@@ -15,8 +15,7 @@ func main() {
 	}
 
 	cmd := command.New(rootCmd, &config)
-	cmd.SetupCreate()
-	cmd.SetupScaffold()
+	cmd.SetupGenerate()
 
 	rootCmd.Execute()
 }

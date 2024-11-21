@@ -1,4 +1,4 @@
-package create
+package generate
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type createHandlerTemplateParams struct {
+type generateHandlerTemplateParams struct {
 	HandlerName string
 }
 
-func (c *Command) runCreateHandler() *cobra.Command {
+func (c *Command) runGenerateHandler() *cobra.Command {
 	var (
 		module       string
 		resourceName string
@@ -21,7 +21,7 @@ func (c *Command) runCreateHandler() *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "handler",
-		Short: "Creates a new handler",
+		Short: "Generates a new handler",
 		Run: func(cmd *cobra.Command, args []string) {
 			input := c.makeHandlerInput(module, resourceName, variant, pkg)
 
@@ -55,7 +55,7 @@ func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) ge
 		Module:       module,
 		Resource:     "handler",
 		ResourceName: resourceName,
-		Data:         createHandlerTemplateParams{HandlerName: resourceName},
+		Data:         generateHandlerTemplateParams{HandlerName: resourceName},
 		Directory:    directory,
 		Suffix:       "_handler",
 	}

@@ -1,4 +1,4 @@
-package create
+package generate
 
 import (
 	"github.com/charmingruby/gentoo/config"
@@ -18,5 +18,5 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
-	c.cmd.AddCommand(c.runCreateHandler())
+	c.cmd.AddCommand(c.runGenerateHandler())
 }

@@ -2,7 +2,7 @@ package command
 
 import (
 	"github.com/charmingruby/gentoo/config"
-	"github.com/charmingruby/gentoo/internal/command/create"
+	"github.com/charmingruby/gentoo/internal/command/generate"
 	"github.com/spf13/cobra"
 )
 
@@ -18,8 +18,6 @@ func New(cmd *cobra.Command, config *config.Configuration) *command {
 	}
 }
 
-func (c *command) SetupCreate() {
-	create.New(c.cmd, c.config).Setup()
+func (c *command) SetupGenerate() {
+	generate.New(c.cmd, c.config).Setup()
 }
-
-func (c *command) SetupScaffold() {}
