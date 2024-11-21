@@ -11,7 +11,7 @@ type createHandlerTemplateParams struct {
 	HandlerName string
 }
 
-func (c *Command) createHandler() *cobra.Command {
+func (c *Command) runCreateHandler() *cobra.Command {
 	var (
 		module       string
 		resourceName string
@@ -43,6 +43,7 @@ func (c *Command) createHandler() *cobra.Command {
 func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) generator.GenerateFileInput {
 	sourceDir := c.config.BaseConfiguration.SourceDir
 
+	// source_dir/module/transport/protocol/handler_name/resource_handler.go
 	directory := fmt.Sprintf("%s/%s/transport/%s/%s/",
 		sourceDir,
 		module,

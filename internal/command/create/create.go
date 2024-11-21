@@ -18,5 +18,5 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
-	c.cmd.AddCommand(c.createHandler())
+	c.cmd.AddCommand(c.runCreateHandler())
 }
