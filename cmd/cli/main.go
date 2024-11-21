@@ -1,7 +1,16 @@
 package main
 
-import create "github.com/charmingruby/gentoo/internal/command/create"
+import (
+	"fmt"
+
+	"github.com/charmingruby/gentoo/config"
+)
 
 func main() {
-	create.CreateHandler()
+	config, err := config.New("./dummy")
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("%+v\n", config)
 }

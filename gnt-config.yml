@@ -1,0 +1,5 @@
+base:
+  project_name: "dummy-gentoo"
+  base_url: "github.com/charmingruby"
+  root_dir: "."
+  source_dir: "internal"
