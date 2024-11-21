@@ -2,60 +2,60 @@ package create
 
 import (
 	"fmt"
-	"os"
-	"text/template"
 
-	"github.com/ettle/strcase"
+	"github.com/charmingruby/gentoo/internal/command/shared/generator"
+	"github.com/spf13/cobra"
 )
 
-const (
-	TEMPLATE_DIR = "./template/create/"
-)
-
-type TemplateParams struct {
+type createHandlerTemplateParams struct {
 	HandlerName string
 }
 
-func CreateHandler() {
-	handlerName := "CreateWallet"
+func (c *Command) createHandler() *cobra.Command {
+	var (
+		module       string
+		resourceName string
+		variant      string
+		pkg          string
+	)
 
-	params := TemplateParams{
-		HandlerName: handlerName,
+	cmd := &cobra.Command{
+		Use:   "handler",
+		Short: "Creates a new handler",
+		Run: func(cmd *cobra.Command, args []string) {
+			input := c.makeHandlerInput(module, resourceName, variant, pkg)
+
+			err := generator.GenerateFile(input)
+			if err != nil {
+				panic(err)
+			}
+		},
 	}
 
-	currentDir, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("Current Directory:", currentDir)
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
+	cmd.Flags().StringVarP(&resourceName, "resource name", "r", "", "handler name")
+	cmd.Flags().StringVarP(&variant, "variant", "v", "", "comunication protocol")
+	cmd.Flags().StringVarP(&pkg, "pkg", "p", "", "communication handler package")
 
-	templatePath := TEMPLATE_DIR + "handler.tpl"
-	fmt.Println("Template Path:", templatePath)
+	return cmd
+}
 
-	tplContent, err := os.ReadFile(templatePath)
-	if err != nil {
-		fmt.Println("Error reading template:", err)
-		panic(err)
-	}
+func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) generator.GenerateFileInput {
+	sourceDir := c.config.BaseConfiguration.SourceDir
 
-	tmpl, err := template.New("handler").Parse(string(tplContent))
-	if err != nil {
-		fmt.Println("Error parsing template:", err)
-		panic(err)
-	}
+	directory := fmt.Sprintf("%s/%s/transport/%s/%s/",
+		sourceDir,
+		module,
+		variant,
+		pkg,
+	)
 
-	fileName := strcase.ToSnake(handlerName) + ".go"
-
-	file, err := os.Create(fileName)
-	if err != nil {
-		fmt.Println("Error creating file:", err)
-		panic(err)
-	}
-	defer file.Close()
-
-	err = tmpl.Execute(file, params)
-	if err != nil {
-		fmt.Println("Error executing template:", err)
-		panic(err)
+	return generator.GenerateFileInput{
+		Module:       module,
+		Resource:     "handler",
+		ResourceName: resourceName,
+		Data:         createHandlerTemplateParams{HandlerName: resourceName},
+		Directory:    directory,
+		Suffix:       "_handler",
 	}
 }
