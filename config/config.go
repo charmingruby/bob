@@ -2,7 +2,6 @@ package config
 
 import (
 	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
@@ -27,13 +26,6 @@ type BaseConfiguration struct {
 }
 
 func New() (Configuration, error) {
-	configPath, err := filepath.Abs(CONFIG_FILE)
-	if err != nil {
-		return Configuration{}, err
-	}
-
-	println(configPath)
-
 	yamlData, err := os.ReadFile(CONFIG_FILE)
 	if err != nil {
 		return Configuration{}, err

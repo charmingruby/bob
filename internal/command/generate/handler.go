@@ -15,17 +15,17 @@ type generateHandlerTemplateParams struct {
 
 func (c *Command) runGenerateHandler() *cobra.Command {
 	var (
-		module       string
-		resourceName string
-		variant      string
-		pkg          string
+		module  string
+		name    string
+		variant string
+		pkg     string
 	)
 
 	cmd := &cobra.Command{
 		Use:   "handler",
 		Short: "Generates a new handler",
 		Run: func(cmd *cobra.Command, args []string) {
-			arguments, err := c.validateHandlerArgs(module, resourceName, variant, pkg)
+			arguments, err := c.validateHandlerArgs(module, name, variant, pkg)
 			if err != nil {
 				panic(err)
 			}
@@ -44,7 +44,7 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&resourceName, "resource name", "r", "", "handler name")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "handler name")
 	cmd.Flags().StringVarP(&variant, "variant", "v", "", "comunication protocol")
 	cmd.Flags().StringVarP(&pkg, "pkg", "p", "", "communication handler package")
 
@@ -70,6 +70,7 @@ func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) ge
 		Directory:    directory,
 		Suffix:       "_handler",
 		ActionType:   constant.GENERATE_ACTION,
+		HasTest:      false,
 	}
 }
 
@@ -79,7 +80,6 @@ func (c *Command) validateHandlerArgs(
 	variant string,
 	pkg string,
 ) ([]validator.Arg, error) {
-
 	args := []validator.Arg{
 		{
 			FieldName:     "module",
@@ -88,7 +88,7 @@ func (c *Command) validateHandlerArgs(
 			EmptyState:    "",
 		},
 		{
-			FieldName:     "resourceName",
+			FieldName:     "name",
 			MustHaveState: true,
 			CurrentState:  resourceName,
 			EmptyState:    "",
