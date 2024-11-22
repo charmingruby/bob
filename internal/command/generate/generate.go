@@ -25,6 +25,7 @@ func (c *Command) Setup() {
 
 	generateCmd.AddCommand(c.runGenerateHandler())
 	generateCmd.AddCommand(c.runGenerateModel())
+	generateCmd.AddCommand(c.runGenerateService())
 
 	c.cmd.AddCommand(generateCmd)
 }
