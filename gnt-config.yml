@@ -3,3 +3,4 @@ base:
   base_url: "github.com/charmingruby"
   root_dir: "."
   source_dir: "internal"
+  library_dir: "pkg"

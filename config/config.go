@@ -23,6 +23,7 @@ type BaseConfiguration struct {
 	BaseURL     string `yaml:"base_url"`
 	RootDir     string `yaml:"root_dir"`
 	SourceDir   string `yaml:"source_dir"`
+	LibraryDir  string `yaml:"library_dir"`
 }
 
 func New() (Configuration, error) {
