@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/charmingruby/gentoo/internal/command/shared/constant"
+	"github.com/charmingruby/gentoo/tpl"
 )
 
 type GenerateFileInput struct {
@@ -15,6 +15,7 @@ type GenerateFileInput struct {
 	ResourceName string
 	Suffix       string
 	Data         any
+	ActionType   string
 }
 
 func GenerateFile(input GenerateFileInput) error {
@@ -23,9 +24,9 @@ func GenerateFile(input GenerateFileInput) error {
 		return err
 	}
 
-	templatePath := constant.TEMPLATE_DIR + formatTplFile(input.Resource)
+	templatePath := fmt.Sprintf("%s/%s", input.ActionType, formatTplFile(input.Resource))
 
-	tplContent, err := os.ReadFile(templatePath)
+	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
 	if err != nil {
 		fmt.Println("Error reading template:", err)
 		return err

@@ -1,5 +1,5 @@
 package constant
 
 const (
-	TEMPLATE_DIR = "./template/create/"
+	TEMPLATE_DIR = "tpl/generate/"
 )

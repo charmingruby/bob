@@ -9,7 +9,7 @@ import (
 func main() {
 	rootCmd := &cobra.Command{}
 
-	config, err := config.New("./dummy")
+	config, err := config.New()
 	if err != nil {
 		panic(err)
 	}

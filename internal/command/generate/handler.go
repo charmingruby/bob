@@ -69,6 +69,7 @@ func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) ge
 		Data:         generateHandlerTemplateParams{HandlerName: resourceName},
 		Directory:    directory,
 		Suffix:       "_handler",
+		ActionType:   "generate",
 	}
 }
 

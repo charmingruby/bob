@@ -1,8 +1,8 @@
 package config
 
 import (
-	"fmt"
 	"os"
+	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
@@ -26,10 +26,15 @@ type BaseConfiguration struct {
 	SourceDir   string `yaml:"source_dir"`
 }
 
-func New(configPath string) (Configuration, error) {
-	configFilePath := fmt.Sprintf("%s/%s", configPath, CONFIG_FILE)
+func New() (Configuration, error) {
+	configPath, err := filepath.Abs(CONFIG_FILE)
+	if err != nil {
+		return Configuration{}, err
+	}
 
-	yamlData, err := os.ReadFile(configFilePath)
+	println(configPath)
+
+	yamlData, err := os.ReadFile(CONFIG_FILE)
 	if err != nil {
 		return Configuration{}, err
 	}
