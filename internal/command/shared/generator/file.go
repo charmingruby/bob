@@ -25,7 +25,6 @@ func GenerateFile(input GenerateFileInput) error {
 	}
 
 	templatePath := fmt.Sprintf("%s/%s", input.ActionType, formatTplFile(input.Resource))
-
 	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
 	if err != nil {
 		fmt.Println("Error reading template:", err)

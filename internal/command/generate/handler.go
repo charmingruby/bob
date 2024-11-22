@@ -3,6 +3,7 @@ package generate
 import (
 	"fmt"
 
+	"github.com/charmingruby/gentoo/internal/command/shared/constant"
 	"github.com/charmingruby/gentoo/internal/command/shared/generator"
 	"github.com/charmingruby/gentoo/internal/command/shared/validator"
 	"github.com/spf13/cobra"
@@ -24,7 +25,6 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 		Use:   "handler",
 		Short: "Generates a new handler",
 		Run: func(cmd *cobra.Command, args []string) {
-
 			arguments, err := c.validateHandlerArgs(module, resourceName, variant, pkg)
 			if err != nil {
 				panic(err)
@@ -69,7 +69,7 @@ func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) ge
 		Data:         generateHandlerTemplateParams{HandlerName: resourceName},
 		Directory:    directory,
 		Suffix:       "_handler",
-		ActionType:   "generate",
+		ActionType:   constant.GENERATE_ACTION,
 	}
 }
 
