@@ -1,7 +1,7 @@
 package generate
 
 import (
-	"github.com/charmingruby/gentoo/config"
+	"github.com/charmingruby/bob/config"
 	"github.com/spf13/cobra"
 )
 

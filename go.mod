@@ -1,4 +1,4 @@
-module github.com/charmingruby/gentoo
+module github.com/charmingruby/bob
 
 go 1.23.2
 

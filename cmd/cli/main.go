@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/charmingruby/gentoo/config"
-	"github.com/charmingruby/gentoo/internal/command"
+	"github.com/charmingruby/bob/config"
+	"github.com/charmingruby/bob/internal/command"
 	"github.com/spf13/cobra"
 )
 

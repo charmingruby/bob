@@ -3,9 +3,9 @@ package generate
 import (
 	"fmt"
 
-	"github.com/charmingruby/gentoo/internal/command/shared/constant"
-	"github.com/charmingruby/gentoo/internal/command/shared/generator"
-	"github.com/charmingruby/gentoo/internal/command/shared/validator"
+	"github.com/charmingruby/bob/internal/command/shared/constant"
+	"github.com/charmingruby/bob/internal/command/shared/generator"
+	"github.com/charmingruby/bob/internal/command/shared/validator"
 	"github.com/ettle/strcase"
 	"github.com/spf13/cobra"
 )

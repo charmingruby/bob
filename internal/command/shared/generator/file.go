@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/charmingruby/gentoo/tpl"
+	"github.com/charmingruby/bob/tpl"
 )
 
 type GenerateFileInput struct {

@@ -1,8 +1,8 @@
 package command
 
 import (
-	"github.com/charmingruby/gentoo/config"
-	"github.com/charmingruby/gentoo/internal/command/generate"
+	"github.com/charmingruby/bob/config"
+	"github.com/charmingruby/bob/internal/command/generate"
 	"github.com/spf13/cobra"
 )
 
