@@ -3,33 +3,28 @@ package validator
 import "fmt"
 
 type Arg struct {
-	FieldName     string
-	MustHaveState bool
-	DefaultState  string
-	CurrentState  string
-	EmptyState    string
+	FieldName  string
+	Value      string
+	IsRequired bool
 }
 
-func NewArg(fieldName string, mustHaveState bool, defaultState, currentState, emptyState string) Arg {
+func NewArg(fieldName string, value string, isRequired bool) Arg {
 	return Arg{
-		FieldName:     fieldName,
-		MustHaveState: mustHaveState,
-		DefaultState:  defaultState,
-		EmptyState:    emptyState,
-		CurrentState:  currentState,
+		FieldName:  fieldName,
+		IsRequired: isRequired,
 	}
 }
 
-func ValidateArgsList(args []Arg) error {
+func ValidateArgsList(args []*Arg) error {
 	for _, arg := range args {
-		if arg.MustHaveState && arg.CurrentState == arg.EmptyState {
+		if arg.IsRequired && isArgEmpty(arg.Value) {
 			return fmt.Errorf("missing state for %s argument", arg.FieldName)
-		}
-
-		if !arg.MustHaveState {
-			arg.CurrentState = arg.DefaultState
 		}
 	}
 
 	return nil
+}
+
+func isArgEmpty(v string) bool {
+	return v == ""
 }

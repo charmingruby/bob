@@ -45,7 +45,6 @@ func GenerateFile(input GenerateFileInput) error {
 
 func createTemplate(resource, actionType string) (*template.Template, error) {
 	templatePath := fmt.Sprintf("%s/%s", actionType, formatTplFile(resource))
-	println("templatePath", templatePath)
 
 	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
 	if err != nil {
@@ -70,16 +69,12 @@ func createFile(resourceName, suffix, directory string, data any, template *temp
 
 	destinyDir := fmt.Sprintf("%s/%s", currentDir, directory)
 
-	println("destinyDir", destinyDir)
-
 	var finalResourceName string = resourceName
 	if suffix != "" {
 		finalResourceName += suffix
 	}
 
 	fileName := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalResourceName))
-
-	println("fileName", fileName)
 
 	file, err := os.Create(fileName)
 	if err != nil {

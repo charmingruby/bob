@@ -9,6 +9,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	DEFAULT_HANDLER_VARIANT = "rest"
+	DEFAULT_HANDLER_PKG     = "endpoint"
+)
+
 type generateHandlerTemplateParams struct {
 	HandlerName string
 }
@@ -31,10 +36,10 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 			}
 
 			input := c.makeHandlerInput(
-				arguments[0].CurrentState,
-				arguments[1].CurrentState,
-				arguments[2].CurrentState,
-				arguments[3].CurrentState,
+				arguments[0].Value,
+				arguments[1].Value,
+				arguments[2].Value,
+				arguments[3].Value,
 			)
 
 			if err := generator.GenerateFile(input); err != nil {
@@ -45,8 +50,8 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
 	cmd.Flags().StringVarP(&name, "name", "n", "", "handler name")
-	cmd.Flags().StringVarP(&variant, "variant", "v", "", "comunication protocol")
-	cmd.Flags().StringVarP(&pkg, "pkg", "p", "", "communication handler package")
+	cmd.Flags().StringVarP(&variant, "variant", "v", DEFAULT_HANDLER_VARIANT, "comunication protocol")
+	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_HANDLER_PKG, "communication handler package")
 
 	return cmd
 }
@@ -79,31 +84,25 @@ func (c *Command) validateHandlerArgs(
 	resourceName string,
 	variant string,
 	pkg string,
-) ([]validator.Arg, error) {
-	args := []validator.Arg{
+) ([]*validator.Arg, error) {
+	args := []*validator.Arg{
 		{
-			FieldName:     "module",
-			MustHaveState: true,
-			CurrentState:  module,
-			EmptyState:    "",
+			FieldName:  "module",
+			Value:      module,
+			IsRequired: true,
 		},
 		{
-			FieldName:     "name",
-			MustHaveState: true,
-			CurrentState:  resourceName,
-			EmptyState:    "",
+			FieldName:  "name",
+			Value:      resourceName,
+			IsRequired: true,
 		},
 		{
-			FieldName:     "variant",
-			MustHaveState: true,
-			CurrentState:  variant,
-			EmptyState:    "",
+			FieldName: "variant",
+			Value:     variant,
 		},
 		{
-			FieldName:     "pkg",
-			MustHaveState: true,
-			CurrentState:  pkg,
-			EmptyState:    "",
+			FieldName: "pkg",
+			Value:     pkg,
 		},
 	}
 

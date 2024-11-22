@@ -10,6 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	DEFAULT_MODEL_PKG = "model"
+)
+
 type generateModelTemplateParams struct {
 	ModelName string
 }
@@ -31,9 +35,9 @@ func (c *Command) runGenerateModel() *cobra.Command {
 			}
 
 			input := c.makeModelInput(
-				arguments[0].CurrentState,
-				arguments[1].CurrentState,
-				arguments[2].CurrentState,
+				arguments[0].Value,
+				arguments[1].Value,
+				arguments[2].Value,
 			)
 
 			if err := generator.GenerateFile(input); err != nil {
@@ -44,7 +48,7 @@ func (c *Command) runGenerateModel() *cobra.Command {
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
 	cmd.Flags().StringVarP(&name, "name", "n", "", "model name")
-	cmd.Flags().StringVarP(&pkg, "pkg", "p", "", "model package")
+	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_MODEL_PKG, "model package")
 
 	return cmd
 }
@@ -78,26 +82,21 @@ func (c *Command) validateModelArgs(
 	module string,
 	name string,
 	pkg string,
-) ([]validator.Arg, error) {
-	args := []validator.Arg{
+) ([]*validator.Arg, error) {
+	args := []*validator.Arg{
 		{
-			FieldName:     "module",
-			MustHaveState: true,
-			CurrentState:  module,
-			EmptyState:    "",
+			FieldName:  "module",
+			Value:      module,
+			IsRequired: true,
 		},
 		{
-			FieldName:     "name",
-			MustHaveState: true,
-			CurrentState:  name,
-			EmptyState:    "",
+			FieldName:  "name",
+			Value:      name,
+			IsRequired: true,
 		},
 		{
-			FieldName:     "pkg",
-			MustHaveState: true,
-			CurrentState:  pkg,
-			EmptyState:    "",
-			DefaultState:  "model",
+			FieldName: "pkg",
+			Value:     pkg,
 		},
 	}
 
