@@ -2,15 +2,16 @@ package generate
 
 import (
 	"github.com/charmingruby/bob/config"
+	"github.com/charmingruby/bob/internal/command/generate/single"
 	"github.com/spf13/cobra"
 )
 
 type Command struct {
 	cmd    *cobra.Command
-	config *config.Configuration
+	config config.Configuration
 }
 
-func New(cmd *cobra.Command, config *config.Configuration) *Command {
+func New(cmd *cobra.Command, config config.Configuration) *Command {
 	return &Command{
 		cmd:    cmd,
 		config: config,
@@ -23,9 +24,9 @@ func (c *Command) Setup() {
 		Short: "Generates components",
 	}
 
-	generateCmd.AddCommand(c.runGenerateHandler())
-	generateCmd.AddCommand(c.runGenerateModel())
-	generateCmd.AddCommand(c.runGenerateService())
+	generateCmd.AddCommand(single.RunModel(c.config))
+	generateCmd.AddCommand(single.RunService(c.config))
+	generateCmd.AddCommand(single.RunHandler(c.config))
 
 	c.cmd.AddCommand(generateCmd)
 }

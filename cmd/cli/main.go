@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	cmd := command.New(rootCmd, &config)
+	cmd := command.New(rootCmd, config)
 	cmd.SetupGenerate()
 
 	rootCmd.Execute()

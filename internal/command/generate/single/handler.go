@@ -1,8 +1,9 @@
-package generate
+package single
 
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/gen"
@@ -11,31 +12,35 @@ import (
 )
 
 const (
-	MODEL_IDENTIFIER = "model"
-
-	DEFAULT_MODEL_PKG = "model"
+	HANDLER_IDENTIFIER      = "handler"
+	DEFAULT_HANDLER_VARIANT = "rest"
+	DEFAULT_HANDLER_PKG     = "endpoint"
 )
 
-func (c *Command) runGenerateModel() *cobra.Command {
+func RunHandler(cfg config.Configuration) *cobra.Command {
 	var (
-		module string
-		name   string
-		pkg    string
+		module  string
+		name    string
+		variant string
+		pkg     string
 	)
 
 	cmd := &cobra.Command{
-		Use:   "model",
-		Short: "Generates a new model",
+		Use:   "handler",
+		Short: "Generates a new handler",
 		Run: func(cmd *cobra.Command, args []string) {
-			arguments, err := c.validateModelArgs(module, name, pkg)
+			arguments, err := validateHandlerArgs(module, name, variant, pkg)
 			if err != nil {
 				panic(err)
 			}
 
-			input := c.makeModelInput(
+			input := makeHandlerComponent(
+				cfg.BaseConfiguration.RootDir,
+				cfg.BaseConfiguration.SourceDir,
 				arguments[0].Value,
 				arguments[1].Value,
 				arguments[2].Value,
+				arguments[3].Value,
 			)
 
 			if err := gen.GenerateFile(input); err != nil {
@@ -45,28 +50,30 @@ func (c *Command) runGenerateModel() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "model name")
-	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_MODEL_PKG, "model package")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "handler name")
+	cmd.Flags().StringVarP(&variant, "variant", "v", DEFAULT_HANDLER_VARIANT, "comunication protocol")
+	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_HANDLER_PKG, "communication handler package")
 
 	return cmd
 }
 
-func (c *Command) makeModelInput(module, name, pkg string) component.Component {
+func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) component.Component {
 	component := component.New(component.ComponentInput{
-		Identifier:  MODEL_IDENTIFIER,
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
+		Identifier:  HANDLER_IDENTIFIER,
 		Name:        name,
 		PackageName: pkg,
-		HasTest:     true,
+		Suffix:      pkg,
+		HasTest:     false,
 	}, component.WithDefaultTemplateParams())
 
-	// source_dir/module/core/pkg_name/model_name.go
-	// source_dir/module/core/pkg_name/model_name_test.go
-	directory := fmt.Sprintf("%s/%s/%s/core/%s",
-		c.config.BaseConfiguration.RootDir,
-		c.config.BaseConfiguration.SourceDir,
-		module,
+	// source_dir/module/transport/protocol/handler_name/resource_handler.go
+	directory := fmt.Sprintf("%s/%s/%s/transport/%s/%s",
+		rootDir,
+		srcDir,
+		component.Module,
+		variant,
 		component.Package.Name,
 	)
 
@@ -75,9 +82,10 @@ func (c *Command) makeModelInput(module, name, pkg string) component.Component {
 	return *component
 }
 
-func (c *Command) validateModelArgs(
+func validateHandlerArgs(
 	module string,
 	name string,
+	variant string,
 	pkg string,
 ) ([]*validator.Arg, error) {
 	args := []*validator.Arg{
@@ -90,6 +98,10 @@ func (c *Command) validateModelArgs(
 			FieldName:  "name",
 			Value:      name,
 			IsRequired: true,
+		},
+		{
+			FieldName: "variant",
+			Value:     variant,
 		},
 		{
 			FieldName: "pkg",

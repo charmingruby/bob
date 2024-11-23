@@ -1,8 +1,9 @@
-package generate
+package single
 
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/gen"
@@ -11,12 +12,12 @@ import (
 )
 
 const (
-	SERVICE_IDENTIFIER = "service"
+	MODEL_IDENTIFIER = "model"
 
-	DEFAULT_SERVICE_PKG = "service"
+	DEFAULT_MODEL_PKG = "model"
 )
 
-func (c *Command) runGenerateService() *cobra.Command {
+func RunModel(cfg config.Configuration) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -24,15 +25,17 @@ func (c *Command) runGenerateService() *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "service",
-		Short: "Generates a new service",
+		Use:   "model",
+		Short: "Generates a new model",
 		Run: func(cmd *cobra.Command, args []string) {
-			arguments, err := c.validateServiceArgs(module, name, pkg)
+			arguments, err := validateModelArgs(module, name, pkg)
 			if err != nil {
 				panic(err)
 			}
 
-			input := c.makeServiceInput(
+			input := makeModelComponent(
+				cfg.BaseConfiguration.RootDir,
+				cfg.BaseConfiguration.SourceDir,
 				arguments[0].Value,
 				arguments[1].Value,
 				arguments[2].Value,
@@ -45,27 +48,27 @@ func (c *Command) runGenerateService() *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "service name")
-	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_SERVICE_PKG, "service package")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "model name")
+	cmd.Flags().StringVarP(&pkg, "pkg", "p", DEFAULT_MODEL_PKG, "model package")
 
 	return cmd
 }
 
-func (c *Command) makeServiceInput(module, name, pkg string) component.Component {
+func makeModelComponent(rootDir, srcDir, module, name, pkg string) component.Component {
 	component := component.New(component.ComponentInput{
-		Identifier:  SERVICE_IDENTIFIER,
+		Identifier:  MODEL_IDENTIFIER,
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
 		Name:        name,
 		PackageName: pkg,
-		Suffix:      pkg,
-		HasTest:     false,
+		HasTest:     true,
 	}, component.WithDefaultTemplateParams())
 
-	// source_dir/module/core/service/name_service.go
+	// source_dir/module/core/pkg_name/model_name.go
+	// source_dir/module/core/pkg_name/model_name_test.go
 	directory := fmt.Sprintf("%s/%s/%s/core/%s",
-		c.config.BaseConfiguration.RootDir,
-		c.config.BaseConfiguration.SourceDir,
+		rootDir,
+		srcDir,
 		module,
 		component.Package.Name,
 	)
@@ -75,7 +78,7 @@ func (c *Command) makeServiceInput(module, name, pkg string) component.Component
 	return *component
 }
 
-func (c *Command) validateServiceArgs(
+func validateModelArgs(
 	module string,
 	name string,
 	pkg string,

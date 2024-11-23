@@ -8,10 +8,10 @@ import (
 
 type command struct {
 	cmd    *cobra.Command
-	config *config.Configuration
+	config config.Configuration
 }
 
-func New(cmd *cobra.Command, config *config.Configuration) *command {
+func New(cmd *cobra.Command, config config.Configuration) *command {
 	return &command{
 		cmd:    cmd,
 		config: config,
