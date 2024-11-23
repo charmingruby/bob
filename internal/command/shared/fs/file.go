@@ -5,45 +5,57 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/charmingruby/bob/internal/command/shared/formatter"
 	"github.com/charmingruby/bob/tpl"
 )
 
 type File struct {
-	Identifier string
-	HasTest    bool
-	ActionType string
-	Directory  string
-	Name       string
-	Suffix     string
-	Data       any
+	FileName             string // file name
+	FileSuffix           string // file suffix
+	CommandType          string // ex: generate, new...
+	TemplateName         string // handler, model...
+	TemplateData         any    // data to be used in the template
+	DestinationDirectory string // directory where the file will be created
+	ResourceName         string // name of the function, struct, etc
+	ResourceSuffix       string // suffix of the function, struct, etc
+	HasTest              bool
+}
+
+func (f *File) format() {
+	f.FileName = formatter.ToSnakeCase(f.FileName)
+	f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
+	f.ResourceName = formatter.ToCamelCase(f.ResourceName)
+	f.ResourceSuffix = formatter.ToCamelCase(f.ResourceSuffix)
 }
 
 func GenerateFile(file File) error {
-	if file.HasTest {
-		testFile := fmt.Sprintf("%s_test", file.Identifier)
+	file.format()
 
-		testTmpl, err := createTemplate(testFile, file.ActionType)
+	if file.HasTest {
+		testFile := fmt.Sprintf("%s_test", file.TemplateName)
+
+		testTmpl, err := createTemplate(testFile, file.CommandType)
 		if err != nil {
 			fmt.Println("Error creating test template:", err)
 			return err
 		}
 
-		if err := createFile(file.Name, "_test", file.Directory, file.Data, testTmpl); err != nil {
+		if err := createFile(file.FileName, "_test", file.DestinationDirectory, file.TemplateData, testTmpl); err != nil {
 			return err
 		}
 	}
 
-	tmpl, err := createTemplate(file.Identifier, file.ActionType)
+	tmpl, err := createTemplate(file.TemplateName, file.CommandType)
 	if err != nil {
 		fmt.Println("Error creating template:", err)
 		return err
 	}
 
-	return createFile(file.Name, file.Suffix, file.Directory, file.Data, tmpl)
+	return createFile(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl)
 }
 
-func createTemplate(file, actionType string) (*template.Template, error) {
-	templatePath := fmt.Sprintf("%s/%s", actionType, formatTplFile(file))
+func createTemplate(fileName, command string) (*template.Template, error) {
+	templatePath := fmt.Sprintf("%s/%s", command, formatTplFile(fileName))
 
 	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
 	if err != nil {
@@ -51,7 +63,7 @@ func createTemplate(file, actionType string) (*template.Template, error) {
 		return nil, err
 	}
 
-	tmpl, err := template.New(file).Parse(string(tplContent))
+	tmpl, err := template.New(fileName).Parse(string(tplContent))
 	if err != nil {
 		fmt.Println("Error parsing template:", err)
 		return nil, err
@@ -69,7 +81,7 @@ func createFile(name, suffix, directory string, data any, template *template.Tem
 
 	var finalFileName string = name
 	if suffix != "" {
-		finalFileName += suffix
+		finalFileName += "_" + suffix
 	}
 
 	fileName := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))

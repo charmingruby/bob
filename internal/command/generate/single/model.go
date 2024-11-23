@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	MODEL_IDENTIFIER = "model"
+	MODEL_TEMPLATE = "model"
 
 	DEFAULT_MODEL_PKG = "model"
 )
@@ -40,15 +40,19 @@ func RunModel(cfg config.Configuration) *cobra.Command {
 				arguments[2].Value,
 			)
 
-			if err := fs.GenerateFile(fs.File{
-				Identifier: component.Identifier,
-				HasTest:    component.HasTest,
-				ActionType: component.ActionType,
-				Directory:  component.Directory,
-				Name:       component.Name,
-				Suffix:     component.Suffix,
-				Data:       component.Data,
-			}); err != nil {
+			file := fs.File{
+				CommandType:          constant.GENERATE_COMMAND,
+				TemplateName:         MODEL_TEMPLATE,
+				TemplateData:         component.Data,
+				FileName:             component.Name,
+				FileSuffix:           "",
+				ResourceName:         component.Name,
+				ResourceSuffix:       component.Suffix,
+				DestinationDirectory: component.Directory,
+				HasTest:              component.HasTest,
+			}
+
+			if err := fs.GenerateFile(file); err != nil {
 				panic(err)
 			}
 		},
@@ -63,11 +67,9 @@ func RunModel(cfg config.Configuration) *cobra.Command {
 
 func makeModelComponent(rootDir, srcDir, module, name, pkg string) Single {
 	component := New(SingleInput{
-		Identifier:  MODEL_IDENTIFIER,
-		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
-		Name:        name,
 		PackageName: pkg,
+		Name:        name,
 		HasTest:     true,
 	}, WithDefaultTemplate())
 

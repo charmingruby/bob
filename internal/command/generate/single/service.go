@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	SERVICE_IDENTIFIER = "service"
+	SERVICE_TEMPLATE = "service"
 
 	DEFAULT_SERVICE_PKG = "service"
 )
@@ -40,15 +40,19 @@ func RunService(cfg config.Configuration) *cobra.Command {
 				arguments[2].Value,
 			)
 
-			if err := fs.GenerateFile(fs.File{
-				Identifier: component.Identifier,
-				HasTest:    component.HasTest,
-				ActionType: component.ActionType,
-				Directory:  component.Directory,
-				Name:       component.Name,
-				Suffix:     component.Suffix,
-				Data:       component.Data,
-			}); err != nil {
+			file := fs.File{
+				CommandType:          constant.GENERATE_COMMAND,
+				TemplateName:         SERVICE_TEMPLATE,
+				TemplateData:         component.Data,
+				FileName:             component.Name,
+				FileSuffix:           component.Package.Name,
+				ResourceName:         component.Name,
+				ResourceSuffix:       component.Suffix,
+				DestinationDirectory: component.Directory,
+				HasTest:              component.HasTest,
+			}
+
+			if err := fs.GenerateFile(file); err != nil {
 				panic(err)
 			}
 		},
@@ -63,8 +67,6 @@ func RunService(cfg config.Configuration) *cobra.Command {
 
 func makeServiceComponent(rootDir, srcDir, module, name, pkg string) Single {
 	component := New(SingleInput{
-		Identifier:  SERVICE_IDENTIFIER,
-		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
 		Name:        name,
 		PackageName: pkg,

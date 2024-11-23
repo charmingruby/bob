@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	HANDLER_IDENTIFIER      = "handler"
+	HANDLER_TEMPLATE        = "handler"
 	DEFAULT_HANDLER_VARIANT = "rest"
 	DEFAULT_HANDLER_PKG     = "endpoint"
 )
@@ -42,15 +42,19 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 				arguments[3].Value,
 			)
 
-			if err := fs.GenerateFile(fs.File{
-				Identifier: component.Identifier,
-				HasTest:    component.HasTest,
-				ActionType: component.ActionType,
-				Directory:  component.Directory,
-				Name:       component.Name,
-				Suffix:     component.Suffix,
-				Data:       component.Data,
-			}); err != nil {
+			file := fs.File{
+				CommandType:          constant.GENERATE_COMMAND,
+				TemplateName:         HANDLER_TEMPLATE,
+				TemplateData:         component.Data,
+				FileName:             component.Name,
+				FileSuffix:           component.Package.Name,
+				ResourceName:         component.Name,
+				ResourceSuffix:       component.Suffix,
+				DestinationDirectory: component.Directory,
+				HasTest:              component.HasTest,
+			}
+
+			if err := fs.GenerateFile(file); err != nil {
 				panic(err)
 			}
 		},
@@ -66,9 +70,7 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 
 func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) Single {
 	component := New(SingleInput{
-		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
-		Identifier:  HANDLER_IDENTIFIER,
 		Name:        name,
 		PackageName: pkg,
 		Suffix:      pkg,
