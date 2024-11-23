@@ -1,6 +1,10 @@
 package component
 
-import "strings"
+import (
+	"strings"
+
+	"github.com/charmingruby/bob/internal/command/shared/formatter"
+)
 
 type Single struct {
 	Identifier string
@@ -56,9 +60,16 @@ func New(in SingleInput, opts ...SingleOption) *Single {
 	return component
 }
 
-func WithDefaultTemplateParams() SingleOption {
+type SingleDefaultTemplate struct {
+	Package                   string
+	PackageRegistry           string
+	PackageRegistryIdentifier string
+	Name                      string
+}
+
+func WithDefaultTemplate() SingleOption {
 	return func(c *Single) {
-		c.Data = DefaultTemplateParams{
+		c.Data = SingleDefaultTemplate{
 			Package:                   c.Package.Name,
 			PackageRegistry:           c.Package.Registry,
 			PackageRegistryIdentifier: c.Package.RegistryIdentifier,
@@ -68,14 +79,14 @@ func WithDefaultTemplateParams() SingleOption {
 }
 
 func (r *Single) format() {
-	r.Module = toSnakeCase(r.Module)
-	r.Name = toCamelCase(r.Name)
+	r.Module = formatter.ToSnakeCase(r.Module)
+	r.Name = formatter.ToCamelCase(r.Name)
 	r.FullName = r.Name
-	r.Package.Name = toSnakeCase(r.Package.Name)
-	r.Package.Registry = toCamelCase(r.Package.Name)
-	r.Package.RegistryIdentifier = toLowerCase(string(r.Package.Name[0]))
+	r.Package.Name = formatter.ToSnakeCase(r.Package.Name)
+	r.Package.Registry = formatter.ToCamelCase(r.Package.Name)
+	r.Package.RegistryIdentifier = formatter.ToLowerCase(string(r.Package.Name[0]))
 	if r.Suffix != "" {
-		r.FullName = toCamelCase(r.Name + strings.ToTitle(r.Suffix))
-		r.Suffix = "_" + toSnakeCase(r.Suffix)
+		r.FullName = formatter.ToCamelCase(r.Name + strings.ToTitle(r.Suffix))
+		r.Suffix = "_" + formatter.ToSnakeCase(r.Suffix)
 	}
 }

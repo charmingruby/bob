@@ -62,7 +62,7 @@ func makeModelComponent(rootDir, srcDir, module, name, pkg string) component.Sin
 		Name:        name,
 		PackageName: pkg,
 		HasTest:     true,
-	}, component.WithDefaultTemplateParams())
+	}, component.WithDefaultTemplate())
 
 	// source_dir/module/core/pkg_name/model_name.go
 	// source_dir/module/core/pkg_name/model_name_test.go

@@ -1,4 +1,4 @@
-package component
+package formatter
 
 import (
 	"strings"
@@ -6,14 +6,14 @@ import (
 	"github.com/ettle/strcase"
 )
 
-func toSnakeCase(s string) string {
+func ToSnakeCase(s string) string {
 	return strcase.ToSnake(s)
 }
 
-func toCamelCase(s string) string {
+func ToCamelCase(s string) string {
 	return strcase.ToGoCase(s, strcase.TitleCase, 0)
 }
 
-func toLowerCase(s string) string {
+func ToLowerCase(s string) string {
 	return strings.ToLower(s)
 }

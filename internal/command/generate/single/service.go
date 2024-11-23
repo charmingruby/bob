@@ -63,7 +63,7 @@ func makeServiceComponent(rootDir, srcDir, module, name, pkg string) component.S
 		PackageName: pkg,
 		Suffix:      pkg,
 		HasTest:     false,
-	}, component.WithDefaultTemplateParams())
+	}, component.WithDefaultTemplate())
 
 	// source_dir/module/core/service/name_service.go
 	directory := fmt.Sprintf("%s/%s/%s/core/%s",

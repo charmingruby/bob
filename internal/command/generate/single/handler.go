@@ -66,7 +66,7 @@ func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) co
 		PackageName: pkg,
 		Suffix:      pkg,
 		HasTest:     false,
-	}, component.WithDefaultTemplateParams())
+	}, component.WithDefaultTemplate())
 
 	// source_dir/module/transport/protocol/handler_name/resource_handler.go
 	directory := fmt.Sprintf("%s/%s/%s/transport/%s/%s",
