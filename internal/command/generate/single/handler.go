@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
@@ -34,7 +33,7 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 				panic(err)
 			}
 
-			input := makeHandlerComponent(
+			component := makeHandlerComponent(
 				cfg.BaseConfiguration.RootDir,
 				cfg.BaseConfiguration.SourceDir,
 				arguments[0].Value,
@@ -43,7 +42,15 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 				arguments[3].Value,
 			)
 
-			if err := fs.GenerateFile(input); err != nil {
+			if err := fs.GenerateFile(fs.File{
+				Identifier: component.Identifier,
+				HasTest:    component.HasTest,
+				ActionType: component.ActionType,
+				Directory:  component.Directory,
+				Name:       component.Name,
+				Suffix:     component.Suffix,
+				Data:       component.Data,
+			}); err != nil {
 				panic(err)
 			}
 		},
@@ -57,8 +64,8 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 	return cmd
 }
 
-func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) component.Single {
-	component := component.New(component.SingleInput{
+func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) Single {
+	component := New(SingleInput{
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
 		Identifier:  HANDLER_IDENTIFIER,
@@ -66,7 +73,7 @@ func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) co
 		PackageName: pkg,
 		Suffix:      pkg,
 		HasTest:     false,
-	}, component.WithDefaultTemplate())
+	}, WithDefaultTemplate())
 
 	// source_dir/module/transport/protocol/handler_name/resource_handler.go
 	directory := fmt.Sprintf("%s/%s/%s/transport/%s/%s",

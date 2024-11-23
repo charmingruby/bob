@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
@@ -33,7 +32,7 @@ func RunService(cfg config.Configuration) *cobra.Command {
 				panic(err)
 			}
 
-			input := makeServiceComponent(
+			component := makeServiceComponent(
 				cfg.BaseConfiguration.RootDir,
 				cfg.BaseConfiguration.SourceDir,
 				arguments[0].Value,
@@ -41,7 +40,15 @@ func RunService(cfg config.Configuration) *cobra.Command {
 				arguments[2].Value,
 			)
 
-			if err := fs.GenerateFile(input); err != nil {
+			if err := fs.GenerateFile(fs.File{
+				Identifier: component.Identifier,
+				HasTest:    component.HasTest,
+				ActionType: component.ActionType,
+				Directory:  component.Directory,
+				Name:       component.Name,
+				Suffix:     component.Suffix,
+				Data:       component.Data,
+			}); err != nil {
 				panic(err)
 			}
 		},
@@ -54,8 +61,8 @@ func RunService(cfg config.Configuration) *cobra.Command {
 	return cmd
 }
 
-func makeServiceComponent(rootDir, srcDir, module, name, pkg string) component.Single {
-	component := component.New(component.SingleInput{
+func makeServiceComponent(rootDir, srcDir, module, name, pkg string) Single {
+	component := New(SingleInput{
 		Identifier:  SERVICE_IDENTIFIER,
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
@@ -63,7 +70,7 @@ func makeServiceComponent(rootDir, srcDir, module, name, pkg string) component.S
 		PackageName: pkg,
 		Suffix:      pkg,
 		HasTest:     false,
-	}, component.WithDefaultTemplate())
+	}, WithDefaultTemplate())
 
 	// source_dir/module/core/service/name_service.go
 	directory := fmt.Sprintf("%s/%s/%s/core/%s",

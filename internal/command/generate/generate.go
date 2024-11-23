@@ -20,13 +20,22 @@ func New(cmd *cobra.Command, config config.Configuration) *Command {
 
 func (c *Command) Setup() {
 	generateCmd := &cobra.Command{
-		Use:   "generate",
+		Use:   "gen",
 		Short: "Generates components",
 	}
 
 	generateCmd.AddCommand(single.RunModel(c.config))
 	generateCmd.AddCommand(single.RunService(c.config))
 	generateCmd.AddCommand(single.RunHandler(c.config))
+
+	resourceCmd := &cobra.Command{
+		Use:   "resource",
+		Short: "Generates resources",
+	}
+
+	//resourceCmd.AddCommand(resource.RunRest(c.config))
+
+	generateCmd.AddCommand(resourceCmd)
 
 	c.cmd.AddCommand(generateCmd)
 }

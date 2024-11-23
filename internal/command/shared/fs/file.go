@@ -5,36 +5,45 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/tpl"
 )
 
-func GenerateFile(component component.Single) error {
-	if component.HasTest {
-		testComponent := fmt.Sprintf("%s_test", component.Identifier)
+type File struct {
+	Identifier string
+	HasTest    bool
+	ActionType string
+	Directory  string
+	Name       string
+	Suffix     string
+	Data       any
+}
 
-		testTmpl, err := createTemplate(testComponent, component.ActionType)
+func GenerateFile(file File) error {
+	if file.HasTest {
+		testFile := fmt.Sprintf("%s_test", file.Identifier)
+
+		testTmpl, err := createTemplate(testFile, file.ActionType)
 		if err != nil {
 			fmt.Println("Error creating test template:", err)
 			return err
 		}
 
-		if err := createFile(component.Name, "_test", component.Directory, component.Data, testTmpl); err != nil {
+		if err := createFile(file.Name, "_test", file.Directory, file.Data, testTmpl); err != nil {
 			return err
 		}
 	}
 
-	tmpl, err := createTemplate(component.Identifier, component.ActionType)
+	tmpl, err := createTemplate(file.Identifier, file.ActionType)
 	if err != nil {
 		fmt.Println("Error creating template:", err)
 		return err
 	}
 
-	return createFile(component.Name, component.Suffix, component.Directory, component.Data, tmpl)
+	return createFile(file.Name, file.Suffix, file.Directory, file.Data, tmpl)
 }
 
-func createTemplate(component, actionType string) (*template.Template, error) {
-	templatePath := fmt.Sprintf("%s/%s", actionType, formatTplFile(component))
+func createTemplate(file, actionType string) (*template.Template, error) {
+	templatePath := fmt.Sprintf("%s/%s", actionType, formatTplFile(file))
 
 	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
 	if err != nil {
@@ -42,7 +51,7 @@ func createTemplate(component, actionType string) (*template.Template, error) {
 		return nil, err
 	}
 
-	tmpl, err := template.New(component).Parse(string(tplContent))
+	tmpl, err := template.New(file).Parse(string(tplContent))
 	if err != nil {
 		fmt.Println("Error parsing template:", err)
 		return nil, err
@@ -51,20 +60,19 @@ func createTemplate(component, actionType string) (*template.Template, error) {
 	return tmpl, err
 }
 
-func createFile(componentName, suffix, directory string, data any, template *template.Template) error {
-	currentDir, err := os.Getwd()
+func createFile(name, suffix, directory string, data any, template *template.Template) error {
+	destinyDir, err := getDestinationDirectory(directory)
 	if err != nil {
+		fmt.Println("Error getting destination directory:", err)
 		return err
 	}
 
-	destinyDir := fmt.Sprintf("%s/%s", currentDir, directory)
-
-	var finalComponentName string = componentName
+	var finalFileName string = name
 	if suffix != "" {
-		finalComponentName += suffix
+		finalFileName += suffix
 	}
 
-	fileName := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalComponentName))
+	fileName := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
 
 	file, err := os.Create(fileName)
 	if err != nil {

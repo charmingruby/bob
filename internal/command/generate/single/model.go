@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
@@ -33,7 +32,7 @@ func RunModel(cfg config.Configuration) *cobra.Command {
 				panic(err)
 			}
 
-			input := makeModelComponent(
+			component := makeModelComponent(
 				cfg.BaseConfiguration.RootDir,
 				cfg.BaseConfiguration.SourceDir,
 				arguments[0].Value,
@@ -41,7 +40,15 @@ func RunModel(cfg config.Configuration) *cobra.Command {
 				arguments[2].Value,
 			)
 
-			if err := fs.GenerateFile(input); err != nil {
+			if err := fs.GenerateFile(fs.File{
+				Identifier: component.Identifier,
+				HasTest:    component.HasTest,
+				ActionType: component.ActionType,
+				Directory:  component.Directory,
+				Name:       component.Name,
+				Suffix:     component.Suffix,
+				Data:       component.Data,
+			}); err != nil {
 				panic(err)
 			}
 		},
@@ -54,15 +61,15 @@ func RunModel(cfg config.Configuration) *cobra.Command {
 	return cmd
 }
 
-func makeModelComponent(rootDir, srcDir, module, name, pkg string) component.Single {
-	component := component.New(component.SingleInput{
+func makeModelComponent(rootDir, srcDir, module, name, pkg string) Single {
+	component := New(SingleInput{
 		Identifier:  MODEL_IDENTIFIER,
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
 		Name:        name,
 		PackageName: pkg,
 		HasTest:     true,
-	}, component.WithDefaultTemplate())
+	}, WithDefaultTemplate())
 
 	// source_dir/module/core/pkg_name/model_name.go
 	// source_dir/module/core/pkg_name/model_name_test.go
