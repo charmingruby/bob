@@ -1,23 +1,23 @@
-package model
+package {{ .Package }}
 
 import (
 	"encoding/json"
 	"time"
 )
 
-type {{ .ModelName }} struct {
+type {{ .Name }} struct {
 	ID        string    `json:"id"`
 	Name      string    `json:"name"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-type New{{ .ModelName }}Input struct {
+type New{{ .Name }}Input struct {
 	Name string
 }
 
-func New{{ .ModelName }}(in New{{ .ModelName }}Input) *{{ .ModelName }} {
-	return &{{ .ModelName }}{
+func New{{ .Name }}(in New{{ .Name }}Input) *{{ .Name }} {
+	return &{{ .Name }}{
 		ID:        "id",
 		Name:      in.Name,
 		CreatedAt: time.Now(),
@@ -25,8 +25,8 @@ func New{{ .ModelName }}(in New{{ .ModelName }}Input) *{{ .ModelName }} {
 	}
 }
 
-func (m *{{ .ModelName }}) MarshalJSON() ([]byte, error) {
-	copy := *m
+func ({{ .PackageRegistryIdentifier }} *{{ .Name }}) MarshalJSON() ([]byte, error) {
+	copy := *{{ .PackageRegistryIdentifier }}
 
 	return json.Marshal(copy)
 }

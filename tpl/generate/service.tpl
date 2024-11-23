@@ -1,9 +1,9 @@
-package {{ .PackageName }}
+package {{ .Package }}
 
-type {{ .ServiceName }}Params struct{}
+type {{ .Name }}Params struct{}
 
-type {{ .ServiceName }}Result struct{}
+type {{ .Name }}Result struct{}
 
-func (s *Service) {{ .ServiceName }}{{ .PackageName }}(params {{ .ServiceName }}Params) ({{ .ServiceName }}Result, error) {
-	return {{ .ServiceName }}Result{}, nil
+func ({{ .PackageRegistryIdentifier }} *{{ .PackageRegistry }}) {{ .Name }}(params {{ .Name }}Params) ({{ .Name }}Result, error) {
+	return {{ .Name }}Result{}, nil
 }

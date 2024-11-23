@@ -3,20 +3,18 @@ package generate
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
-	"github.com/charmingruby/bob/internal/command/shared/generator"
+	"github.com/charmingruby/bob/internal/command/shared/gen"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
 	"github.com/spf13/cobra"
 )
 
 const (
+	HANDLER_IDENTIFIER      = "handler"
 	DEFAULT_HANDLER_VARIANT = "rest"
 	DEFAULT_HANDLER_PKG     = "endpoint"
 )
-
-type generateHandlerTemplateParams struct {
-	HandlerName string
-}
 
 func (c *Command) runGenerateHandler() *cobra.Command {
 	var (
@@ -42,7 +40,7 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 				arguments[3].Value,
 			)
 
-			if err := generator.GenerateFile(input); err != nil {
+			if err := gen.GenerateFile(input); err != nil {
 				panic(err)
 			}
 		},
@@ -56,32 +54,34 @@ func (c *Command) runGenerateHandler() *cobra.Command {
 	return cmd
 }
 
-func (c *Command) makeHandlerInput(module, resourceName, variant, pkg string) generator.GenerateFileInput {
-	sourceDir := c.config.BaseConfiguration.SourceDir
+func (c *Command) makeHandlerInput(module, name, variant, pkg string) component.Component {
+	component := component.New(component.ComponentInput{
+		ActionType:  constant.GENERATE_ACTION,
+		Module:      module,
+		Identifier:  HANDLER_IDENTIFIER,
+		Name:        name,
+		PackageName: pkg,
+		Suffix:      pkg,
+		HasTest:     false,
+	}, component.WithDefaultTemplateParams())
 
 	// source_dir/module/transport/protocol/handler_name/resource_handler.go
-	directory := fmt.Sprintf("%s/%s/transport/%s/%s/",
-		sourceDir,
-		module,
+	directory := fmt.Sprintf("%s/%s/%s/transport/%s/%s",
+		c.config.BaseConfiguration.RootDir,
+		c.config.BaseConfiguration.SourceDir,
+		component.Module,
 		variant,
-		pkg,
+		component.Package.Name,
 	)
 
-	return generator.GenerateFileInput{
-		Module:       module,
-		Resource:     "handler",
-		ResourceName: resourceName,
-		Data:         generateHandlerTemplateParams{HandlerName: resourceName},
-		Directory:    directory,
-		Suffix:       "_handler",
-		ActionType:   constant.GENERATE_ACTION,
-		HasTest:      false,
-	}
+	component.Directory = directory
+
+	return *component
 }
 
 func (c *Command) validateHandlerArgs(
 	module string,
-	resourceName string,
+	name string,
 	variant string,
 	pkg string,
 ) ([]*validator.Arg, error) {
@@ -93,7 +93,7 @@ func (c *Command) validateHandlerArgs(
 		},
 		{
 			FieldName:  "name",
-			Value:      resourceName,
+			Value:      name,
 			IsRequired: true,
 		},
 		{

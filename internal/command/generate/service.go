@@ -3,21 +3,18 @@ package generate
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
-	"github.com/charmingruby/bob/internal/command/shared/generator"
+	"github.com/charmingruby/bob/internal/command/shared/gen"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
-	"github.com/ettle/strcase"
 	"github.com/spf13/cobra"
 )
 
 const (
+	SERVICE_IDENTIFIER = "service"
+
 	DEFAULT_SERVICE_PKG = "service"
 )
-
-type generateServiceTemplateParams struct {
-	PackageName string
-	ServiceName string
-}
 
 func (c *Command) runGenerateService() *cobra.Command {
 	var (
@@ -41,7 +38,7 @@ func (c *Command) runGenerateService() *cobra.Command {
 				arguments[2].Value,
 			)
 
-			if err := generator.GenerateFile(input); err != nil {
+			if err := gen.GenerateFile(input); err != nil {
 				panic(err)
 			}
 		},
@@ -54,37 +51,33 @@ func (c *Command) runGenerateService() *cobra.Command {
 	return cmd
 }
 
-func (c *Command) makeServiceInput(module, resourceName, pkg string) generator.GenerateFileInput {
-	sourceDir := c.config.BaseConfiguration.SourceDir
-
-	camelCasePkgName := strcase.ToCamel(pkg)
-	formattedResourceName := strcase.ToGoCase(resourceName, strcase.TitleCase, 0)
+func (c *Command) makeServiceInput(module, name, pkg string) component.Component {
+	component := component.New(component.ComponentInput{
+		Identifier:  SERVICE_IDENTIFIER,
+		ActionType:  constant.GENERATE_ACTION,
+		Module:      module,
+		Name:        name,
+		PackageName: pkg,
+		Suffix:      pkg,
+		HasTest:     false,
+	}, component.WithDefaultTemplateParams())
 
 	// source_dir/module/core/service/name_service.go
-	directory := fmt.Sprintf("%s/%s/core/%s/",
-		sourceDir,
+	directory := fmt.Sprintf("%s/%s/%s/core/%s",
+		c.config.BaseConfiguration.RootDir,
+		c.config.BaseConfiguration.SourceDir,
 		module,
-		camelCasePkgName,
+		component.Package.Name,
 	)
 
-	return generator.GenerateFileInput{
-		Module:       module,
-		Resource:     "service",
-		ResourceName: resourceName,
-		Data: generateServiceTemplateParams{
-			PackageName: camelCasePkgName,
-			ServiceName: formattedResourceName,
-		},
-		Directory:  directory,
-		Suffix:     "_" + pkg,
-		ActionType: constant.GENERATE_ACTION,
-		HasTest:    false,
-	}
+	component.Directory = directory
+
+	return *component
 }
 
 func (c *Command) validateServiceArgs(
 	module string,
-	resourceName string,
+	name string,
 	pkg string,
 ) ([]*validator.Arg, error) {
 	args := []*validator.Arg{
@@ -95,7 +88,7 @@ func (c *Command) validateServiceArgs(
 		},
 		{
 			FieldName:  "name",
-			Value:      resourceName,
+			Value:      name,
 			IsRequired: true,
 		},
 		{

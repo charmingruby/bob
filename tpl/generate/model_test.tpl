@@ -1,4 +1,4 @@
-package model
+package {{ .Package }}
 
 import (
 	"testing"
@@ -6,26 +6,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_New{{ .ModelName }}(t *testing.T) {
-	t.Run("it should be able to create a new {{ .ModelName }}", func(t *testing.T) {
-		in := New{{ .ModelName }}Input{
-			Name: "{{ .ModelName }} model",
+func Test_New{{ .Name }}(t *testing.T) {
+	t.Run("it should be able to create a new {{ .Name }}", func(t *testing.T) {
+		in := New{{ .Name }}Input{
+			Name: "{{ .Name }}",
 		}
-		u := New{{ .ModelName }}(in)
+		{{ .PackageRegistryIdentifier }} := New{{ .Name }}(in)
 
-		assert.Equal(t, u.ID, "id")
-		assert.Equal(t, u.Name, in.Name)
+		assert.Equal(t, {{ .PackageRegistryIdentifier }}.ID, "id")
+		assert.Equal(t, {{ .PackageRegistryIdentifier }}.Name, in.Name)
 	})
 }
 
-func Test_{{ .ModelName }}Marshal(t *testing.T) {
-	t.Run("it should be able to marshal {{ .ModelName }}", func(t *testing.T) {
-		in := New{{ .ModelName }}Input{
-			Name: "{{ .ModelName }} model",
+func Test_{{ .Name }}Marshal(t *testing.T) {
+	t.Run("it should be able to marshal {{ .Name }}", func(t *testing.T) {
+		in := New{{ .Name }}Input{
+			Name: "{{ .Name }}",
 		}
-		u := New{{ .ModelName }}(in)
+		{{ .PackageRegistryIdentifier }} := New{{ .Name }}(in)
 
-		data, err := u.MarshalJSON()
+		data, err := {{ .PackageRegistryIdentifier }}.MarshalJSON()
 
 		assert.Nil(t, err)
 		assert.NotNil(t, data)

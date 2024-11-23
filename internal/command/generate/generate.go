@@ -20,7 +20,7 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 func (c *Command) Setup() {
 	generateCmd := &cobra.Command{
 		Use:   "generate",
-		Short: "Generates resources",
+		Short: "Generates components",
 	}
 
 	generateCmd.AddCommand(c.runGenerateHandler())
