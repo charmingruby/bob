@@ -2,7 +2,26 @@ package component
 
 import "strings"
 
-type ComponentInput struct {
+type Single struct {
+	Identifier string
+	Directory  string
+	Module     string
+	Name       string
+	FullName   string
+	Suffix     string
+	Package    Package
+	Data       any
+	ActionType string
+	HasTest    bool
+}
+
+type Package struct {
+	Name               string
+	RegistryIdentifier string
+	Registry           string
+}
+
+type SingleInput struct {
 	Identifier    string
 	Module        string
 	Name          string
@@ -13,10 +32,10 @@ type ComponentInput struct {
 	HasSuffixName bool
 }
 
-type ComponentOption func(*Component)
+type SingleOption func(*Single)
 
-func New(in ComponentInput, opts ...ComponentOption) *Component {
-	component := &Component{
+func New(in SingleInput, opts ...SingleOption) *Single {
+	component := &Single{
 		Identifier: in.Identifier,
 		Module:     in.Module,
 		Name:       in.Name,
@@ -37,8 +56,8 @@ func New(in ComponentInput, opts ...ComponentOption) *Component {
 	return component
 }
 
-func WithDefaultTemplateParams() ComponentOption {
-	return func(c *Component) {
+func WithDefaultTemplateParams() SingleOption {
+	return func(c *Single) {
 		c.Data = DefaultTemplateParams{
 			Package:                   c.Package.Name,
 			PackageRegistry:           c.Package.Registry,
@@ -48,7 +67,7 @@ func WithDefaultTemplateParams() ComponentOption {
 	}
 }
 
-func (r *Component) format() {
+func (r *Single) format() {
 	r.Module = toSnakeCase(r.Module)
 	r.Name = toCamelCase(r.Name)
 	r.FullName = r.Name

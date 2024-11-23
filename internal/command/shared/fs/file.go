@@ -1,4 +1,4 @@
-package gen
+package fs
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"github.com/charmingruby/bob/tpl"
 )
 
-func GenerateFile(component component.Component) error {
+func GenerateFile(component component.Single) error {
 	if component.HasTest {
 		testComponent := fmt.Sprintf("%s_test", component.Identifier)
 

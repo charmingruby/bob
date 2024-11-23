@@ -1,4 +1,4 @@
-package gen
+package fs
 
 import "github.com/ettle/strcase"
 

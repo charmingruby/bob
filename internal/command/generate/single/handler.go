@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
-	"github.com/charmingruby/bob/internal/command/shared/gen"
+	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator"
 	"github.com/spf13/cobra"
 )
@@ -43,7 +43,7 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 				arguments[3].Value,
 			)
 
-			if err := gen.GenerateFile(input); err != nil {
+			if err := fs.GenerateFile(input); err != nil {
 				panic(err)
 			}
 		},
@@ -57,8 +57,8 @@ func RunHandler(cfg config.Configuration) *cobra.Command {
 	return cmd
 }
 
-func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) component.Component {
-	component := component.New(component.ComponentInput{
+func makeHandlerComponent(rootDir, srcDir, module, name, variant, pkg string) component.Single {
+	component := component.New(component.SingleInput{
 		ActionType:  constant.GENERATE_ACTION,
 		Module:      module,
 		Identifier:  HANDLER_IDENTIFIER,
