@@ -52,7 +52,6 @@ func WithDefaultTemplate() ComponentOption {
 }
 
 func (r *Component) format() {
-	r.Module = formatter.ToSnakeCase(r.Module)
 	r.Name = formatter.ToCamelCase(r.Name)
 
 	if r.Suffix != "" {

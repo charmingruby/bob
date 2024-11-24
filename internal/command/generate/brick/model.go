@@ -23,22 +23,11 @@ func RunModel(destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			component := MakeModelComponent(
+			if err := fs.GenerateFile(MakeModelComponent(
 				destinationDirectory,
 				module,
 				name,
-			)
-
-			if err := fs.GenerateFile(fs.File{
-				CommandType:          constant.GENERATE_COMMAND,
-				TemplateName:         constant.MODEL_TEMPLATE,
-				TemplateData:         component.Data,
-				FileName:             component.Name,
-				FileSuffix:           "",
-				ResourceName:         component.Name,
-				DestinationDirectory: component.Directory,
-				HasTest:              component.HasTest,
-			}); err != nil {
+			)); err != nil {
 				panic(err)
 			}
 		},
@@ -50,8 +39,8 @@ func RunModel(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeModelComponent(destinationDirectory, module, name string) Component {
-	return *New(ComponentInput{
+func MakeModelComponent(destinationDirectory, module, name string) fs.File {
+	component := *New(ComponentInput{
 		Directory: fmt.Sprintf("%s/%s/core/%s",
 			destinationDirectory,
 			module,
@@ -62,4 +51,17 @@ func MakeModelComponent(destinationDirectory, module, name string) Component {
 		Suffix:  "",
 		HasTest: true,
 	}, WithDefaultTemplate())
+
+	file := fs.File{
+		CommandType:          constant.GENERATE_COMMAND,
+		TemplateName:         constant.MODEL_TEMPLATE,
+		TemplateData:         component.Data,
+		FileName:             component.Name,
+		FileSuffix:           "",
+		ResourceName:         component.Name,
+		DestinationDirectory: component.Directory,
+		HasTest:              component.HasTest,
+	}
+
+	return file
 }

@@ -9,12 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const (
-	SERVICE_TEMPLATE = "service"
-
-	DEFAULT_SERVICE_PKG = "service"
-)
-
 func RunService(destinationDirectory string) *cobra.Command {
 	var (
 		module string
@@ -29,24 +23,11 @@ func RunService(destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			component := makeServiceComponent(
+			if err := fs.GenerateFile(makeServiceComponent(
 				destinationDirectory,
 				module,
 				name,
-			)
-
-			file := fs.File{
-				CommandType:          constant.GENERATE_COMMAND,
-				TemplateName:         constant.SERVICE_TEMPLATE,
-				TemplateData:         component.Data,
-				FileName:             component.Name,
-				FileSuffix:           "service",
-				ResourceName:         component.Name,
-				DestinationDirectory: component.Directory,
-				HasTest:              component.HasTest,
-			}
-
-			if err := fs.GenerateFile(file); err != nil {
+			)); err != nil {
 				panic(err)
 			}
 		},
@@ -58,7 +39,7 @@ func RunService(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func makeServiceComponent(destinationDirectory, module, name string) Component {
+func makeServiceComponent(destinationDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
 		Module:  module,
 		Name:    name,
@@ -71,5 +52,16 @@ func makeServiceComponent(destinationDirectory, module, name string) Component {
 		module,
 	)
 
-	return *component
+	file := fs.File{
+		CommandType:          constant.GENERATE_COMMAND,
+		TemplateName:         constant.SERVICE_TEMPLATE,
+		TemplateData:         component.Data,
+		FileName:             component.Name,
+		FileSuffix:           "service",
+		ResourceName:         component.Name,
+		DestinationDirectory: component.Directory,
+		HasTest:              component.HasTest,
+	}
+
+	return file
 }

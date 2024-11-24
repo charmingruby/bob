@@ -9,11 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const (
-	DEFAULT_HANDLER_VARIANT = "rest"
-	DEFAULT_HANDLER_PKG     = "endpoint"
-)
-
 func RunHandler(destinationDirectory string) *cobra.Command {
 	var (
 		module string
@@ -28,24 +23,11 @@ func RunHandler(destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			component := MakeHandlerComponent(
+			if err := fs.GenerateFile(MakeHandlerComponent(
 				destinationDirectory,
 				module,
 				name,
-			)
-
-			file := fs.File{
-				CommandType:          constant.GENERATE_COMMAND,
-				TemplateName:         constant.HANDLER_TEMPLATE,
-				TemplateData:         component.Data,
-				FileName:             component.Name,
-				FileSuffix:           "handler",
-				ResourceName:         component.Name,
-				DestinationDirectory: component.Directory,
-				HasTest:              component.HasTest,
-			}
-
-			if err := fs.GenerateFile(file); err != nil {
+			)); err != nil {
 				panic(err)
 			}
 		},
@@ -57,7 +39,7 @@ func RunHandler(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeHandlerComponent(destinationDirectory, module, name string) Component {
+func MakeHandlerComponent(destinationDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
 		Module:  module,
 		Name:    name,
@@ -70,5 +52,16 @@ func MakeHandlerComponent(destinationDirectory, module, name string) Component {
 		component.Module,
 	)
 
-	return *component
+	file := fs.File{
+		CommandType:          constant.GENERATE_COMMAND,
+		TemplateName:         constant.HANDLER_TEMPLATE,
+		TemplateData:         component.Data,
+		FileName:             component.Name,
+		FileSuffix:           "handler",
+		ResourceName:         component.Name,
+		DestinationDirectory: component.Directory,
+		HasTest:              component.HasTest,
+	}
+
+	return file
 }
