@@ -1,6 +1,10 @@
 package brick
 
-import "github.com/charmingruby/bob/internal/command/shared/formatter"
+import (
+	"github.com/charmingruby/bob/internal/command/shared/constant"
+	"github.com/charmingruby/bob/internal/command/shared/formatter"
+	"github.com/charmingruby/bob/internal/command/shared/fs"
+)
 
 type Component struct {
 	Directory string
@@ -51,10 +55,38 @@ func WithDefaultTemplate() ComponentOption {
 	}
 }
 
+type ModuleDependenciesTemplateParams struct {
+	SourcePath string
+	Module     string
+	Name       string
+}
+
+func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
+	return func(s *Component) {
+		s.Data = ModuleDependenciesTemplateParams{
+			Module:     s.Module,
+			SourcePath: sourcePath,
+			Name:       s.Name,
+		}
+	}
+}
+
 func (r *Component) format() {
 	r.Name = formatter.ToCamelCase(r.Name)
 
 	if r.Suffix != "" {
 		r.Suffix = formatter.ToCamelCase(r.Suffix)
+	}
+}
+
+func NewFileFromBrick(component Component, template string) fs.File {
+	return fs.File{
+		CommandType:          constant.GENERATE_COMMAND,
+		TemplateName:         template,
+		TemplateData:         component.Data,
+		FileName:             component.Name,
+		FileSuffix:           component.Suffix,
+		DestinationDirectory: component.Directory,
+		HasTest:              component.HasTest,
 	}
 }

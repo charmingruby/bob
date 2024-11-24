@@ -6,14 +6,14 @@ import (
 )
 
 type Endpoint struct {
-	router    *chi.Mux
-	service   *service.Service
+	router *chi.Mux
+	service *service.Service
 }
 
 func New(r *chi.Mux, service *service.Service) *Endpoint {
 	return &Endpoint{
-		router:    r,
-		service:   service,
+		router: r,
+		service: service,
 	}
 }
 

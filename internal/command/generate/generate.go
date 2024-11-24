@@ -36,6 +36,7 @@ func (c *Command) Setup() {
 	brickCmd.AddCommand(brick.RunModel(destinationDirectory))
 	brickCmd.AddCommand(brick.RunService(destinationDirectory))
 	brickCmd.AddCommand(brick.RunHandler(destinationDirectory))
+	brickCmd.AddCommand(brick.RunRepository(projectData, destinationDirectory))
 
 	resourceCmd := &cobra.Command{
 		Use:   "resource",

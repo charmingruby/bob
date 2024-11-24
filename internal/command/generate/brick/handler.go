@@ -52,15 +52,5 @@ func MakeHandlerComponent(destinationDirectory, module, name string) fs.File {
 		component.Module,
 	)
 
-	file := fs.File{
-		CommandType:          constant.GENERATE_COMMAND,
-		TemplateName:         constant.HANDLER_TEMPLATE,
-		TemplateData:         component.Data,
-		FileName:             component.Name,
-		FileSuffix:           "handler",
-		DestinationDirectory: component.Directory,
-		HasTest:              component.HasTest,
-	}
-
-	return file
+	return NewFileFromBrick(*component, constant.HANDLER_TEMPLATE)
 }
