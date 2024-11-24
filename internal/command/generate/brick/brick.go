@@ -62,6 +62,7 @@ type ModuleDependenciesTemplateParams struct {
 }
 
 func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
+	println(sourcePath)
 	return func(s *Component) {
 		s.Data = ModuleDependenciesTemplateParams{
 			Module:     s.Module,

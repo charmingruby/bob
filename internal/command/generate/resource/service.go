@@ -18,6 +18,13 @@ func RunService(destinationDirectory string) *cobra.Command {
 		Use:   "service",
 		Short: "Generates a new service resource",
 		Run: func(cmd *cobra.Command, args []string) {
+			if err := fs.GenerateNestedDirectories(
+				fmt.Sprintf("%s/%s", destinationDirectory, module),
+				[]string{"core", "service"},
+			); err != nil {
+				panic(err)
+			}
+
 			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
 				panic(err)
 			}
@@ -33,13 +40,6 @@ func RunService(destinationDirectory string) *cobra.Command {
 
 func MakeService(destinationDirectory, module string) {
 	moduleDir := fmt.Sprintf("%s/%s", destinationDirectory, module)
-
-	if err := fs.GenerateNestedDirectories(
-		moduleDir,
-		[]string{"core", "service"},
-	); err != nil {
-		panic(err)
-	}
 
 	if err := fs.GenerateFile(makeServiceRegistryBrickComponent(
 		fmt.Sprintf("%s/%s", moduleDir, "core/service"),

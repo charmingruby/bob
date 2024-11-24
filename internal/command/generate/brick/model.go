@@ -23,7 +23,7 @@ func RunModel(destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(makeModelComponent(
+			if err := fs.GenerateFile(MakeModelComponent(
 				destinationDirectory,
 				module,
 				name,
@@ -39,7 +39,7 @@ func RunModel(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func makeModelComponent(destinationDirectory, module, name string) fs.File {
+func MakeModelComponent(destinationDirectory, module, name string) fs.File {
 	component := *New(ComponentInput{
 		Directory: fmt.Sprintf("%s/%s/core/%s",
 			destinationDirectory,

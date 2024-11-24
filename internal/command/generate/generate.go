@@ -8,21 +8,25 @@ import (
 )
 
 type Command struct {
-	cmd    *cobra.Command
-	config config.Configuration
+	cmd     *cobra.Command
+	Project Project
+}
+type Project struct {
+	Data            string
+	SourceDirectory string
 }
 
 func New(cmd *cobra.Command, config config.Configuration) *Command {
 	return &Command{
-		cmd:    cmd,
-		config: config,
+		cmd: cmd,
+		Project: Project{
+			Data:            config.BaseConfiguration.BaseURL + "/" + config.BaseConfiguration.ProjectName,
+			SourceDirectory: config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir,
+		},
 	}
 }
 
 func (c *Command) Setup() {
-	projectData := c.config.BaseConfiguration.BaseURL + "/" + c.config.BaseConfiguration.ProjectName
-	destinationDirectory := c.config.BaseConfiguration.RootDir + "/" + c.config.BaseConfiguration.SourceDir
-
 	generateCmd := &cobra.Command{
 		Use:   "gen",
 		Short: "Generates components",
@@ -33,21 +37,26 @@ func (c *Command) Setup() {
 		Short: "Generates pure components",
 	}
 
-	brickCmd.AddCommand(brick.RunModel(destinationDirectory))
-	brickCmd.AddCommand(brick.RunService(destinationDirectory))
-	brickCmd.AddCommand(brick.RunHandler(destinationDirectory))
-	brickCmd.AddCommand(brick.RunRepository(projectData, destinationDirectory))
+	brickCmd.AddCommand(brick.RunModel(c.Project.SourceDirectory))
+	brickCmd.AddCommand(brick.RunService(c.Project.SourceDirectory))
+	brickCmd.AddCommand(brick.RunHandler(c.Project.SourceDirectory))
+	brickCmd.AddCommand(brick.RunRepository(c.Project.Data, c.Project.SourceDirectory))
 
 	resourceCmd := &cobra.Command{
 		Use:   "resource",
 		Short: "Generates conventional services, grouping bricks",
 	}
 
-	resourceCmd.AddCommand(resource.RunRest(projectData, destinationDirectory))
-	resourceCmd.AddCommand(resource.RunService(destinationDirectory))
+	resourceCmd.AddCommand(resource.RunRest(c.Project.Data, c.Project.SourceDirectory))
+	resourceCmd.AddCommand(resource.RunService(c.Project.SourceDirectory))
+	resourceCmd.AddCommand(resource.RunCore(c.Project.Data, c.Project.SourceDirectory))
 
 	generateCmd.AddCommand(brickCmd)
 	generateCmd.AddCommand(resourceCmd)
 
 	c.cmd.AddCommand(generateCmd)
+}
+
+func (c *Command) ModuleDirectory(module string) string {
+	return c.Project.SourceDirectory + "/" + module
 }
