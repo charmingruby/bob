@@ -27,8 +27,8 @@ func (c *Command) Setup() {
 	}
 
 	brickCmd := &cobra.Command{
-		Use:   "brick",
-		Short: "Generates pure components",
+		Use:   "bck",
+		Short: "Generates pure components (or bricks)",
 	}
 
 	brickCmd.AddCommand(brick.RunModel(c.Manager))
@@ -37,8 +37,8 @@ func (c *Command) Setup() {
 	brickCmd.AddCommand(brick.RunRepository(c.Manager))
 
 	resourceCmd := &cobra.Command{
-		Use:   "resource",
-		Short: "Generates conventional services, grouping bricks",
+		Use:   "rsc",
+		Short: "Generates conventional resources, grouping bricks",
 	}
 
 	resourceCmd.AddCommand(resource.RunRest(c.Manager))
