@@ -20,14 +20,12 @@ type File struct {
 	TemplateName         string // handler, model...
 	TemplateData         any    // data to be used in the template
 	DestinationDirectory string // directory where the file will be created
-	ResourceName         string // name of the function, struct, etc
 	HasTest              bool
 }
 
 func (f *File) format() {
 	f.FileName = formatter.ToSnakeCase(f.FileName)
 	f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
-	f.ResourceName = formatter.ToCamelCase(f.ResourceName)
 }
 
 func GenerateFile(file File) error {

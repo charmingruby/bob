@@ -19,11 +19,11 @@ func RunModel(destinationDirectory string) *cobra.Command {
 		Use:   "model",
 		Short: "Generates a new model",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandArgs(module, name); err != nil {
+			if err := input.ValidateDefaultCommandInput(module, name); err != nil {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(MakeModelComponent(
+			if err := fs.GenerateFile(makeModelComponent(
 				destinationDirectory,
 				module,
 				name,
@@ -39,7 +39,7 @@ func RunModel(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeModelComponent(destinationDirectory, module, name string) fs.File {
+func makeModelComponent(destinationDirectory, module, name string) fs.File {
 	component := *New(ComponentInput{
 		Directory: fmt.Sprintf("%s/%s/core/%s",
 			destinationDirectory,
@@ -58,7 +58,6 @@ func MakeModelComponent(destinationDirectory, module, name string) fs.File {
 		TemplateData:         component.Data,
 		FileName:             component.Name,
 		FileSuffix:           "",
-		ResourceName:         component.Name,
 		DestinationDirectory: component.Directory,
 		HasTest:              component.HasTest,
 	}

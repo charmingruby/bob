@@ -10,8 +10,8 @@ type arg struct {
 
 func validateArgsList(args []arg) error {
 	for _, arg := range args {
-		if arg.IsRequired && isArgEmpty(arg.Value) {
-			return fmt.Errorf("missing state for %s argument", arg.FieldName)
+		if err := validateArg(arg); err != nil {
+			return err
 		}
 	}
 
@@ -20,4 +20,12 @@ func validateArgsList(args []arg) error {
 
 func isArgEmpty(v string) bool {
 	return v == ""
+}
+
+func validateArg(arg arg) error {
+	if arg.IsRequired && isArgEmpty(arg.Value) {
+		return fmt.Errorf("missing state for %s argument", arg.FieldName)
+	}
+
+	return nil
 }

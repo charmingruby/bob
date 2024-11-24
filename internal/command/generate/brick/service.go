@@ -19,7 +19,7 @@ func RunService(destinationDirectory string) *cobra.Command {
 		Use:   "service",
 		Short: "Generates a new service",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandArgs(module, name); err != nil {
+			if err := input.ValidateDefaultCommandInput(module, name); err != nil {
 				panic(err)
 			}
 
@@ -58,7 +58,6 @@ func makeServiceComponent(destinationDirectory, module, name string) fs.File {
 		TemplateData:         component.Data,
 		FileName:             component.Name,
 		FileSuffix:           "service",
-		ResourceName:         component.Name,
 		DestinationDirectory: component.Directory,
 		HasTest:              component.HasTest,
 	}

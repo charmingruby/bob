@@ -3,6 +3,7 @@ package generate
 import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/generate/brick"
+	"github.com/charmingruby/bob/internal/command/generate/resource"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +20,7 @@ func New(cmd *cobra.Command, config config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
+	projectData := c.config.BaseConfiguration.BaseURL + "/" + c.config.BaseConfiguration.ProjectName
 	destinationDirectory := c.config.BaseConfiguration.RootDir + "/" + c.config.BaseConfiguration.SourceDir
 
 	generateCmd := &cobra.Command{
@@ -35,7 +37,7 @@ func (c *Command) Setup() {
 		Short: "Generates resources",
 	}
 
-	//resourceCmd.AddCommand(resource.RunRest(c.config))
+	resourceCmd.AddCommand(resource.RunRest(projectData, destinationDirectory))
 
 	generateCmd.AddCommand(resourceCmd)
 
