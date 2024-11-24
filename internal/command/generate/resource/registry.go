@@ -5,18 +5,18 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 )
 
-type entryBrickParams struct {
+type registryBrickParams struct {
 	Module               string
-	EntryName            string
+	RegistryName         string
 	DestinationDirectory string
 	TemplateName         string
 	TemplateData         any
 }
 
-func makeEntryBrick(params entryBrickParams) fs.File {
+func makeRegistryBrick(params registryBrickParams) fs.File {
 	component := brick.New(brick.ComponentInput{
 		Module:    params.Module,
-		Name:      params.EntryName,
+		Name:      params.RegistryName,
 		Suffix:    "",
 		Directory: params.DestinationDirectory,
 		HasTest:   false,
@@ -26,7 +26,7 @@ func makeEntryBrick(params entryBrickParams) fs.File {
 		BaseComponent: *component,
 		TemplateName:  params.TemplateName,
 		TemplateData:  params.TemplateData,
-		FileName:      params.EntryName,
+		FileName:      params.RegistryName,
 		FileSuffix:    "",
 	}, params.TemplateData)
 }

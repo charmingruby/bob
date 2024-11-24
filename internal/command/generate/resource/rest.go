@@ -31,7 +31,7 @@ func RunRest(projectData, destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(makeRestEntryBrickComponent(
+			if err := fs.GenerateFile(makeRestRegistryBrickComponent(
 				fmt.Sprintf("%s/%s", moduleDir, "transport/rest/endpoint"),
 				fmt.Sprintf("%s/%s", projectData, destinationDirectory),
 				module,
@@ -54,20 +54,20 @@ func RunRest(projectData, destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-type restEntryBrickData struct {
+type restRegistryBrickData struct {
 	Module     string
 	SourcePath string
 }
 
-func makeRestEntryBrickComponent(destinationDirectory, sourcePath, module string) fs.File {
-	return makeEntryBrick(entryBrickParams{
+func makeRestRegistryBrickComponent(destinationDirectory, sourcePath, module string) fs.File {
+	return makeRegistryBrick(registryBrickParams{
 		Module:       module,
-		TemplateName: "rest_entry",
-		TemplateData: restEntryBrickData{
+		TemplateName: "rest_registry",
+		TemplateData: restRegistryBrickData{
 			Module:     module,
 			SourcePath: sourcePath,
 		},
-		EntryName:            "endpoint",
+		RegistryName:         "endpoint",
 		DestinationDirectory: destinationDirectory,
 	})
 }
