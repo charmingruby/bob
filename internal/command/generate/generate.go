@@ -28,18 +28,24 @@ func (c *Command) Setup() {
 		Short: "Generates components",
 	}
 
-	generateCmd.AddCommand(brick.RunModel(destinationDirectory))
-	generateCmd.AddCommand(brick.RunService(destinationDirectory))
-	generateCmd.AddCommand(brick.RunHandler(destinationDirectory))
+	brickCmd := &cobra.Command{
+		Use:   "brick",
+		Short: "Generates pure components",
+	}
+
+	brickCmd.AddCommand(brick.RunModel(destinationDirectory))
+	brickCmd.AddCommand(brick.RunService(destinationDirectory))
+	brickCmd.AddCommand(brick.RunHandler(destinationDirectory))
 
 	resourceCmd := &cobra.Command{
 		Use:   "resource",
-		Short: "Generates resources",
+		Short: "Generates conventional services, grouping bricks",
 	}
 
 	resourceCmd.AddCommand(resource.RunRest(projectData, destinationDirectory))
 	resourceCmd.AddCommand(resource.RunService(destinationDirectory))
 
+	generateCmd.AddCommand(brickCmd)
 	generateCmd.AddCommand(resourceCmd)
 
 	c.cmd.AddCommand(generateCmd)
