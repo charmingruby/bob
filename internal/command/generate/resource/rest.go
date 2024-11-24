@@ -4,12 +4,13 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/command/generate/brick"
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
-func RunRest(projectData, destinationDirectory string) *cobra.Command {
+func RunRest(m component.Manager) *cobra.Command {
 	var (
 		module string
 	)
@@ -22,7 +23,7 @@ func RunRest(projectData, destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			MakeRest(projectData, destinationDirectory, module)
+			MakeRest(m.Data, m.SourceDirectory, module)
 		},
 	}
 
@@ -59,17 +60,17 @@ func MakeRest(projectData, destinationDirectory, module string) {
 }
 
 type restRegistryBrickData struct {
-	Module     string
-	SourcePath string
+	Module          string
+	SourceDirectory string
 }
 
-func makeRestRegistryBrickComponent(destinationDirectory, sourcePath, module string) fs.File {
+func makeRestRegistryBrickComponent(destinationDirectory, sourceDirectory, module string) fs.File {
 	return makeRegistryBrick(registryBrickParams{
 		Module:       module,
 		TemplateName: "rest_registry",
 		TemplateData: restRegistryBrickData{
-			Module:     module,
-			SourcePath: sourcePath,
+			Module:          module,
+			SourceDirectory: sourceDirectory,
 		},
 		RegistryName:         "endpoint",
 		DestinationDirectory: destinationDirectory,

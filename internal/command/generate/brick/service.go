@@ -1,15 +1,14 @@
 package brick
 
 import (
-	"fmt"
-
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
-func RunService(destinationDirectory string) *cobra.Command {
+func RunService(m component.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -24,7 +23,7 @@ func RunService(destinationDirectory string) *cobra.Command {
 			}
 
 			if err := fs.GenerateFile(MakeServiceComponent(
-				destinationDirectory,
+				m.SourceDirectory,
 				module,
 				name,
 			)); err != nil {
@@ -39,28 +38,18 @@ func RunService(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeServiceComponent(destinationDirectory, module, name string) fs.File {
+func MakeServiceComponent(sourceDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
-		Module:  module,
-		Name:    name,
-		Suffix:  "service",
-		HasTest: false,
+		Module:    module,
+		Name:      name,
+		Suffix:    "service",
+		Directory: component.ModulePath(sourceDirectory, module, ServicePath()),
+		HasTest:   false,
 	}, WithDefaultTemplate())
 
-	component.Directory = fmt.Sprintf("%s/%s/core/service",
-		destinationDirectory,
-		module,
-	)
+	return NewFileFromBrick(*component, constant.SERVICE_TEMPLATE)
+}
 
-	file := fs.File{
-		CommandType:          constant.GENERATE_COMMAND,
-		TemplateName:         constant.SERVICE_TEMPLATE,
-		TemplateData:         component.Data,
-		FileName:             component.Name,
-		FileSuffix:           "service",
-		DestinationDirectory: component.Directory,
-		HasTest:              component.HasTest,
-	}
-
-	return file
+func ServicePath() string {
+	return "core/service"
 }

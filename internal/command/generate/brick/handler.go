@@ -1,15 +1,14 @@
 package brick
 
 import (
-	"fmt"
-
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
-func RunHandler(destinationDirectory string) *cobra.Command {
+func RunHandler(m component.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -24,7 +23,7 @@ func RunHandler(destinationDirectory string) *cobra.Command {
 			}
 
 			if err := fs.GenerateFile(MakeHandlerComponent(
-				destinationDirectory,
+				m.SourceDirectory,
 				module,
 				name,
 			)); err != nil {
@@ -39,18 +38,18 @@ func RunHandler(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeHandlerComponent(destinationDirectory, module, name string) fs.File {
+func MakeHandlerComponent(sourceDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
-		Module:  module,
-		Name:    name,
-		Suffix:  "handler",
-		HasTest: false,
+		Module:    module,
+		Name:      name,
+		Suffix:    "handler",
+		Directory: component.ModulePath(sourceDirectory, module, HandlerPath()),
+		HasTest:   false,
 	}, WithDefaultTemplate())
 
-	component.Directory = fmt.Sprintf("%s/%s/transport/rest/endpoint",
-		destinationDirectory,
-		component.Module,
-	)
-
 	return NewFileFromBrick(*component, constant.HANDLER_TEMPLATE)
+}
+
+func HandlerPath() string {
+	return "transport/rest/endpoint"
 }

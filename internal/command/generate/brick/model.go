@@ -1,15 +1,14 @@
 package brick
 
 import (
-	"fmt"
-
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
-func RunModel(destinationDirectory string) *cobra.Command {
+func RunModel(m component.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -24,7 +23,7 @@ func RunModel(destinationDirectory string) *cobra.Command {
 			}
 
 			if err := fs.GenerateFile(MakeModelComponent(
-				destinationDirectory,
+				m.SourceDirectory,
 				module,
 				name,
 			)); err != nil {
@@ -39,28 +38,18 @@ func RunModel(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func MakeModelComponent(destinationDirectory, module, name string) fs.File {
+func MakeModelComponent(sourceDirectory, module, name string) fs.File {
 	component := *New(ComponentInput{
-		Directory: fmt.Sprintf("%s/%s/core/%s",
-			destinationDirectory,
-			module,
-			constant.MODEL_TEMPLATE,
-		),
-		Module:  module,
-		Name:    name,
-		Suffix:  "",
-		HasTest: true,
+		Directory: component.ModulePath(sourceDirectory, module, ModelPath()),
+		Module:    module,
+		Name:      name,
+		Suffix:    "",
+		HasTest:   true,
 	}, WithDefaultTemplate())
 
-	file := fs.File{
-		CommandType:          constant.GENERATE_COMMAND,
-		TemplateName:         constant.MODEL_TEMPLATE,
-		TemplateData:         component.Data,
-		FileName:             component.Name,
-		FileSuffix:           "",
-		DestinationDirectory: component.Directory,
-		HasTest:              component.HasTest,
-	}
+	return NewFileFromBrick(component, constant.MODEL_TEMPLATE)
+}
 
-	return file
+func ModelPath() string {
+	return "core/model"
 }

@@ -4,25 +4,19 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/generate/brick"
 	"github.com/charmingruby/bob/internal/command/generate/resource"
+	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/spf13/cobra"
 )
 
 type Command struct {
 	cmd     *cobra.Command
-	Project Project
-}
-type Project struct {
-	Data            string
-	SourceDirectory string
+	Manager component.Manager
 }
 
 func New(cmd *cobra.Command, config config.Configuration) *Command {
 	return &Command{
-		cmd: cmd,
-		Project: Project{
-			Data:            config.BaseConfiguration.BaseURL + "/" + config.BaseConfiguration.ProjectName,
-			SourceDirectory: config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir,
-		},
+		cmd:     cmd,
+		Manager: component.NewManager(config),
 	}
 }
 
@@ -37,26 +31,22 @@ func (c *Command) Setup() {
 		Short: "Generates pure components",
 	}
 
-	brickCmd.AddCommand(brick.RunModel(c.Project.SourceDirectory))
-	brickCmd.AddCommand(brick.RunService(c.Project.SourceDirectory))
-	brickCmd.AddCommand(brick.RunHandler(c.Project.SourceDirectory))
-	brickCmd.AddCommand(brick.RunRepository(c.Project.Data, c.Project.SourceDirectory))
+	brickCmd.AddCommand(brick.RunModel(c.Manager))
+	brickCmd.AddCommand(brick.RunService(c.Manager))
+	brickCmd.AddCommand(brick.RunHandler(c.Manager))
+	brickCmd.AddCommand(brick.RunRepository(c.Manager))
 
 	resourceCmd := &cobra.Command{
 		Use:   "resource",
 		Short: "Generates conventional services, grouping bricks",
 	}
 
-	resourceCmd.AddCommand(resource.RunRest(c.Project.Data, c.Project.SourceDirectory))
-	resourceCmd.AddCommand(resource.RunService(c.Project.SourceDirectory))
-	resourceCmd.AddCommand(resource.RunCore(c.Project.Data, c.Project.SourceDirectory))
+	resourceCmd.AddCommand(resource.RunRest(c.Manager))
+	resourceCmd.AddCommand(resource.RunService(c.Manager))
+	resourceCmd.AddCommand(resource.RunCore(c.Manager))
 
 	generateCmd.AddCommand(brickCmd)
 	generateCmd.AddCommand(resourceCmd)
 
 	c.cmd.AddCommand(generateCmd)
-}
-
-func (c *Command) ModuleDirectory(module string) string {
-	return c.Project.SourceDirectory + "/" + module
 }
