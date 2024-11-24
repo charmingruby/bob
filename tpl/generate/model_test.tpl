@@ -1,4 +1,4 @@
-package {{ .Package }}
+package model
 
 import (
 	"testing"
@@ -11,10 +11,10 @@ func Test_New{{ .Name }}(t *testing.T) {
 		in := New{{ .Name }}Input{
 			Name: "{{ .Name }}",
 		}
-		{{ .PackageRegistryIdentifier }} := New{{ .Name }}(in)
+		m := New{{ .Name }}(in)
 
-		assert.Equal(t, {{ .PackageRegistryIdentifier }}.ID, "id")
-		assert.Equal(t, {{ .PackageRegistryIdentifier }}.Name, in.Name)
+		assert.Equal(t, m.ID, "id")
+		assert.Equal(t, m.Name, in.Name)
 	})
 }
 
@@ -23,9 +23,9 @@ func Test_{{ .Name }}Marshal(t *testing.T) {
 		in := New{{ .Name }}Input{
 			Name: "{{ .Name }}",
 		}
-		{{ .PackageRegistryIdentifier }} := New{{ .Name }}(in)
+		m := New{{ .Name }}(in)
 
-		data, err := {{ .PackageRegistryIdentifier }}.MarshalJSON()
+		data, err := m.MarshalJSON()
 
 		assert.Nil(t, err)
 		assert.NotNil(t, data)

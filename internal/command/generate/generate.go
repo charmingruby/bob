@@ -2,7 +2,7 @@ package generate
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/generate/single"
+	"github.com/charmingruby/bob/internal/command/generate/brick"
 	"github.com/spf13/cobra"
 )
 
@@ -19,14 +19,16 @@ func New(cmd *cobra.Command, config config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
+	destinationDirectory := c.config.BaseConfiguration.RootDir + "/" + c.config.BaseConfiguration.SourceDir
+
 	generateCmd := &cobra.Command{
 		Use:   "gen",
 		Short: "Generates components",
 	}
 
-	generateCmd.AddCommand(single.RunModel(c.config))
-	generateCmd.AddCommand(single.RunService(c.config))
-	generateCmd.AddCommand(single.RunHandler(c.config))
+	generateCmd.AddCommand(brick.RunModel(destinationDirectory))
+	generateCmd.AddCommand(brick.RunService(destinationDirectory))
+	generateCmd.AddCommand(brick.RunHandler(destinationDirectory))
 
 	resourceCmd := &cobra.Command{
 		Use:   "resource",

@@ -1,10 +1,10 @@
-package {{ .Package }}
+package endpoint
 
 import (
 	"net/http"
 )
 
-func ({{ .PackageRegistryIdentifier }} *{{ .PackageRegistry }}) make{{ .Name }}() http.HandlerFunc {
+func (e *Endpoint) make{{ .Name }}Handler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("hello world"))

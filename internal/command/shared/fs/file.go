@@ -9,6 +9,10 @@ import (
 	"github.com/charmingruby/bob/tpl"
 )
 
+const (
+	TEMPLATE_DIR = "tpl/generate/"
+)
+
 type File struct {
 	FileName             string // file name
 	FileSuffix           string // file suffix
@@ -17,7 +21,6 @@ type File struct {
 	TemplateData         any    // data to be used in the template
 	DestinationDirectory string // directory where the file will be created
 	ResourceName         string // name of the function, struct, etc
-	ResourceSuffix       string // suffix of the function, struct, etc
 	HasTest              bool
 }
 
@@ -25,7 +28,6 @@ func (f *File) format() {
 	f.FileName = formatter.ToSnakeCase(f.FileName)
 	f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
 	f.ResourceName = formatter.ToCamelCase(f.ResourceName)
-	f.ResourceSuffix = formatter.ToCamelCase(f.ResourceSuffix)
 }
 
 func GenerateFile(file File) error {

@@ -1,4 +1,4 @@
-package {{ .Package }}
+package model
 
 import (
 	"encoding/json"
@@ -25,8 +25,8 @@ func New{{ .Name }}(in New{{ .Name }}Input) *{{ .Name }} {
 	}
 }
 
-func ({{ .PackageRegistryIdentifier }} *{{ .Name }}) MarshalJSON() ([]byte, error) {
-	copy := *{{ .PackageRegistryIdentifier }}
+func (m *{{ .Name }}) MarshalJSON() ([]byte, error) {
+	copy := *m
 
 	return json.Marshal(copy)
 }
