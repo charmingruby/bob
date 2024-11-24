@@ -38,6 +38,7 @@ func (c *Command) Setup() {
 	}
 
 	resourceCmd.AddCommand(resource.RunRest(projectData, destinationDirectory))
+	resourceCmd.AddCommand(resource.RunService(destinationDirectory))
 
 	generateCmd.AddCommand(resourceCmd)
 

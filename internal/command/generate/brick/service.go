@@ -23,7 +23,7 @@ func RunService(destinationDirectory string) *cobra.Command {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(makeServiceComponent(
+			if err := fs.GenerateFile(MakeServiceComponent(
 				destinationDirectory,
 				module,
 				name,
@@ -39,7 +39,7 @@ func RunService(destinationDirectory string) *cobra.Command {
 	return cmd
 }
 
-func makeServiceComponent(destinationDirectory, module, name string) fs.File {
+func MakeServiceComponent(destinationDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
 		Module:  module,
 		Name:    name,
