@@ -1,3 +1,4 @@
+#  Base modular structure panoramic view
 ```
 .
 ├─── cmd // all executables
@@ -15,7 +16,7 @@
 │           ├── model // domain entities
 │           ├── repository // repository contracts
 │           └── service // implementation of use cases
-│       └── database // database stuff
+│       └── persistence // persistence stuff
 │           └── database_choosen // database choosen module
 │               └── module_a_repository.go // implementation of a repository contract
 │       ├── transport // communication module
