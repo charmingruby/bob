@@ -1,11 +1,10 @@
-package resource
+package atom
 
 import (
-	"github.com/charmingruby/bob/internal/command/generate/brick"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 )
 
-type registryBrickParams struct {
+type RegistryParams struct {
 	Module               string
 	RegistryName         string
 	DestinationDirectory string
@@ -13,8 +12,8 @@ type registryBrickParams struct {
 	TemplateData         any
 }
 
-func makeRegistryBrick(params registryBrickParams) fs.File {
-	component := brick.New(brick.ComponentInput{
+func MakeRegistryComponent(params RegistryParams) fs.File {
+	component := New(ComponentInput{
 		Module:    params.Module,
 		Name:      params.RegistryName,
 		Suffix:    "",
@@ -22,7 +21,7 @@ func makeRegistryBrick(params registryBrickParams) fs.File {
 		HasTest:   false,
 	})
 
-	return brick.MakeCustomComponent(brick.CustomComponentInput{
+	return MakeCustomComponent(CustomComponentInput{
 		BaseComponent: *component,
 		TemplateName:  params.TemplateName,
 		TemplateData:  params.TemplateData,

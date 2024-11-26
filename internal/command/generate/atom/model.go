@@ -1,10 +1,10 @@
-package brick
+package atom
 
 import (
 	"github.com/charmingruby/bob/internal/command/shared/component"
-	"github.com/charmingruby/bob/internal/command/shared/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
-	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +23,7 @@ func RunModel(m component.Manager) *cobra.Command {
 			}
 
 			if err := fs.GenerateFile(MakeModelComponent(
-				m.SourceDirectory,
+				m,
 				module,
 				name,
 			)); err != nil {
@@ -38,16 +38,16 @@ func RunModel(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeModelComponent(sourceDirectory, module, name string) fs.File {
+func MakeModelComponent(m component.Manager, module, name string) fs.File {
 	component := *New(ComponentInput{
-		Directory: component.ModulePath(sourceDirectory, module, ModelPath()),
+		Directory: m.AppendToModuleDirectory(module, ModelPath()),
 		Module:    module,
 		Name:      name,
 		Suffix:    "",
 		HasTest:   true,
 	}, WithDefaultTemplate())
 
-	return NewFileFromBrick(component, constant.MODEL_TEMPLATE)
+	return NewFileFromAtom(component, constant.MODEL_TEMPLATE)
 }
 
 func ModelPath() string {

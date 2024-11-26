@@ -2,8 +2,8 @@ package generate
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/generate/brick"
-	"github.com/charmingruby/bob/internal/command/generate/resource"
+	"github.com/charmingruby/bob/internal/command/generate/atom"
+	"github.com/charmingruby/bob/internal/command/generate/molecule"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/spf13/cobra"
 )
@@ -26,27 +26,27 @@ func (c *Command) Setup() {
 		Short: "Generates components",
 	}
 
-	brickCmd := &cobra.Command{
-		Use:   "bck",
-		Short: "Generates pure components (or bricks)",
+	atomCmd := &cobra.Command{
+		Use:   "atm",
+		Short: "Generates pure components (or atoms)",
 	}
 
-	brickCmd.AddCommand(brick.RunModel(c.Manager))
-	brickCmd.AddCommand(brick.RunService(c.Manager))
-	brickCmd.AddCommand(brick.RunHandler(c.Manager))
-	brickCmd.AddCommand(brick.RunRepository(c.Manager))
+	atomCmd.AddCommand(atom.RunModel(c.Manager))
+	atomCmd.AddCommand(atom.RunService(c.Manager))
+	atomCmd.AddCommand(atom.RunHandler(c.Manager))
+	atomCmd.AddCommand(atom.RunRepository(c.Manager))
 
-	resourceCmd := &cobra.Command{
-		Use:   "rsc",
-		Short: "Generates conventional resources, grouping bricks",
+	moleculeCmd := &cobra.Command{
+		Use:   "mol",
+		Short: "Generates conventional molecules, grouping atoms",
 	}
 
-	resourceCmd.AddCommand(resource.RunRest(c.Manager))
-	resourceCmd.AddCommand(resource.RunService(c.Manager))
-	resourceCmd.AddCommand(resource.RunCore(c.Manager))
+	moleculeCmd.AddCommand(molecule.RunRest(c.Manager))
+	moleculeCmd.AddCommand(molecule.RunService(c.Manager))
+	moleculeCmd.AddCommand(molecule.RunCore(c.Manager))
 
-	generateCmd.AddCommand(brickCmd)
-	generateCmd.AddCommand(resourceCmd)
+	generateCmd.AddCommand(atomCmd)
+	generateCmd.AddCommand(moleculeCmd)
 
 	c.cmd.AddCommand(generateCmd)
 }

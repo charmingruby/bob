@@ -1,7 +1,7 @@
-package brick
+package atom
 
 import (
-	"github.com/charmingruby/bob/internal/command/shared/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 )
 

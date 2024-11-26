@@ -1,8 +1,8 @@
-package brick
+package atom
 
 import (
-	"github.com/charmingruby/bob/internal/command/shared/constant"
-	"github.com/charmingruby/bob/internal/command/shared/formatter"
+	"github.com/charmingruby/bob/internal/command/shared/component/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/structure"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 )
 
@@ -34,8 +34,6 @@ func New(in ComponentInput, opts ...ComponentOption) *Component {
 		HasTest:   in.HasTest,
 	}
 
-	component.format()
-
 	for _, opt := range opts {
 		opt(component)
 	}
@@ -43,28 +41,17 @@ func New(in ComponentInput, opts ...ComponentOption) *Component {
 	return component
 }
 
-type DefaultTemplateParams struct {
-	Name string
-}
-
 func WithDefaultTemplate() ComponentOption {
 	return func(s *Component) {
-		s.Data = DefaultTemplateParams{
+		s.Data = structure.Pure{
 			Name: s.Name,
 		}
 	}
 }
 
-type ModuleDependenciesTemplateParams struct {
-	SourcePath string
-	Module     string
-	Name       string
-}
-
 func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
-	println(sourcePath)
 	return func(s *Component) {
-		s.Data = ModuleDependenciesTemplateParams{
+		s.Data = structure.DependentPackage{
 			Module:     s.Module,
 			SourcePath: sourcePath,
 			Name:       s.Name,
@@ -72,15 +59,7 @@ func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
 	}
 }
 
-func (r *Component) format() {
-	r.Name = formatter.ToCamelCase(r.Name)
-
-	if r.Suffix != "" {
-		r.Suffix = formatter.ToCamelCase(r.Suffix)
-	}
-}
-
-func NewFileFromBrick(component Component, template string) fs.File {
+func NewFileFromAtom(component Component, template string) fs.File {
 	return fs.File{
 		CommandType:          constant.GENERATE_COMMAND,
 		TemplateName:         template,

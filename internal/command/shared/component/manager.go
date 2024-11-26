@@ -12,9 +12,14 @@ type Manager struct {
 }
 
 func NewManager(config config.Configuration) Manager {
+	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir
+	if config.BaseConfiguration.RootDir == "." {
+		sourceDirectory = config.BaseConfiguration.SourceDir
+	}
+
 	return Manager{
 		Data:            config.BaseConfiguration.BaseURL + "/" + config.BaseConfiguration.ProjectName,
-		SourceDirectory: config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir,
+		SourceDirectory: sourceDirectory,
 	}
 }
 

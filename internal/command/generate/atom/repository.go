@@ -1,10 +1,10 @@
-package brick
+package atom
 
 import (
 	"github.com/charmingruby/bob/internal/command/shared/component"
-	"github.com/charmingruby/bob/internal/command/shared/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/constant"
+	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
-	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
@@ -23,10 +23,9 @@ func RunRepository(m component.Manager) *cobra.Command {
 			}
 
 			if err := fs.GenerateFile(MakeRepositoryComponent(
-				m.SourceDirectory,
+				m,
 				module,
 				name,
-				m.DependencyPath(module),
 			)); err != nil {
 				panic(err)
 			}
@@ -39,16 +38,16 @@ func RunRepository(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeRepositoryComponent(directory, module, name, dependencyPath string) fs.File {
+func MakeRepositoryComponent(m component.Manager, module, name string) fs.File {
 	component := *New(ComponentInput{
-		Directory: component.ModulePath(directory, module, RepositoryPath()),
+		Directory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
 		Module:    module,
 		Name:      name,
 		Suffix:    "repository",
 		HasTest:   false,
-	}, WithModuleDependenciesTemplate(dependencyPath))
+	}, WithModuleDependenciesTemplate(m.DependencyPath(module)))
 
-	return NewFileFromBrick(component, constant.REPOSITORY_TEMPLATE)
+	return NewFileFromAtom(component, constant.REPOSITORY_TEMPLATE)
 }
 
 func RepositoryPath() string {

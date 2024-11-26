@@ -1,12 +1,12 @@
-package resource
+package molecule
 
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/command/generate/brick"
+	"github.com/charmingruby/bob/internal/command/generate/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
+	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
-	"github.com/charmingruby/bob/internal/command/shared/validator/input"
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +17,7 @@ func RunRest(m component.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "rest",
-		Short: "Generates a new rest resource",
+		Short: "Generates a new rest molecule",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
 				panic(err)
@@ -42,7 +42,7 @@ func MakeRest(projectData, destinationDirectory, module string) {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(makeRestRegistryBrickComponent(
+	if err := fs.GenerateFile(makeRestRegistryAtomComponent(
 		fmt.Sprintf("%s/%s", moduleDir, "transport/rest/endpoint"),
 		fmt.Sprintf("%s/%s", projectData, destinationDirectory),
 		module,
@@ -50,7 +50,7 @@ func MakeRest(projectData, destinationDirectory, module string) {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(brick.MakeHandlerComponent(
+	if err := fs.GenerateFile(atom.MakeHandlerComponent(
 		destinationDirectory,
 		module,
 		"ping",
@@ -59,16 +59,16 @@ func MakeRest(projectData, destinationDirectory, module string) {
 	}
 }
 
-type restRegistryBrickData struct {
+type restRegistryAtomData struct {
 	Module          string
 	SourceDirectory string
 }
 
-func makeRestRegistryBrickComponent(destinationDirectory, sourceDirectory, module string) fs.File {
-	return makeRegistryBrick(registryBrickParams{
+func makeRestRegistryAtomComponent(destinationDirectory, sourceDirectory, module string) fs.File {
+	return atom.MakeRegistryComponent(atom.RegistryParams{
 		Module:       module,
 		TemplateName: "rest_registry",
-		TemplateData: restRegistryBrickData{
+		TemplateData: restRegistryAtomData{
 			Module:          module,
 			SourceDirectory: sourceDirectory,
 		},
