@@ -44,7 +44,7 @@ func MakeCore(m component.Manager, module string) {
 
 	sampleActor := module
 
-	MakeService(m, "", module)
+	MakeService(m, sampleActor, module)
 
 	if err := fs.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
 		panic(err)

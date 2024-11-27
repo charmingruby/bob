@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/command/generate/atom"
+	"github.com/charmingruby/bob/internal/command/generate/molecule/custom/custom_atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/component/structure"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
 	"github.com/spf13/cobra"
 )
@@ -46,14 +46,14 @@ func MakeService(m component.Manager, repo string, module string) {
 	hasRepo := repo != ""
 
 	if !hasRepo {
-		if err := fs.GenerateFile(makeServiceRegistryAtomComponent(
+		if err := fs.GenerateFile(custom_atom.MakeIndependentServiceRegistryComponent(
 			m,
 			module,
 		)); err != nil {
 			panic(err)
 		}
 	} else {
-		if err := fs.GenerateFile(makeServiceRegistryWithRepositoryAtomComponent(
+		if err := fs.GenerateFile(custom_atom.MakeServiceRegistryComponent(
 			m,
 			module,
 			repo,
@@ -67,36 +67,6 @@ func MakeService(m component.Manager, repo string, module string) {
 	if err := fs.GenerateFile(atom.MakeServiceComponent(m.SourceDirectory, module, sampleActor)); err != nil {
 		panic(err)
 	}
-}
-
-func makeServiceRegistryWithRepositoryAtomComponent(m component.Manager, module, name string) fs.File {
-	return atom.MakeRegistryComponent(atom.RegistryParams{
-		Module:       module,
-		TemplateName: "service_registry_with_repository",
-		TemplateData: structure.DependentPackage{
-			SourcePath: m.DependencyPath(module),
-			Module:     module,
-			Name:       name,
-		},
-		RegistryName:         "service",
-		DestinationDirectory: m.AppendToModuleDirectory(module, "/core/service"),
-	})
-}
-
-type serviceRegistryAtomData struct {
-	Module string
-}
-
-func makeServiceRegistryAtomComponent(m component.Manager, module string) fs.File {
-	return atom.MakeRegistryComponent(atom.RegistryParams{
-		Module:       module,
-		TemplateName: "service_registry",
-		TemplateData: serviceRegistryAtomData{
-			Module: module,
-		},
-		RegistryName:         "service",
-		DestinationDirectory: m.AppendToModuleDirectory(module, "/core/service"),
-	})
 }
 
 func ServicePath() string {

@@ -43,19 +43,13 @@ func New(in ComponentInput, opts ...ComponentOption) *Component {
 
 func WithDefaultTemplate() ComponentOption {
 	return func(s *Component) {
-		s.Data = structure.Pure{
-			Name: s.Name,
-		}
+		s.Data = structure.NewPure(s.Name)
 	}
 }
 
 func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
 	return func(s *Component) {
-		s.Data = structure.DependentPackage{
-			Module:     s.Module,
-			SourcePath: sourcePath,
-			Name:       s.Name,
-		}
+		s.Data = structure.NewDependentPackage(sourcePath, s.Module, s.Name)
 	}
 }
 

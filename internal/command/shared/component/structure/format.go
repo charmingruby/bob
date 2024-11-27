@@ -9,3 +9,7 @@ func PublicNameFormat(name string) string {
 func ModuleFormat(module string) string {
 	return formatter.ToSnakeCase(module)
 }
+
+func PrivateNameFormat(name string) string {
+	return formatter.ToCamelLowerCase(name)
+}
