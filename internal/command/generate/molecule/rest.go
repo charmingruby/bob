@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/command/generate/atom"
+	"github.com/charmingruby/bob/internal/command/generate/molecule/custom/custom_atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
@@ -42,11 +43,12 @@ func MakeRest(projectData, destinationDirectory, module string) {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(makeRestRegistryAtomComponent(
-		fmt.Sprintf("%s/%s", moduleDir, "transport/rest/endpoint"),
-		fmt.Sprintf("%s/%s", projectData, destinationDirectory),
-		module,
-	)); err != nil {
+	if err := fs.GenerateFile(
+		custom_atom.MakeRestRegistryComponent(
+			fmt.Sprintf("%s/%s", moduleDir, "transport/rest/endpoint"),
+			fmt.Sprintf("%s/%s", projectData, destinationDirectory),
+			module,
+		)); err != nil {
 		panic(err)
 	}
 
@@ -57,22 +59,4 @@ func MakeRest(projectData, destinationDirectory, module string) {
 	)); err != nil {
 		panic(err)
 	}
-}
-
-type restRegistryAtomData struct {
-	Module          string
-	SourceDirectory string
-}
-
-func makeRestRegistryAtomComponent(destinationDirectory, sourceDirectory, module string) fs.File {
-	return atom.MakeRegistryComponent(atom.RegistryParams{
-		Module:       module,
-		TemplateName: "rest_registry",
-		TemplateData: restRegistryAtomData{
-			Module:          module,
-			SourceDirectory: sourceDirectory,
-		},
-		RegistryName:         "endpoint",
-		DestinationDirectory: destinationDirectory,
-	})
 }

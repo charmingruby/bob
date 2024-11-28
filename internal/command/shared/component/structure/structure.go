@@ -1,23 +1,23 @@
 package structure
 
-type Pure struct {
+type PureData struct {
 	Name string
 }
 
-func NewPure(name string) Pure {
-	return Pure{
+func NewPureData(name string) PureData {
+	return PureData{
 		Name: PublicNameFormat(name),
 	}
 }
 
-type DependentPackage struct {
+type DependentPackageData struct {
 	SourcePath string
 	Module     string
 	Name       string
 }
 
-func NewDependentPackage(sourcePath, module, name string) DependentPackage {
-	return DependentPackage{
+func NewDependentPackageData(sourcePath, module, name string) DependentPackageData {
+	return DependentPackageData{
 		SourcePath: sourcePath,
 		Module:     ModuleFormat(module),
 		Name:       PublicNameFormat(name),
