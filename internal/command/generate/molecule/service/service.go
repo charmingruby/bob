@@ -1,10 +1,10 @@
-package molecule
+package service
 
 import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/command/generate/atom"
-	"github.com/charmingruby/bob/internal/command/generate/molecule/custom/custom_atom"
+	serviceAtom "github.com/charmingruby/bob/internal/command/generate/molecule/service/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
@@ -46,14 +46,14 @@ func MakeService(m component.Manager, repo string, module string) {
 	hasRepo := repo != ""
 
 	if !hasRepo {
-		if err := fs.GenerateFile(custom_atom.MakeIndependentServiceRegistryComponent(
+		if err := fs.GenerateFile(serviceAtom.MakeIndependentServiceRegistryComponent(
 			m,
 			module,
 		)); err != nil {
 			panic(err)
 		}
 	} else {
-		if err := fs.GenerateFile(custom_atom.MakeServiceRegistryComponent(
+		if err := fs.GenerateFile(serviceAtom.MakeServiceRegistryComponent(
 			m,
 			module,
 			repo,

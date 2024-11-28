@@ -4,6 +4,8 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/command/generate/atom"
 	"github.com/charmingruby/bob/internal/command/generate/molecule"
+	"github.com/charmingruby/bob/internal/command/generate/molecule/rest"
+	"github.com/charmingruby/bob/internal/command/generate/molecule/service"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/spf13/cobra"
 )
@@ -41,8 +43,8 @@ func (c *Command) Setup() {
 		Short: "Generates conventional molecules, grouping atoms",
 	}
 
-	moleculeCmd.AddCommand(molecule.RunRest(c.Manager))
-	moleculeCmd.AddCommand(molecule.RunService(c.Manager))
+	moleculeCmd.AddCommand(rest.RunRest(c.Manager))
+	moleculeCmd.AddCommand(service.RunService(c.Manager))
 	moleculeCmd.AddCommand(molecule.RunCore(c.Manager))
 
 	generateCmd.AddCommand(atomCmd)

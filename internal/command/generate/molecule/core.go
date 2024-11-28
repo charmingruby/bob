@@ -2,6 +2,7 @@ package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/command/generate/atom"
+	"github.com/charmingruby/bob/internal/command/generate/molecule/service"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
@@ -44,7 +45,7 @@ func MakeCore(m component.Manager, module string) {
 
 	sampleActor := module
 
-	MakeService(m, sampleActor, module)
+	service.MakeService(m, sampleActor, module)
 
 	if err := fs.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
 		panic(err)

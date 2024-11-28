@@ -1,10 +1,10 @@
-package molecule
+package rest
 
 import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/command/generate/atom"
-	"github.com/charmingruby/bob/internal/command/generate/molecule/custom/custom_atom"
+	restAtom "github.com/charmingruby/bob/internal/command/generate/molecule/rest/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"
@@ -44,7 +44,7 @@ func MakeRest(projectData, destinationDirectory, module string) {
 	}
 
 	if err := fs.GenerateFile(
-		custom_atom.MakeRestRegistryComponent(
+		restAtom.MakeRestRegistryComponent(
 			fmt.Sprintf("%s/%s", moduleDir, "transport/rest/endpoint"),
 			fmt.Sprintf("%s/%s", projectData, destinationDirectory),
 			module,

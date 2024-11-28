@@ -1,4 +1,4 @@
-package custom_structure
+package structure
 
 import "github.com/charmingruby/bob/internal/command/shared/component/structure"
 
