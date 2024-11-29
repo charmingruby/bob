@@ -1,8 +1,8 @@
 package molecule
 
 import (
-	"github.com/charmingruby/bob/internal/command/generate/atom"
-	"github.com/charmingruby/bob/internal/command/generate/molecule/service"
+	"github.com/charmingruby/bob/internal/command/gen/atom"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/service"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"

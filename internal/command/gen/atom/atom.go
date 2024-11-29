@@ -7,31 +7,31 @@ import (
 )
 
 type Component struct {
-	Directory string
-	Module    string
-	Name      string
-	Suffix    string
-	Data      any
-	HasTest   bool
+	DestinationDirectory string
+	Module               string
+	Name                 string
+	Suffix               string
+	Data                 any
+	HasTest              bool
 }
 
 type ComponentInput struct {
-	Module    string
-	Name      string
-	Suffix    string
-	Directory string
-	HasTest   bool
+	Module               string
+	Name                 string
+	Suffix               string
+	DestinationDirectory string
+	HasTest              bool
 }
 
 type ComponentOption func(*Component)
 
 func New(in ComponentInput, opts ...ComponentOption) *Component {
 	component := &Component{
-		Module:    in.Module,
-		Name:      in.Name,
-		Directory: in.Directory,
-		Suffix:    in.Suffix,
-		HasTest:   in.HasTest,
+		Module:               in.Module,
+		Name:                 in.Name,
+		DestinationDirectory: in.DestinationDirectory,
+		Suffix:               in.Suffix,
+		HasTest:              in.HasTest,
 	}
 
 	for _, opt := range opts {
@@ -60,7 +60,7 @@ func NewFileFromAtom(component Component, template string) fs.File {
 		TemplateData:         component.Data,
 		FileName:             component.Name,
 		FileSuffix:           component.Suffix,
-		DestinationDirectory: component.Directory,
+		DestinationDirectory: component.DestinationDirectory,
 		HasTest:              component.HasTest,
 	}
 }

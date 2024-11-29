@@ -3,8 +3,8 @@ package service
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/command/generate/atom"
-	serviceAtom "github.com/charmingruby/bob/internal/command/generate/molecule/service/atom"
+	"github.com/charmingruby/bob/internal/command/gen/atom"
+	serviceAtom "github.com/charmingruby/bob/internal/command/gen/molecule/service/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/fs"

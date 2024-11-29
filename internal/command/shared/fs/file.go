@@ -10,13 +10,13 @@ import (
 )
 
 const (
-	TEMPLATE_DIR = "tpl/generate/"
+	TEMPLATE_DIR = "tpl/gen/"
 )
 
 type File struct {
 	FileName             string // file name
 	FileSuffix           string // file suffix
-	CommandType          string // ex: generate, new...
+	CommandType          string // ex: gen, new...
 	TemplateName         string // handler, model...
 	TemplateData         any    // data to be used in the template
 	DestinationDirectory string // directory where the file will be created

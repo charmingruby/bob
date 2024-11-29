@@ -2,7 +2,7 @@ package command
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/generate"
+	"github.com/charmingruby/bob/internal/command/gen"
 	"github.com/spf13/cobra"
 )
 
@@ -19,5 +19,5 @@ func New(cmd *cobra.Command, config config.Configuration) *command {
 }
 
 func (c *command) SetupGenerate() {
-	generate.New(c.cmd, c.config).Setup()
+	gen.New(c.cmd, c.config).Setup()
 }

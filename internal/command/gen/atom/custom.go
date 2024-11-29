@@ -13,14 +13,14 @@ type CustomComponentInput struct {
 	FileSuffix    string
 }
 
-func MakeCustomComponent(in CustomComponentInput, data any) fs.File {
+func MakeCustomComponent(in CustomComponentInput) fs.File {
 	file := fs.File{
 		CommandType:          constant.GENERATE_COMMAND,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,
 		FileName:             in.FileName,
 		FileSuffix:           in.FileSuffix,
-		DestinationDirectory: in.BaseComponent.Directory,
+		DestinationDirectory: in.BaseComponent.DestinationDirectory,
 		HasTest:              in.BaseComponent.HasTest,
 	}
 

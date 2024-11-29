@@ -1,5 +1,5 @@
 package constant
 
 const (
-	GENERATE_COMMAND = "generate"
+	GENERATE_COMMAND = "gen"
 )

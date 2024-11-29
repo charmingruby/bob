@@ -40,11 +40,11 @@ func RunRepository(m component.Manager) *cobra.Command {
 
 func MakeRepositoryComponent(m component.Manager, module, name string) fs.File {
 	component := *New(ComponentInput{
-		Directory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
-		Module:    module,
-		Name:      name,
-		Suffix:    "repository",
-		HasTest:   false,
+		DestinationDirectory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
+		Module:               module,
+		Name:                 name,
+		Suffix:               "repository",
+		HasTest:              false,
 	}, WithModuleDependenciesTemplate(m.DependencyPath(module)))
 
 	return NewFileFromAtom(component, constant.REPOSITORY_TEMPLATE)

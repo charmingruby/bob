@@ -40,11 +40,11 @@ func RunHandler(m component.Manager) *cobra.Command {
 
 func MakeHandlerComponent(sourceDirectory, module, name string) fs.File {
 	component := New(ComponentInput{
-		Module:    module,
-		Name:      name,
-		Suffix:    "handler",
-		Directory: component.ModulePath(sourceDirectory, module, HandlerPath()),
-		HasTest:   false,
+		Module:               module,
+		Name:                 name,
+		Suffix:               "handler",
+		DestinationDirectory: component.ModulePath(sourceDirectory, module, HandlerPath()),
+		HasTest:              false,
 	}, WithDefaultTemplate())
 
 	return NewFileFromAtom(*component, constant.HANDLER_TEMPLATE)

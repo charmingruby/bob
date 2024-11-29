@@ -14,11 +14,11 @@ type RegistryParams struct {
 
 func MakeRegistryComponent(params RegistryParams) fs.File {
 	component := New(ComponentInput{
-		Module:    params.Module,
-		Name:      params.RegistryName,
-		Suffix:    "",
-		Directory: params.DestinationDirectory,
-		HasTest:   false,
+		Module:               params.Module,
+		Name:                 params.RegistryName,
+		Suffix:               "",
+		DestinationDirectory: params.DestinationDirectory,
+		HasTest:              false,
 	})
 
 	return MakeCustomComponent(CustomComponentInput{
@@ -27,5 +27,5 @@ func MakeRegistryComponent(params RegistryParams) fs.File {
 		TemplateData:  params.TemplateData,
 		FileName:      params.RegistryName,
 		FileSuffix:    "",
-	}, params.TemplateData)
+	})
 }

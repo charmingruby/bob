@@ -8,22 +8,22 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunModel(m component.Manager) *cobra.Command {
+func RunService(m component.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
 	)
 
 	cmd := &cobra.Command{
-		Use:   "model",
-		Short: "Generates a new model",
+		Use:   "service",
+		Short: "Generates a new service",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := input.ValidateDefaultCommandInput(module, name); err != nil {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(MakeModelComponent(
-				m,
+			if err := fs.GenerateFile(MakeServiceComponent(
+				m.SourceDirectory,
 				module,
 				name,
 			)); err != nil {
@@ -33,23 +33,23 @@ func RunModel(m component.Manager) *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "model name")
+	cmd.Flags().StringVarP(&name, "name", "n", "", "service name")
 
 	return cmd
 }
 
-func MakeModelComponent(m component.Manager, module, name string) fs.File {
-	component := *New(ComponentInput{
-		Directory: m.AppendToModuleDirectory(module, ModelPath()),
-		Module:    module,
-		Name:      name,
-		Suffix:    "",
-		HasTest:   true,
+func MakeServiceComponent(sourceDirectory, module, name string) fs.File {
+	component := New(ComponentInput{
+		Module:               module,
+		Name:                 name,
+		Suffix:               "service",
+		DestinationDirectory: component.ModulePath(sourceDirectory, module, ServicePath()),
+		HasTest:              false,
 	}, WithDefaultTemplate())
 
-	return NewFileFromAtom(component, constant.MODEL_TEMPLATE)
+	return NewFileFromAtom(*component, constant.SERVICE_TEMPLATE)
 }
 
-func ModelPath() string {
-	return "core/model"
+func ServicePath() string {
+	return "core/service"
 }

@@ -1,11 +1,11 @@
-package generate
+package gen
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/generate/atom"
-	"github.com/charmingruby/bob/internal/command/generate/molecule"
-	"github.com/charmingruby/bob/internal/command/generate/molecule/rest"
-	"github.com/charmingruby/bob/internal/command/generate/molecule/service"
+	"github.com/charmingruby/bob/internal/command/gen/atom"
+	"github.com/charmingruby/bob/internal/command/gen/molecule"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/rest"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/service"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +23,7 @@ func New(cmd *cobra.Command, config config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
-	generateCmd := &cobra.Command{
+	genCmd := &cobra.Command{
 		Use:   "gen",
 		Short: "Generates components",
 	}
@@ -47,8 +47,8 @@ func (c *Command) Setup() {
 	moleculeCmd.AddCommand(service.RunService(c.Manager))
 	moleculeCmd.AddCommand(molecule.RunCore(c.Manager))
 
-	generateCmd.AddCommand(atomCmd)
-	generateCmd.AddCommand(moleculeCmd)
+	genCmd.AddCommand(atomCmd)
+	genCmd.AddCommand(moleculeCmd)
 
-	c.cmd.AddCommand(generateCmd)
+	c.cmd.AddCommand(genCmd)
 }
