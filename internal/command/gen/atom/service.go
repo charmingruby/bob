@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,7 @@ func RunService(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(MakeServiceComponent(
+			if err := filesystem.GenerateFile(MakeServiceComponent(
 				m.SourceDirectory,
 				module,
 				name,
@@ -38,7 +38,7 @@ func RunService(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeServiceComponent(sourceDirectory, module, name string) fs.File {
+func MakeServiceComponent(sourceDirectory, module, name string) filesystem.File {
 	component := New(ComponentInput{
 		Module:               module,
 		Name:                 name,

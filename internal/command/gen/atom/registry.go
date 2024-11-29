@@ -1,7 +1,7 @@
 package atom
 
 import (
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
 type RegistryParams struct {
@@ -12,7 +12,7 @@ type RegistryParams struct {
 	TemplateData         any
 }
 
-func MakeRegistryComponent(params RegistryParams) fs.File {
+func MakeRegistryComponent(params RegistryParams) filesystem.File {
 	component := New(ComponentInput{
 		Module:               params.Module,
 		Name:                 params.RegistryName,

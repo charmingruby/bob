@@ -3,7 +3,7 @@ package atom
 import (
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/structure"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
 type Component struct {
@@ -53,8 +53,8 @@ func WithModuleDependenciesTemplate(sourcePath string) ComponentOption {
 	}
 }
 
-func NewFileFromAtom(component Component, template string) fs.File {
-	return fs.File{
+func NewFileFromAtom(component Component, template string) filesystem.File {
+	return filesystem.File{
 		CommandType:          constant.GENERATE_COMMAND,
 		TemplateName:         template,
 		TemplateData:         component.Data,

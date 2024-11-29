@@ -1,4 +1,4 @@
-package fs
+package filesystem
 
 // func getDestinationDirectory(directory string) (string, error) {
 // 	currentDir, err := os.Getwd()

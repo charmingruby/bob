@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +22,7 @@ func RunRepository(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := fs.GenerateFile(MakeRepositoryComponent(
+			if err := filesystem.GenerateFile(MakeRepositoryComponent(
 				m,
 				module,
 				name,
@@ -38,7 +38,7 @@ func RunRepository(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeRepositoryComponent(m component.Manager, module, name string) fs.File {
+func MakeRepositoryComponent(m component.Manager, module, name string) filesystem.File {
 	component := *New(ComponentInput{
 		DestinationDirectory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
 		Module:               module,

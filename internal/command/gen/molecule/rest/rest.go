@@ -5,7 +5,7 @@ import (
 	restAtom "github.com/charmingruby/bob/internal/command/gen/molecule/rest/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
@@ -32,28 +32,28 @@ func RunRest(m component.Manager) *cobra.Command {
 }
 
 func MakeRest(m component.Manager, module string) {
-	if err := fs.GenerateNestedDirectories(
+	if err := filesystem.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
 		[]string{"transport", "rest"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := fs.GenerateMultipleDirectories(
+	if err := filesystem.GenerateMultipleDirectories(
 		m.AppendToModuleDirectory(module, "transport/rest"),
 		[]string{"endpoint", "dto"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := fs.GenerateMultipleDirectories(
+	if err := filesystem.GenerateMultipleDirectories(
 		m.AppendToModuleDirectory(module, "transport/rest/dto"),
 		[]string{"request", "response"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(
+	if err := filesystem.GenerateFile(
 		restAtom.MakeRestRegistryComponent(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(module),
@@ -64,7 +64,7 @@ func MakeRest(m component.Manager, module string) {
 
 	actioName := "ping"
 
-	if err := fs.GenerateFile(atom.MakeHandlerComponent(
+	if err := filesystem.GenerateFile(atom.MakeHandlerComponent(
 		m.SourceDirectory,
 		module,
 		actioName,
@@ -72,7 +72,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(restAtom.MakeRequest(
+	if err := filesystem.GenerateFile(restAtom.MakeRequest(
 		m,
 		module,
 		actioName,
@@ -80,7 +80,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(restAtom.MakeResponse(
+	if err := filesystem.GenerateFile(restAtom.MakeResponse(
 		m,
 		module,
 		actioName,

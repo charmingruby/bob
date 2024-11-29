@@ -7,7 +7,7 @@ import (
 	serviceAtom "github.com/charmingruby/bob/internal/command/gen/molecule/service/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
@@ -21,7 +21,7 @@ func RunService(m component.Manager) *cobra.Command {
 		Use:   "service",
 		Short: "Generates a new service molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := fs.GenerateNestedDirectories(
+			if err := filesystem.GenerateNestedDirectories(
 				fmt.Sprintf("%s/%s", m.SourceDirectory, module),
 				[]string{"core", "service"},
 			); err != nil {
@@ -46,14 +46,14 @@ func MakeService(m component.Manager, repo string, module string) {
 	hasRepo := repo != ""
 
 	if !hasRepo {
-		if err := fs.GenerateFile(serviceAtom.MakeIndependentServiceRegistryComponent(
+		if err := filesystem.GenerateFile(serviceAtom.MakeIndependentServiceRegistryComponent(
 			m,
 			module,
 		)); err != nil {
 			panic(err)
 		}
 	} else {
-		if err := fs.GenerateFile(serviceAtom.MakeServiceRegistryComponent(
+		if err := filesystem.GenerateFile(serviceAtom.MakeServiceRegistryComponent(
 			m,
 			module,
 			repo,
@@ -64,7 +64,7 @@ func MakeService(m component.Manager, repo string, module string) {
 
 	sampleActor := module
 
-	if err := fs.GenerateFile(atom.MakeServiceComponent(m.SourceDirectory, module, sampleActor)); err != nil {
+	if err := filesystem.GenerateFile(atom.MakeServiceComponent(m.SourceDirectory, module, sampleActor)); err != nil {
 		panic(err)
 	}
 }

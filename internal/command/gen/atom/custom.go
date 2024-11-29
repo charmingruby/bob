@@ -2,7 +2,7 @@ package atom
 
 import (
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
 type CustomComponentInput struct {
@@ -13,8 +13,8 @@ type CustomComponentInput struct {
 	FileSuffix    string
 }
 
-func MakeCustomComponent(in CustomComponentInput) fs.File {
-	file := fs.File{
+func MakeCustomComponent(in CustomComponentInput) filesystem.File {
+	file := filesystem.File{
 		CommandType:          constant.GENERATE_COMMAND,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,

@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/gen/molecule/service"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
-	"github.com/charmingruby/bob/internal/command/shared/fs"
+	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
@@ -32,11 +32,11 @@ func RunCore(m component.Manager) *cobra.Command {
 }
 
 func MakeCore(m component.Manager, module string) {
-	if err := fs.GenerateDirectory(m.ModuleDirectory(module), "core"); err != nil {
+	if err := filesystem.GenerateDirectory(m.ModuleDirectory(module), "core"); err != nil {
 		panic(err)
 	}
 
-	if err := fs.GenerateMultipleDirectories(
+	if err := filesystem.GenerateMultipleDirectories(
 		component.ModulePath(m.SourceDirectory, module, CorePath()),
 		[]string{"service", "model", "repository"},
 	); err != nil {
@@ -47,11 +47,11 @@ func MakeCore(m component.Manager, module string) {
 
 	service.MakeService(m, sampleActor, module)
 
-	if err := fs.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
+	if err := filesystem.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
 		panic(err)
 	}
 
-	if err := fs.GenerateFile(atom.MakeModelComponent(m, module, sampleActor)); err != nil {
+	if err := filesystem.GenerateFile(atom.MakeModelComponent(m, module, sampleActor)); err != nil {
 		panic(err)
 	}
 }
