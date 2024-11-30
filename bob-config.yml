@@ -1,6 +1,0 @@
-base:
-  project_name: "bob"
-  base_url: "github.com/charmingruby"
-  root_dir: "dummy"
-  source_dir: "internal"
-  library_dir: "pkg"

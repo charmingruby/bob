@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	CONFIG_FILE = "bob-config.yml"
+	CONFIG_FILE = "bob.yml"
 )
 
 type Configuration struct {
