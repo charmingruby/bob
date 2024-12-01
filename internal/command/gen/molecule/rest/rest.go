@@ -5,6 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/gen/library"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/rest_component"
 	"github.com/charmingruby/bob/internal/command/shared/component"
+	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -42,6 +43,19 @@ func MakeRest(m component.Manager, module string) {
 
 	if err := filesystem.GenerateFile(
 		library.MakeValidatorComponent(m),
+	); err != nil {
+		panic(err)
+	}
+
+	if err := filesystem.GenerateDirectory(
+		m.SourceDirectory,
+		constant.COMMON_MODULE,
+	); err != nil {
+		panic(err)
+	}
+
+	if err := filesystem.GenerateFile(
+		rest_component.MakeRestUtilComponent(m),
 	); err != nil {
 		panic(err)
 	}
