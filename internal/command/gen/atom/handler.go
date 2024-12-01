@@ -1,12 +1,17 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/command/gen/atom/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
+
+func HandlerPath() string {
+	return "transport/rest/endpoint"
+}
 
 func RunHandler(m component.Manager) *cobra.Command {
 	var (
@@ -39,17 +44,15 @@ func RunHandler(m component.Manager) *cobra.Command {
 }
 
 func MakeHandlerComponent(sourceDirectory, module, name string) filesystem.File {
-	component := New(ComponentInput{
+	return component.New(component.ComponentInput{
 		Module:               module,
 		Name:                 name,
 		Suffix:               "handler",
 		DestinationDirectory: component.ModulePath(sourceDirectory, module, HandlerPath()),
-		HasTest:              false,
-	}, WithDefaultTemplate())
-
-	return NewFileFromAtom(*component, constant.HANDLER_TEMPLATE)
-}
-
-func HandlerPath() string {
-	return "transport/rest/endpoint"
+	}).Componetize(component.ComponetizeInput{
+		TemplateName: constant.HANDLER_TEMPLATE,
+		TemplateData: structure.NewDefaultData(name),
+		FileName:     name,
+		FileSuffix:   "handler",
+	})
 }

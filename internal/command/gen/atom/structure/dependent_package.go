@@ -1,14 +1,6 @@
 package structure
 
-type PureData struct {
-	Name string
-}
-
-func NewPureData(name string) PureData {
-	return PureData{
-		Name: PublicNameFormat(name),
-	}
-}
+import "github.com/charmingruby/bob/internal/command/shared/component/structure"
 
 type DependentPackageData struct {
 	SourcePath string
@@ -19,7 +11,7 @@ type DependentPackageData struct {
 func NewDependentPackageData(sourcePath, module, name string) DependentPackageData {
 	return DependentPackageData{
 		SourcePath: sourcePath,
-		Module:     ModuleFormat(module),
-		Name:       PublicNameFormat(name),
+		Module:     structure.ModuleFormat(module),
+		Name:       structure.PublicNameFormat(name),
 	}
 }

@@ -1,12 +1,17 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/command/gen/atom/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
+
+func ModelPath() string {
+	return "core/model"
+}
 
 func RunModel(m component.Manager) *cobra.Command {
 	var (
@@ -39,17 +44,14 @@ func RunModel(m component.Manager) *cobra.Command {
 }
 
 func MakeModelComponent(m component.Manager, module, name string) filesystem.File {
-	component := *New(ComponentInput{
+	return component.New(component.ComponentInput{
 		DestinationDirectory: m.AppendToModuleDirectory(module, ModelPath()),
 		Module:               module,
 		Name:                 name,
-		Suffix:               "",
 		HasTest:              true,
-	}, WithDefaultTemplate())
-
-	return NewFileFromAtom(component, constant.MODEL_TEMPLATE)
-}
-
-func ModelPath() string {
-	return "core/model"
+	}).Componetize(component.ComponetizeInput{
+		TemplateName: constant.MODEL_TEMPLATE,
+		TemplateData: structure.NewDefaultData(name),
+		FileName:     name,
+	})
 }

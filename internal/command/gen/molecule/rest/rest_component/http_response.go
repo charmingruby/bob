@@ -1,7 +1,6 @@
 package rest_component
 
 import (
-	"github.com/charmingruby/bob/internal/command/gen/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
@@ -17,18 +16,13 @@ func MakeRestUtilComponent(m component.Manager) filesystem.File {
 		panic(err)
 	}
 
-	component := atom.New(atom.ComponentInput{
+	return component.New(component.ComponentInput{
 		Module: pkg,
 		DestinationDirectory: m.AppendToModuleDirectory(
 			constant.COMMON_MODULE,
 			"transport/rest"),
-	})
-
-	return atom.MakeCustomComponent(atom.CustomComponentInput{
-		BaseComponent: *component,
-		TemplateName:  constant.REST_HTTP_RESPONSE_TEMPLATE,
-		TemplateData:  nil,
-		FileName:      "response",
-		FileSuffix:    "",
+	}).Componetize(component.ComponetizeInput{
+		TemplateName: constant.REST_HTTP_RESPONSE_TEMPLATE,
+		FileName:     "response",
 	})
 }

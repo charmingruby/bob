@@ -1,7 +1,6 @@
 package library
 
 import (
-	"github.com/charmingruby/bob/internal/command/gen/atom"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
@@ -15,21 +14,12 @@ func MakeValidatorComponent(m component.Manager) filesystem.File {
 		panic(err)
 	}
 
-	component := atom.New(atom.ComponentInput{
+	return component.New(component.ComponentInput{
 		Module:               constant.COMMON_MODULE,
 		Name:                 "validator",
-		Suffix:               "",
 		DestinationDirectory: m.AppendToModuleDirectory(constant.COMMON_MODULE, "validation"),
-		HasTest:              false,
+	}).Componetize(component.ComponetizeInput{
+		TemplateName: constant.VALIDATION_LIBRARY_TEMPLATE,
+		FileName:     "validator",
 	})
-
-	return atom.MakeCustomComponent(
-		atom.CustomComponentInput{
-			BaseComponent: *component,
-			TemplateName:  constant.VALIDATION_LIBRARY_TEMPLATE,
-			TemplateData:  nil,
-			FileName:      component.Name,
-			FileSuffix:    "",
-		},
-	)
 }

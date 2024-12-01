@@ -3,7 +3,6 @@ package rest_component
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/command/gen/atom"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
@@ -11,7 +10,7 @@ import (
 )
 
 func makeExchangeComponent(m component.Manager, module, name, exchange string) filesystem.File {
-	component := atom.New(atom.ComponentInput{
+	return component.New(component.ComponentInput{
 		Module: module,
 		Name:   name,
 		Suffix: exchange,
@@ -19,15 +18,11 @@ func makeExchangeComponent(m component.Manager, module, name, exchange string) f
 			module,
 			fmt.Sprintf("transport/rest/dto/%s", exchange),
 		),
-		HasTest: false,
-	})
-
-	return atom.MakeCustomComponent(atom.CustomComponentInput{
-		BaseComponent: *component,
-		TemplateName:  constant.REST_EXCHANGE_TEMPLATE,
-		TemplateData:  structure.NewExchangeData(exchange, name),
-		FileName:      name,
-		FileSuffix:    exchange,
+	}).Componetize(component.ComponetizeInput{
+		TemplateName: constant.REST_EXCHANGE_TEMPLATE,
+		TemplateData: structure.NewExchangeData(exchange, name),
+		FileName:     name,
+		FileSuffix:   exchange,
 	})
 }
 
