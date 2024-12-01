@@ -1,4 +1,4 @@
-package atom
+package rest_component
 
 import (
 	"fmt"

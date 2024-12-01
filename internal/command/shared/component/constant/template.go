@@ -12,4 +12,7 @@ const (
 	REST_EXCHANGE_TEMPLATE                    = "molecule/rest/exchange"
 	SERVICE_REGISTRY_TEMPLATE                 = "molecule/service/registry"
 	SERVICE_REGISTRY_WITH_REPOSITORY_TEMPLATE = "molecule/service/registry_with_repository"
+
+	// LIBRARY
+	VALIDATION_LIBRARY_TEMPLATE = "library/validator"
 )

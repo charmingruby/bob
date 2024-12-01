@@ -1,4 +1,4 @@
-package atom
+package service_component
 
 import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"

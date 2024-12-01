@@ -2,7 +2,8 @@ package rest
 
 import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"
-	restAtom "github.com/charmingruby/bob/internal/command/gen/molecule/rest/atom"
+	"github.com/charmingruby/bob/internal/command/gen/library"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/rest_component"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
@@ -39,6 +40,12 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
+	if err := filesystem.GenerateFile(
+		library.MakeValidatorComponent(m),
+	); err != nil {
+		panic(err)
+	}
+
 	if err := filesystem.GenerateMultipleDirectories(
 		m.AppendToModuleDirectory(module, "transport/rest"),
 		[]string{"endpoint", "dto"},
@@ -54,7 +61,7 @@ func MakeRest(m component.Manager, module string) {
 	}
 
 	if err := filesystem.GenerateFile(
-		restAtom.MakeRestRegistryComponent(
+		rest_component.MakeRestRegistryComponent(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(module),
 			module,
@@ -72,7 +79,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(restAtom.MakeRequest(
+	if err := filesystem.GenerateFile(rest_component.MakeRequest(
 		m,
 		module,
 		actioName,
@@ -80,7 +87,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(restAtom.MakeResponse(
+	if err := filesystem.GenerateFile(rest_component.MakeResponse(
 		m,
 		module,
 		actioName,
