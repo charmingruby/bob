@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunCore(m component.Manager) *cobra.Command {
+func RunCore(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 	)
@@ -31,12 +31,12 @@ func RunCore(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeCore(m component.Manager, module string) {
-	if err := filesystem.GenerateDirectory(m.ModuleDirectory(module), "core"); err != nil {
+func MakeCore(m filesystem.Manager, module string) {
+	if err := m.GenerateDirectory(m.ModuleDirectory(module), "core"); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateMultipleDirectories(
+	if err := m.GenerateMultipleDirectories(
 		component.ModulePath(m.SourceDirectory, module, CorePath()),
 		[]string{"service", "model", "repository"},
 	); err != nil {
@@ -47,11 +47,11 @@ func MakeCore(m component.Manager, module string) {
 
 	service.MakeService(m, sampleActor, module)
 
-	if err := filesystem.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
+	if err := m.GenerateFile(atom.MakeRepositoryComponent(m, module, sampleActor)); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(atom.MakeModelComponent(m, module, sampleActor)); err != nil {
+	if err := m.GenerateFile(atom.MakeModelComponent(m, module, sampleActor)); err != nil {
 		panic(err)
 	}
 }

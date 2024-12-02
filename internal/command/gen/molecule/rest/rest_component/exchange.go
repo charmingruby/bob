@@ -9,7 +9,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func makeExchangeComponent(m component.Manager, module, name, exchange string) filesystem.File {
+func makeExchangeComponent(m filesystem.Manager, module, name, exchange string) filesystem.File {
 	return component.New(component.ComponentInput{
 		Module: module,
 		Name:   name,
@@ -26,13 +26,13 @@ func makeExchangeComponent(m component.Manager, module, name, exchange string) f
 	})
 }
 
-func MakeRequest(m component.Manager, module, handlerName string) filesystem.File {
+func MakeRequest(m filesystem.Manager, module, handlerName string) filesystem.File {
 	exchangeName := "request"
 
 	return makeExchangeComponent(m, module, handlerName, exchangeName)
 }
 
-func MakeResponse(m component.Manager, module, handlerName string) filesystem.File {
+func MakeResponse(m filesystem.Manager, module, handlerName string) filesystem.File {
 	exchangeName := "response"
 
 	return makeExchangeComponent(m, module, handlerName, exchangeName)

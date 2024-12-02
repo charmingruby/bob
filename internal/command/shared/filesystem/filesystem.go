@@ -6,32 +6,32 @@ import (
 	"github.com/charmingruby/bob/config"
 )
 
-type FileSystem struct {
+type Manager struct {
 	Data            string
 	SourceDirectory string
 }
 
-func New(config config.Configuration) FileSystem {
+func New(config config.Configuration) Manager {
 	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir
 	if config.BaseConfiguration.RootDir == "." {
 		sourceDirectory = config.BaseConfiguration.SourceDir
 	}
 
-	return FileSystem{
+	return Manager{
 		Data:            config.BaseConfiguration.BaseURL + "/" + config.BaseConfiguration.ProjectName,
 		SourceDirectory: sourceDirectory,
 	}
 }
 
-func (m *FileSystem) ModuleDirectory(module string) string {
+func (m *Manager) ModuleDirectory(module string) string {
 	return m.SourceDirectory + "/" + module
 }
 
-func (m *FileSystem) AppendToModuleDirectory(module, path string) string {
+func (m *Manager) AppendToModuleDirectory(module, path string) string {
 	return m.ModuleDirectory(module) + "/" + path
 }
 
-func (m *FileSystem) DependencyPath(module string) string {
+func (m *Manager) DependencyPath(module string) string {
 	return fmt.Sprintf("%s/%s", m.Data, m.SourceDirectory)
 }
 

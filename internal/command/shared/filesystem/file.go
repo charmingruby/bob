@@ -28,7 +28,7 @@ func (f *File) format() {
 	f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
 }
 
-func GenerateFile(file File) error {
+func (f *Manager) GenerateFile(file File) error {
 	file.format()
 
 	if file.HasTest {

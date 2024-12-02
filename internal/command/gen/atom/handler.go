@@ -13,7 +13,7 @@ func HandlerPath() string {
 	return "transport/rest/endpoint"
 }
 
-func RunHandler(m component.Manager) *cobra.Command {
+func RunHandler(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -27,7 +27,7 @@ func RunHandler(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := filesystem.GenerateFile(MakeHandlerComponent(
+			if err := m.GenerateFile(MakeHandlerComponent(
 				m.SourceDirectory,
 				module,
 				name,

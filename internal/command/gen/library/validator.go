@@ -6,8 +6,8 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func MakeValidatorComponent(m component.Manager) filesystem.File {
-	if err := filesystem.GenerateNestedDirectories(
+func MakeValidatorComponent(m filesystem.Manager) filesystem.File {
+	if err := m.GenerateNestedDirectories(
 		m.SourceDirectory,
 		[]string{constant.COMMON_MODULE, "validation"},
 	); err != nil {

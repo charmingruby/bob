@@ -13,7 +13,7 @@ func getDestinationDirectory(baseDir string) (string, error) {
 	return absPath, nil
 }
 
-func GenerateDirectory(baseDir, directory string) error {
+func (f *Manager) GenerateDirectory(baseDir, directory string) error {
 	currentDir, err := getDestinationDirectory(baseDir)
 	if err != nil {
 		return err
@@ -29,7 +29,7 @@ func GenerateDirectory(baseDir, directory string) error {
 	return nil
 }
 
-func GenerateNestedDirectories(baseDir string, directories []string) error {
+func (f *Manager) GenerateNestedDirectories(baseDir string, directories []string) error {
 	currentDir, err := getDestinationDirectory(baseDir)
 	if err != nil {
 		return err
@@ -47,7 +47,7 @@ func GenerateNestedDirectories(baseDir string, directories []string) error {
 	return nil
 }
 
-func GenerateMultipleDirectories(baseDir string, directories []string) error {
+func (f *Manager) GenerateMultipleDirectories(baseDir string, directories []string) error {
 	currentDir, err := getDestinationDirectory(baseDir)
 	if err != nil {
 		return err

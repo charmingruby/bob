@@ -13,7 +13,7 @@ func ModelPath() string {
 	return "core/model"
 }
 
-func RunModel(m component.Manager) *cobra.Command {
+func RunModel(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -27,7 +27,7 @@ func RunModel(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := filesystem.GenerateFile(MakeModelComponent(
+			if err := m.GenerateFile(MakeModelComponent(
 				m,
 				module,
 				name,
@@ -43,7 +43,7 @@ func RunModel(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeModelComponent(m component.Manager, module, name string) filesystem.File {
+func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
 		DestinationDirectory: m.AppendToModuleDirectory(module, ModelPath()),
 		Module:               module,

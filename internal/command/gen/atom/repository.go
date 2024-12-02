@@ -13,7 +13,7 @@ func RepositoryPath() string {
 	return "core/repository"
 }
 
-func RunRepository(m component.Manager) *cobra.Command {
+func RunRepository(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -27,7 +27,7 @@ func RunRepository(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := filesystem.GenerateFile(MakeRepositoryComponent(
+			if err := m.GenerateFile(MakeRepositoryComponent(
 				m,
 				module,
 				name,
@@ -43,7 +43,7 @@ func RunRepository(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeRepositoryComponent(m component.Manager, module, name string) filesystem.File {
+func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
 		DestinationDirectory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
 		Module:               module,

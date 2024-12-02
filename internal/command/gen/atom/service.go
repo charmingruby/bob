@@ -13,7 +13,7 @@ func ServicePath() string {
 	return "core/service"
 }
 
-func RunService(m component.Manager) *cobra.Command {
+func RunService(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 		name   string
@@ -27,7 +27,7 @@ func RunService(m component.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := filesystem.GenerateFile(MakeServiceComponent(
+			if err := m.GenerateFile(MakeServiceComponent(
 				m.SourceDirectory,
 				module,
 				name,

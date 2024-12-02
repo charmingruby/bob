@@ -4,14 +4,13 @@ import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"
 	"github.com/charmingruby/bob/internal/command/gen/library"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/rest_component"
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 
-func RunRest(m component.Manager) *cobra.Command {
+func RunRest(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 	)
@@ -33,48 +32,48 @@ func RunRest(m component.Manager) *cobra.Command {
 	return cmd
 }
 
-func MakeRest(m component.Manager, module string) {
-	if err := filesystem.GenerateNestedDirectories(
+func MakeRest(m filesystem.Manager, module string) {
+	if err := m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
 		[]string{"transport", "rest"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(
+	if err := m.GenerateFile(
 		library.MakeValidatorComponent(m),
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateDirectory(
+	if err := m.GenerateDirectory(
 		m.SourceDirectory,
 		constant.COMMON_MODULE,
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(
+	if err := m.GenerateFile(
 		rest_component.MakeRestUtilComponent(m),
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateMultipleDirectories(
+	if err := m.GenerateMultipleDirectories(
 		m.AppendToModuleDirectory(module, "transport/rest"),
 		[]string{"endpoint", "dto"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateMultipleDirectories(
+	if err := m.GenerateMultipleDirectories(
 		m.AppendToModuleDirectory(module, "transport/rest/dto"),
 		[]string{"request", "response"},
 	); err != nil {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(
+	if err := m.GenerateFile(
 		rest_component.MakeRestRegistryComponent(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(module),
@@ -85,7 +84,7 @@ func MakeRest(m component.Manager, module string) {
 
 	actioName := "ping"
 
-	if err := filesystem.GenerateFile(atom.MakeHandlerComponent(
+	if err := m.GenerateFile(atom.MakeHandlerComponent(
 		m.SourceDirectory,
 		module,
 		actioName,
@@ -93,7 +92,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(rest_component.MakeRequest(
+	if err := m.GenerateFile(rest_component.MakeRequest(
 		m,
 		module,
 		actioName,
@@ -101,7 +100,7 @@ func MakeRest(m component.Manager, module string) {
 		panic(err)
 	}
 
-	if err := filesystem.GenerateFile(rest_component.MakeResponse(
+	if err := m.GenerateFile(rest_component.MakeResponse(
 		m,
 		module,
 		actioName,
