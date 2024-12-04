@@ -13,6 +13,8 @@ const (
 	REST_RESPONSE_HELPER_TEMPLATE             = "molecule/rest/response_helper"
 	REST_REQUEST_HELPER_TEMPLATE              = "molecule/rest/request_helper"
 	REST_HANDLER_TEMPLATE                     = "molecule/rest/handler"
+	REST_BASE_SERVER_MIDDLEWARE               = "molecule/rest/base_server_middleware"
+	REST_SERVER                               = "molecule/rest/server"
 	SERVICE_REGISTRY_TEMPLATE                 = "molecule/service/registry"
 	SERVICE_REGISTRY_WITH_REPOSITORY_TEMPLATE = "molecule/service/registry_with_repository"
 

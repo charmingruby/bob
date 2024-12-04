@@ -21,9 +21,9 @@ func MakeRest(m filesystem.Manager, module string) {
 		panic(err)
 	}
 
-	if err := m.GenerateDirectory(
+	if err := m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		constant.COMMON_MODULE,
+		[]string{constant.COMMON_MODULE, "transport", "rest"},
 	); err != nil {
 		panic(err)
 	}
@@ -45,6 +45,20 @@ func MakeRest(m filesystem.Manager, module string) {
 		m.AppendToModuleDirectory(module, "transport/rest/dto"),
 		[]string{"request", "response"},
 	); err != nil {
+		panic(err)
+	}
+
+	if err := m.GenerateFile(
+		rest_component.MakeBaseServerMiddlewareComponent(
+			m,
+		)); err != nil {
+		panic(err)
+	}
+
+	if err := m.GenerateFile(
+		rest_component.MakeServerComponent(
+			m,
+		)); err != nil {
 		panic(err)
 	}
 
@@ -90,4 +104,5 @@ func MakeRest(m filesystem.Manager, module string) {
 	)); err != nil {
 		panic(err)
 	}
+
 }
