@@ -45,13 +45,13 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 
 func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
-		DestinationDirectory: component.ModulePath(m.SourceDirectory, module, RepositoryPath()),
+		DestinationDirectory: filesystem.ModulePath(m.SourceDirectory, module, RepositoryPath()),
 		Module:               module,
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(component.ComponetizeInput{
 		TemplateName: constant.REPOSITORY_TEMPLATE,
-		TemplateData: structure.NewDependentPackageData(m.DependencyPath(module), module, name),
+		TemplateData: structure.NewDependentPackageData(m.DependencyPath(), module, name),
 		FileName:     name,
 		FileSuffix:   "repository",
 	})

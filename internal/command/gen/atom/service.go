@@ -48,7 +48,7 @@ func MakeServiceComponent(sourceDirectory, module, name string) filesystem.File 
 		Module:               module,
 		Name:                 name,
 		Suffix:               "service",
-		DestinationDirectory: component.ModulePath(sourceDirectory, module, ServicePath()),
+		DestinationDirectory: filesystem.ModulePath(sourceDirectory, module, ServicePath()),
 	}).Componetize(component.ComponetizeInput{
 		TemplateName: constant.SERVICE_TEMPLATE,
 		TemplateData: structure.NewDefaultData(name),

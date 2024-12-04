@@ -11,7 +11,7 @@ func MakeServiceRegistryComponent(m filesystem.Manager, module, name string) fil
 	return atom.MakeRegistryComponent(atom.RegistryParams{
 		Module:               module,
 		TemplateName:         constant.SERVICE_REGISTRY_WITH_REPOSITORY_TEMPLATE,
-		TemplateData:         structure.NewServiceWithRepository(m.DependencyPath(module), module, name),
+		TemplateData:         structure.NewServiceWithRepository(m.DependencyPath(), module, name),
 		RegistryName:         "service",
 		DestinationDirectory: m.AppendToModuleDirectory(module, "/core/service"),
 	})

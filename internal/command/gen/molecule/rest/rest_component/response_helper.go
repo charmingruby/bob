@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func MakeRestUtilComponent(m filesystem.Manager) filesystem.File {
+func MakeResponseHelperComponent(m filesystem.Manager) filesystem.File {
 	pkg := "rest"
 
 	if err := m.GenerateNestedDirectories(
@@ -20,9 +20,10 @@ func MakeRestUtilComponent(m filesystem.Manager) filesystem.File {
 		Module: pkg,
 		DestinationDirectory: m.AppendToModuleDirectory(
 			constant.COMMON_MODULE,
-			"transport/rest"),
+			"transport/rest",
+		),
 	}).Componetize(component.ComponetizeInput{
-		TemplateName: constant.REST_HTTP_RESPONSE_TEMPLATE,
+		TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
 		FileName:     "response",
 	})
 }

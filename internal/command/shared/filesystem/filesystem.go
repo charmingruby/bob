@@ -31,7 +31,7 @@ func (m *Manager) AppendToModuleDirectory(module, path string) string {
 	return m.ModuleDirectory(module) + "/" + path
 }
 
-func (m *Manager) DependencyPath(module string) string {
+func (m *Manager) DependencyPath() string {
 	return fmt.Sprintf("%s/%s", m.Data, m.SourceDirectory)
 }
 

@@ -10,7 +10,9 @@ const (
 	// MOLECULE
 	REST_REGISTRY_TEMPLATE                    = "molecule/rest/registry"
 	REST_EXCHANGE_TEMPLATE                    = "molecule/rest/exchange"
-	REST_HTTP_RESPONSE_TEMPLATE               = "molecule/rest/http_response"
+	REST_RESPONSE_HELPER_TEMPLATE             = "molecule/rest/response_helper"
+	REST_REQUEST_HELPER_TEMPLATE              = "molecule/rest/request_helper"
+	REST_HANDLER_TEMPLATE                     = "molecule/rest/handler"
 	SERVICE_REGISTRY_TEMPLATE                 = "molecule/service/registry"
 	SERVICE_REGISTRY_WITH_REPOSITORY_TEMPLATE = "molecule/service/registry_with_repository"
 

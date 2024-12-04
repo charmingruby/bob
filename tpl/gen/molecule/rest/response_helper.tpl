@@ -29,3 +29,7 @@ func newResponse[T any](w http.ResponseWriter, code int, message string, data T)
 func OkResponse[T any](w http.ResponseWriter, message string, data T) {
 	newResponse[*T](w, http.StatusOK, message, &data)
 }
+
+func BadRequestErrorResponse[T any](w http.ResponseWriter, message string) {
+	newResponse[*T](w, http.StatusBadRequest, message, nil)
+}

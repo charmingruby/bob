@@ -48,7 +48,7 @@ func MakeHandlerComponent(sourceDirectory, module, name string) filesystem.File 
 		Module:               module,
 		Name:                 name,
 		Suffix:               "handler",
-		DestinationDirectory: component.ModulePath(sourceDirectory, module, HandlerPath()),
+		DestinationDirectory: filesystem.ModulePath(sourceDirectory, module, HandlerPath()),
 	}).Componetize(component.ComponetizeInput{
 		TemplateName: constant.HANDLER_TEMPLATE,
 		TemplateData: structure.NewDefaultData(name),

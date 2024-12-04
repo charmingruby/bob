@@ -1,21 +1,23 @@
 package endpoint
 
 import (
-	"fmt"
 	"net/http"
 
-	"github.com/charmingruby/txgo/internal/giftshop/transport/rest/dto/request"
-	"github.com/charmingruby/txgo/internal/shared/transport/rest"
+	"{{ .SourcePath }}/{{ .Module }}/transport/rest/dto/response"
+	"{{ .SourcePath }}/{{ .Module }}/transport/rest/dto/request"
+	"{{ .SourcePath }}/{{ .CommonModule }}/transport/rest"
 )
 
-func (e *Endpoint) createWalletHandler() http.HandlerFunc {
+func (e *Endpoint) make{{ .Name }}Handler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-			req, err := rest.ParseRequest[request.CreateWalletRequest](*e.validator, r)
-			if err != nil {
-				rest.BadRequestErrorResponse[any](w, err.Error())
-				return
-			}
-        
-		rest.CreatedResponse[any](w, "wallet")
+		req, err := rest.ParseRequest[request.PingRequest](r)
+		if err != nil {
+			rest.BadRequestErrorResponse[any](w, err.Error())
+			return
+		}
+
+		rest.OkResponse[response.PingResponse](w, "success", response.PingResponse{
+			Name: req.Name,
+		})
 	}
 }

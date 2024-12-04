@@ -3,7 +3,6 @@ package molecule
 import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/service"
-	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -37,7 +36,7 @@ func MakeCore(m filesystem.Manager, module string) {
 	}
 
 	if err := m.GenerateMultipleDirectories(
-		component.ModulePath(m.SourceDirectory, module, CorePath()),
+		filesystem.ModulePath(m.SourceDirectory, module, CorePath()),
 		[]string{"service", "model", "repository"},
 	); err != nil {
 		panic(err)
