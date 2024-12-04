@@ -2,10 +2,11 @@ package gen
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command/gen/atom"
-	"github.com/charmingruby/bob/internal/command/gen/molecule"
-	"github.com/charmingruby/bob/internal/command/gen/molecule/rest"
-	"github.com/charmingruby/bob/internal/command/gen/molecule/service"
+	atomCommand "github.com/charmingruby/bob/internal/command/gen/atom/cmd"
+	coreCommand "github.com/charmingruby/bob/internal/command/gen/molecule/core/cmd"
+	restCommand "github.com/charmingruby/bob/internal/command/gen/molecule/rest/cmd"
+	serviceCommand "github.com/charmingruby/bob/internal/command/gen/molecule/service/cmd"
+
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -33,19 +34,19 @@ func (c *Command) Setup() {
 		Short: "Generates pure components (or atoms)",
 	}
 
-	atomCmd.AddCommand(atom.RunModel(c.fs))
-	atomCmd.AddCommand(atom.RunService(c.fs))
-	atomCmd.AddCommand(atom.RunHandler(c.fs))
-	atomCmd.AddCommand(atom.RunRepository(c.fs))
+	atomCmd.AddCommand(atomCommand.RunModel(c.fs))
+	atomCmd.AddCommand(atomCommand.RunService(c.fs))
+	atomCmd.AddCommand(atomCommand.RunRepository(c.fs))
 
 	moleculeCmd := &cobra.Command{
 		Use:   "mol",
 		Short: "Generates conventional molecules, grouping atoms",
 	}
 
-	moleculeCmd.AddCommand(rest.RunRest(c.fs))
-	moleculeCmd.AddCommand(service.RunService(c.fs))
-	moleculeCmd.AddCommand(molecule.RunCore(c.fs))
+	moleculeCmd.AddCommand(restCommand.RunRest(c.fs))
+	moleculeCmd.AddCommand(restCommand.RunHandler(c.fs))
+	moleculeCmd.AddCommand(serviceCommand.RunService(c.fs))
+	moleculeCmd.AddCommand(coreCommand.RunCore(c.fs))
 
 	genCmd.AddCommand(atomCmd)
 	genCmd.AddCommand(moleculeCmd)

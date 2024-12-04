@@ -21,6 +21,22 @@ func RunHandler(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
+			if err := m.GenerateFile(rest_component.MakeRequest(
+				m,
+				module,
+				name,
+			)); err != nil {
+				panic(err)
+			}
+
+			if err := m.GenerateFile(rest_component.MakeResponse(
+				m,
+				module,
+				name,
+			)); err != nil {
+				panic(err)
+			}
+
 			if err := m.GenerateFile(rest_component.MakeHandlerComponent(
 				m,
 				module,
