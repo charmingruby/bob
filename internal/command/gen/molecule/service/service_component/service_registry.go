@@ -2,8 +2,8 @@ package service_component
 
 import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/service/constant"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/service/structure"
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 

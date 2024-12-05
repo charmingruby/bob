@@ -1,5 +1,5 @@
 package constant
 
 const (
-	COMMON_MODULE = "shared"
+	SHARED_MODULE = "shared"
 )

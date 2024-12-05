@@ -2,8 +2,8 @@ package rest_component
 
 import (
 	"github.com/charmingruby/bob/internal/command/gen/atom"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/structure"
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 

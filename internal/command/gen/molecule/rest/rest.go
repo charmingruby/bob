@@ -23,7 +23,7 @@ func MakeRest(m filesystem.Manager, module string) {
 
 	if err := m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{constant.COMMON_MODULE, "transport", "rest"},
+		[]string{constant.SHARED_MODULE, "transport", "rest"},
 	); err != nil {
 		panic(err)
 	}
@@ -104,5 +104,4 @@ func MakeRest(m filesystem.Manager, module string) {
 	)); err != nil {
 		panic(err)
 	}
-
 }

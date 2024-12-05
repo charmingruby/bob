@@ -6,9 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func CorePath() string {
-	return "core"
-}
+const corePath = "core"
 
 func MakeCore(m filesystem.Manager, module string) {
 	if err := m.GenerateDirectory(m.ModuleDirectory(module), "core"); err != nil {
@@ -16,7 +14,7 @@ func MakeCore(m filesystem.Manager, module string) {
 	}
 
 	if err := m.GenerateMultipleDirectories(
-		filesystem.ModulePath(m.SourceDirectory, module, CorePath()),
+		filesystem.ModulePath(m.SourceDirectory, module, corePath),
 		[]string{"service", "model", "repository"},
 	); err != nil {
 		panic(err)

@@ -1,21 +1,20 @@
 package rest_component
 
 import (
+	restConstant "github.com/charmingruby/bob/internal/command/gen/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func ServerPath() string {
-	return "transport/rest"
-}
+const serverPath = "transport/rest"
 
 func MakeServerComponent(m filesystem.Manager) filesystem.File {
 	return component.New(component.ComponentInput{
 		Module:               "rest",
-		DestinationDirectory: m.AppendToModuleDirectory(constant.COMMON_MODULE, ServerPath()),
+		DestinationDirectory: m.AppendToModuleDirectory(constant.SHARED_MODULE, serverPath),
 	}).Componetize(component.ComponetizeInput{
-		TemplateName: constant.REST_SERVER,
+		TemplateName: restConstant.REST_SERVER,
 		FileName:     "server",
 	})
 }

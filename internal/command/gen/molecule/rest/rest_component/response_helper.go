@@ -1,6 +1,7 @@
 package rest_component
 
 import (
+	restConstant "github.com/charmingruby/bob/internal/command/gen/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
@@ -10,7 +11,7 @@ func MakeResponseHelperComponent(m filesystem.Manager) filesystem.File {
 	pkg := "rest"
 
 	if err := m.GenerateNestedDirectories(
-		m.ModuleDirectory(constant.COMMON_MODULE),
+		m.ModuleDirectory(constant.SHARED_MODULE),
 		[]string{"transport", pkg},
 	); err != nil {
 		panic(err)
@@ -19,11 +20,11 @@ func MakeResponseHelperComponent(m filesystem.Manager) filesystem.File {
 	return component.New(component.ComponentInput{
 		Module: pkg,
 		DestinationDirectory: m.AppendToModuleDirectory(
-			constant.COMMON_MODULE,
+			constant.SHARED_MODULE,
 			"transport/rest",
 		),
 	}).Componetize(component.ComponetizeInput{
-		TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
+		TemplateName: restConstant.REST_RESPONSE_HELPER_TEMPLATE,
 		FileName:     "response",
 	})
 }

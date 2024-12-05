@@ -1,19 +1,17 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/command/gen/atom/constant"
 	"github.com/charmingruby/bob/internal/command/gen/atom/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func RepositoryPath() string {
-	return "core/repository"
-}
+var repositoryPath = "core/repository"
 
 func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
-		DestinationDirectory: filesystem.ModulePath(m.SourceDirectory, module, RepositoryPath()),
+		DestinationDirectory: filesystem.ModulePath(m.SourceDirectory, module, repositoryPath),
 		Module:               module,
 		Name:                 name,
 		Suffix:               "repository",
