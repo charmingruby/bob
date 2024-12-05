@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/rest_component"
-	"github.com/charmingruby/bob/internal/command/shared/component/input"
+	"github.com/charmingruby/bob/internal/command/shared/cli/input"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 	"github.com/spf13/cobra"
 )
