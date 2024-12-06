@@ -2,13 +2,13 @@ package input
 
 import "fmt"
 
-type arg struct {
+type Arg struct {
 	FieldName  string
 	Value      string
 	IsRequired bool
 }
 
-func validateArgsList(args []arg) error {
+func ValidateArgsList(args []Arg) error {
 	for _, arg := range args {
 		if err := validateArg(arg); err != nil {
 			return err
@@ -22,7 +22,7 @@ func isArgEmpty(v string) bool {
 	return v == ""
 }
 
-func validateArg(arg arg) error {
+func validateArg(arg Arg) error {
 	if arg.IsRequired && isArgEmpty(arg.Value) {
 		return fmt.Errorf("missing state for %s argument", arg.FieldName)
 	}

@@ -8,7 +8,7 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
 
-func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesystem.File {
+func MakeRepositoryComponent(m filesystem.Manager, module, name, database string) filesystem.File {
 	prepareDirectoriesForRepository(m, module)
 
 	return component.New(component.ComponentInput{
@@ -17,7 +17,7 @@ func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesyst
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(component.ComponetizeInput{
-		TemplateName: constant.REPOSITORY_TEMPLATE,
+		TemplateName: constant.REPOSITORY_CONTRACT_TEMPLATE,
 		TemplateData: structure.NewDependentPackageData(m.DependencyPath(), module, name),
 		FileName:     name,
 		FileSuffix:   "repository",

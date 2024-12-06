@@ -19,3 +19,13 @@ func CorePath(moduleDir string, complementaryPath []string) string {
 
 	return path
 }
+
+func PersistencePath(moduleDir string, complementaryPath []string) string {
+	var path = moduleDir + "/" + PERSISTENCE_PACKAGE
+
+	for _, p := range complementaryPath {
+		path += "/" + p
+	}
+
+	return path
+}

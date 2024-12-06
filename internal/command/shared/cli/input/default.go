@@ -6,7 +6,7 @@ type DefaultCommandInput struct {
 }
 
 func ValidateDefaultCommandInput(module, name string) error {
-	args := []arg{
+	args := []Arg{
 		{
 			FieldName:  "module",
 			Value:      module,
@@ -19,7 +19,7 @@ func ValidateDefaultCommandInput(module, name string) error {
 		},
 	}
 
-	if err := validateArgsList(args); err != nil {
+	if err := ValidateArgsList(args); err != nil {
 		return err
 	}
 
@@ -27,7 +27,7 @@ func ValidateDefaultCommandInput(module, name string) error {
 }
 
 func ValidateOnlyModuleCommandInput(module string) error {
-	arg := arg{
+	arg := Arg{
 		FieldName:  "module",
 		Value:      module,
 		IsRequired: true,
