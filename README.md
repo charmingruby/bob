@@ -16,7 +16,7 @@
 │           ├── model // domain entities
 │           ├── repository // repository contracts
 │           └── service // implementation of use cases
-│       └── persistence // persistence stuff
+│       └── database // persistence stuff
 │           └── database_choosen // database choosen module
 │               └── module_a_repository.go // implementation of a repository contract
 │       ├── transport // communication module

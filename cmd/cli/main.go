@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/command"
+	"github.com/charmingruby/bob/internal/cli/command"
 	"github.com/spf13/cobra"
 )
 
