@@ -2,13 +2,13 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/molecule/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func makeExchangeComponent(m filesystem.Manager, module, name, exchange string) filesystem.File {
+func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
 	return base.New(base.ComponentInput{
 		Package: module,
 		Name:    name,
@@ -19,7 +19,7 @@ func makeExchangeComponent(m filesystem.Manager, module, name, exchange string) 
 			[]string{scaffold.DTO_PACKAGE, exchange},
 		),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: molecule.REST_EXCHANGE_TEMPLATE,
+		TemplateName: constant.REST_EXCHANGE_TEMPLATE,
 		TemplateData: data.NewExchangeData(exchange, name),
 		FileName:     name,
 		FileSuffix:   exchange,
@@ -36,11 +36,11 @@ func prepareDirectoriesForExchange(m filesystem.Manager, module, exchange string
 func MakeRequest(m filesystem.Manager, module, handlerName string) filesystem.File {
 	exchange := "request"
 	prepareDirectoriesForExchange(m, module, exchange)
-	return makeExchangeComponent(m, module, handlerName, exchange)
+	return makeExchange(m, module, handlerName, exchange)
 }
 
 func MakeResponse(m filesystem.Manager, module, handlerName string) filesystem.File {
 	exchange := "response"
 	prepareDirectoriesForExchange(m, module, exchange)
-	return makeExchangeComponent(m, module, handlerName, exchange)
+	return makeExchange(m, module, handlerName, exchange)
 }

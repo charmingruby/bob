@@ -21,7 +21,7 @@ func RunModel(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			model := atom.MakeModelComponent(m, module, name)
+			model := atom.MakeModel(m, module, name)
 
 			if err := m.GenerateFile(model); err != nil {
 				panic(err)

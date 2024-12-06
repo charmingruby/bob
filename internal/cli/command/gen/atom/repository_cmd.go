@@ -22,12 +22,12 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			repository := atom.MakeRepositoryComponent(m, module, name, database)
+			repository := atom.MakeRepository(m, module, name, database)
 			if err := m.GenerateFile(repository); err != nil {
 				panic(err)
 			}
 
-			persistenceRepository := atom.MakePersistenceRepositoryComponent(m, module, name, database)
+			persistenceRepository := atom.MakePersistenceRepository(m, module, name, database)
 			if err := m.GenerateFile(persistenceRepository); err != nil {
 				panic(err)
 			}

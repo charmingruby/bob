@@ -1,4 +1,4 @@
-package rest
+package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/component/library"
@@ -8,25 +8,25 @@ import (
 
 func MakeRest(m filesystem.Manager, module string) {
 	if err := m.GenerateFile(
-		library.MakeValidatorComponent(m),
+		library.MakeValidator(m),
 	); err != nil {
 		panic(err)
 	}
 
 	if err := m.GenerateFile(
-		component.MakeRequestHelperComponent(m),
+		component.MakeRequestHelper(m),
 	); err != nil {
 		panic(err)
 	}
 	if err := m.GenerateFile(
-		component.MakeBaseServerMiddlewareComponent(
+		component.MakeBaseServerMiddleware(
 			m,
 		)); err != nil {
 		panic(err)
 	}
 
 	if err := m.GenerateFile(
-		component.MakeServerComponent(
+		component.MakeServer(
 			m,
 		)); err != nil {
 		panic(err)
@@ -34,7 +34,7 @@ func MakeRest(m filesystem.Manager, module string) {
 
 	actioName := "ping"
 
-	if err := m.GenerateFile(component.MakeHandlerComponent(
+	if err := m.GenerateFile(component.MakeHandler(
 		m,
 		module,
 		actioName,
@@ -43,7 +43,7 @@ func MakeRest(m filesystem.Manager, module string) {
 	}
 
 	if err := m.GenerateFile(
-		component.MakeHandlerRegistryComponent(
+		component.MakeHandlerRegistry(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(),
 			module,
@@ -51,11 +51,11 @@ func MakeRest(m filesystem.Manager, module string) {
 		panic(err)
 	}
 
-	if err := m.GenerateFile(component.MakeRequestHelperComponent(m)); err != nil {
+	if err := m.GenerateFile(component.MakeRequestHelper(m)); err != nil {
 		panic(err)
 	}
 
-	if err := m.GenerateFile(component.MakeResponseHelperComponent(m)); err != nil {
+	if err := m.GenerateFile(component.MakeResponseHelper(m)); err != nil {
 		panic(err)
 	}
 

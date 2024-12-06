@@ -35,6 +35,7 @@ func (c *Command) Setup() {
 	atomCmd.AddCommand(atom.RunModel(c.fs))
 	atomCmd.AddCommand(atom.RunService(c.fs))
 	atomCmd.AddCommand(atom.RunRepository(c.fs))
+	atomCmd.AddCommand(atom.RunHandler(c.fs))
 
 	moleculeCmd := &cobra.Command{
 		Use:   "mol",
@@ -42,7 +43,6 @@ func (c *Command) Setup() {
 	}
 
 	moleculeCmd.AddCommand(molecule.RunRest(c.fs))
-	moleculeCmd.AddCommand(molecule.RunHandler(c.fs))
 	moleculeCmd.AddCommand(molecule.RunService(c.fs))
 	moleculeCmd.AddCommand(molecule.RunCore(c.fs))
 

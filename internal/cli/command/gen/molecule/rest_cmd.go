@@ -2,7 +2,7 @@ package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule/rest"
+	"github.com/charmingruby/bob/internal/component/molecule"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -20,7 +20,7 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			rest.MakeRest(m, module)
+			molecule.MakeRest(m, module)
 		},
 	}
 

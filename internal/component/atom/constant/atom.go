@@ -1,4 +1,4 @@
-package atom
+package constant
 
 const (
 	ATOM_PREFIX = "atom"

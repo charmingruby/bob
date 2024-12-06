@@ -1,13 +1,14 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.File {
+func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForModel(m, module)
 
 	return base.New(base.ComponentInput{
@@ -16,7 +17,7 @@ func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.Fi
 		Name:                 name,
 		HasTest:              true,
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: MODEL_TEMPLATE,
+		TemplateName: constant.MODEL_TEMPLATE,
 		TemplateData: data.NewDefaultData(name),
 		FileName:     name,
 	})

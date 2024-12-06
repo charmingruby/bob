@@ -1,13 +1,14 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeServiceComponent(m filesystem.Manager, module, name string) filesystem.File {
+func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForService(m, module)
 
 	return base.New(base.ComponentInput{
@@ -16,7 +17,7 @@ func MakeServiceComponent(m filesystem.Manager, module, name string) filesystem.
 		Suffix:               "service",
 		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.SERVICE_PACKAGE}),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: SERVICE_TEMPLATE,
+		TemplateName: constant.SERVICE_TEMPLATE,
 		TemplateData: data.NewDefaultData(name),
 		FileName:     name,
 		FileSuffix:   "service",

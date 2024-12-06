@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule/service"
+	"github.com/charmingruby/bob/internal/component/molecule"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -30,7 +30,7 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			service.MakeService(m, repo, module)
+			molecule.MakeService(m, repo, module)
 		},
 	}
 

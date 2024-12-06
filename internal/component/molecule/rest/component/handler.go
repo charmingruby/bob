@@ -2,13 +2,13 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/molecule/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeHandlerComponent(m filesystem.Manager, module, name string) filesystem.File {
+func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForHandler(m, module)
 
 	return base.New(base.ComponentInput{
@@ -21,7 +21,7 @@ func MakeHandlerComponent(m filesystem.Manager, module, name string) filesystem.
 			[]string{scaffold.HANDLER_PACKAGE},
 		),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: molecule.REST_HANDLER_TEMPLATE,
+		TemplateName: constant.REST_HANDLER_TEMPLATE,
 		TemplateData: data.NewHandlerData(
 			m.DependencyPath(),
 			scaffold.SHARED_MODULE,

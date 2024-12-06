@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeValidatorComponent(m filesystem.Manager) filesystem.File {
+func MakeValidator(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForValidator(m, scaffold.SHARED_MODULE)
 
 	return base.New(base.ComponentInput{

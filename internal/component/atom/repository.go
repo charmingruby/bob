@@ -1,13 +1,14 @@
 package atom
 
 import (
+	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeRepositoryComponent(m filesystem.Manager, module, name, database string) filesystem.File {
+func MakeRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	prepareDirectoriesForRepository(m, module)
 
 	return base.New(base.ComponentInput{
@@ -16,7 +17,7 @@ func MakeRepositoryComponent(m filesystem.Manager, module, name, database string
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: REPOSITORY_CONTRACT_TEMPLATE,
+		TemplateName: constant.REPOSITORY_CONTRACT_TEMPLATE,
 		TemplateData: data.NewDependentPackageData(m.DependencyPath(), module, name),
 		FileName:     name,
 		FileSuffix:   "repository",

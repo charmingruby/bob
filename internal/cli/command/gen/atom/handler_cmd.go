@@ -1,4 +1,4 @@
-package molecule
+package atom
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -37,7 +37,7 @@ func RunHandler(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := m.GenerateFile(component.MakeHandlerComponent(
+			if err := m.GenerateFile(component.MakeHandler(
 				m,
 				module,
 				name,

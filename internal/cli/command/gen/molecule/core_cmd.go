@@ -2,7 +2,7 @@ package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule/core"
+	"github.com/charmingruby/bob/internal/component/molecule"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +21,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			core.MakeCore(m, module, database)
+			molecule.MakeCore(m, module, database)
 		},
 	}
 

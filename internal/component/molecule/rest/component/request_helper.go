@@ -2,13 +2,13 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/molecule/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeRequestHelperComponent(m filesystem.Manager) filesystem.File {
+func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForRequestHelper(m, scaffold.SHARED_MODULE)
 
 	return base.New(base.ComponentInput{
@@ -19,7 +19,7 @@ func MakeRequestHelperComponent(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: molecule.REST_REQUEST_HELPER_TEMPLATE,
+		TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
 		TemplateData: data.NewRequestHelperData(m.DependencyPath()),
 		FileName:     "request",
 	})

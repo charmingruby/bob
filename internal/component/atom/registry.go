@@ -13,7 +13,7 @@ type RegistryParams struct {
 	TemplateData         any
 }
 
-func MakeRegistryComponent(params RegistryParams) filesystem.File {
+func MakeRegistry(params RegistryParams) filesystem.File {
 	return base.New(base.ComponentInput{
 		Package:              params.Package,
 		Name:                 params.RegistryName,

@@ -1,4 +1,4 @@
-package service
+package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/component/atom"
@@ -9,21 +9,21 @@ import (
 func MakeService(m filesystem.Manager, repo string, module string) {
 	sampleActor := module
 
-	service := atom.MakeServiceComponent(m, module, sampleActor)
+	service := atom.MakeService(m, module, sampleActor)
 
 	if err := m.GenerateFile(service); err != nil {
 		panic(err)
 	}
 
 	if repo == "" {
-		if err := m.GenerateFile(component.MakeIndependentServiceRegistryComponent(
+		if err := m.GenerateFile(component.MakeIndependentServiceRegistry(
 			m,
 			module,
 		)); err != nil {
 			panic(err)
 		}
 	} else {
-		if err := m.GenerateFile(component.MakeServiceRegistryComponent(
+		if err := m.GenerateFile(component.MakeServiceRegistry(
 			m,
 			module,
 			repo,
