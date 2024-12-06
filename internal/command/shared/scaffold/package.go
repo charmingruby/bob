@@ -11,5 +11,5 @@ const (
 	SERVICE_PACKAGE     = "service"
 	MODEL_PACKAGE       = "model"
 	REPOSITORY_PACKAGE  = "repository"
-	PERSISTENCE_PACKAGE = "persistence"
+	PERSISTENCE_PACKAGE = "database"
 )

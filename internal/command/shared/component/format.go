@@ -1,6 +1,6 @@
-package structure
+package component
 
-import "github.com/charmingruby/bob/internal/command/shared/formatter"
+import "github.com/charmingruby/bob/pkg/formatter"
 
 func PublicNameFormat(name string) string {
 	return formatter.ToCamelCase(name)

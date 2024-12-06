@@ -1,6 +1,6 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/component/structure"
+import "github.com/charmingruby/bob/internal/command/shared/component"
 
 type ExchangeData struct {
 	ExchangePackage string
@@ -10,8 +10,8 @@ type ExchangeData struct {
 
 func NewExchangeData(exchange, name string) ExchangeData {
 	return ExchangeData{
-		ExchangePackage: structure.ModuleFormat(exchange),
-		Exchange:        structure.PublicNameFormat(exchange),
-		Name:            structure.PublicNameFormat(name),
+		ExchangePackage: component.ModuleFormat(exchange),
+		Exchange:        component.PublicNameFormat(exchange),
+		Name:            component.PublicNameFormat(name),
 	}
 }

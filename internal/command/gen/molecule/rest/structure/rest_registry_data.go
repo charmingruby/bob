@@ -1,6 +1,8 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/component/structure"
+import (
+	"github.com/charmingruby/bob/internal/command/shared/component"
+)
 
 type RestRegistryData struct {
 	Module     string
@@ -9,7 +11,7 @@ type RestRegistryData struct {
 
 func NewRestRegistryData(module, sourcePath string) RestRegistryData {
 	return RestRegistryData{
-		Module:     structure.ModuleFormat(module),
+		Module:     component.ModuleFormat(module),
 		SourcePath: sourcePath,
 	}
 }

@@ -1,6 +1,8 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/component/structure"
+import (
+	"github.com/charmingruby/bob/internal/command/shared/component"
+)
 
 type DefaultData struct {
 	Name string
@@ -8,6 +10,6 @@ type DefaultData struct {
 
 func NewDefaultData(name string) DefaultData {
 	return DefaultData{
-		Name: structure.PublicNameFormat(name),
+		Name: component.PublicNameFormat(name),
 	}
 }

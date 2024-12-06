@@ -1,6 +1,6 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/component/structure"
+import "github.com/charmingruby/bob/internal/command/shared/component"
 
 type ServiceWithRepositoryData struct {
 	SourcePath            string
@@ -12,8 +12,8 @@ type ServiceWithRepositoryData struct {
 func NewServiceWithRepositoryData(sourcePath, module, name string) ServiceWithRepositoryData {
 	return ServiceWithRepositoryData{
 		SourcePath:            sourcePath,
-		Module:                structure.ModuleFormat(module),
-		RepositoryName:        structure.PublicNameFormat(name),
-		PrivateRepositoryName: structure.PrivateNameFormat(name),
+		Module:                component.ModuleFormat(module),
+		RepositoryName:        component.PublicNameFormat(name),
+		PrivateRepositoryName: component.PrivateNameFormat(name),
 	}
 }

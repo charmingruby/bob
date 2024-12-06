@@ -1,6 +1,8 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/component/structure"
+import (
+	"github.com/charmingruby/bob/internal/command/shared/component"
+)
 
 type UnimplementedRepositoryData struct {
 	SourcePath string
@@ -12,8 +14,8 @@ type UnimplementedRepositoryData struct {
 func NewUnimplementedRepositoryData(sourcePath, module, name, db string) UnimplementedRepositoryData {
 	return UnimplementedRepositoryData{
 		SourcePath: sourcePath,
-		Module:     structure.ModuleFormat(module),
-		Name:       structure.PublicNameFormat(name),
-		Database:   structure.ModuleFormat(db),
+		Module:     component.ModuleFormat(module),
+		Name:       component.PublicNameFormat(name),
+		Database:   component.ModuleFormat(db),
 	}
 }

@@ -1,6 +1,6 @@
 package structure
 
-import "github.com/charmingruby/bob/internal/command/shared/formatter"
+import "github.com/charmingruby/bob/pkg/formatter"
 
 type HandlerData struct {
 	SourcePath   string

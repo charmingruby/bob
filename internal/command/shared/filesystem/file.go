@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/charmingruby/bob/internal/command/shared/formatter"
+	"github.com/charmingruby/bob/pkg/formatter"
 	"github.com/charmingruby/bob/tpl"
 )
 
