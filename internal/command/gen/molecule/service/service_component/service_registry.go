@@ -9,7 +9,7 @@ import (
 
 func MakeServiceRegistryComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return atom.MakeRegistryComponent(atom.RegistryParams{
-		Module:               module,
+		Package:              module,
 		TemplateName:         constant.SERVICE_REGISTRY_WITH_REPOSITORY_TEMPLATE,
 		TemplateData:         structure.NewServiceWithRepositoryData(m.DependencyPath(), module, name),
 		RegistryName:         "service",
@@ -19,7 +19,7 @@ func MakeServiceRegistryComponent(m filesystem.Manager, module, name string) fil
 
 func MakeIndependentServiceRegistryComponent(m filesystem.Manager, module string) filesystem.File {
 	return atom.MakeRegistryComponent(atom.RegistryParams{
-		Module:               module,
+		Package:              module,
 		TemplateName:         constant.SERVICE_REGISTRY_TEMPLATE,
 		RegistryName:         "service",
 		DestinationDirectory: m.AppendToModuleDirectory(module, "/core/service"),

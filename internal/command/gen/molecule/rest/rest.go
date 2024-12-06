@@ -3,8 +3,8 @@ package rest
 import (
 	"github.com/charmingruby/bob/internal/command/gen/library"
 	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/rest_component"
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
+	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
 
 func MakeRest(m filesystem.Manager, module string) {
@@ -23,7 +23,7 @@ func MakeRest(m filesystem.Manager, module string) {
 
 	if err := m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{constant.SHARED_MODULE, "transport", "rest"},
+		[]string{scaffold.SHARED_MODULE, "transport", "rest"},
 	); err != nil {
 		panic(err)
 	}
@@ -63,7 +63,7 @@ func MakeRest(m filesystem.Manager, module string) {
 	}
 
 	if err := m.GenerateFile(
-		rest_component.MakeRestRegistryComponent(
+		rest_component.MakeHandlerRegistryComponent(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(),
 			module,

@@ -1,20 +1,22 @@
 package rest_component
 
 import (
-	restConstant "github.com/charmingruby/bob/internal/command/gen/molecule/rest/constant"
+	"github.com/charmingruby/bob/internal/command/gen/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/command/shared/component"
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
+	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
-
-const middlewarePath = "transport/rest"
 
 func MakeBaseServerMiddlewareComponent(m filesystem.Manager) filesystem.File {
 	return component.New(component.ComponentInput{
-		Module:               "rest",
-		DestinationDirectory: m.AppendToModuleDirectory(constant.SHARED_MODULE, middlewarePath),
+		Package: scaffold.SERVICE_PACKAGE,
+		DestinationDirectory: scaffold.TransportPath(
+			m.ModuleDirectory(scaffold.SHARED_MODULE),
+			scaffold.REST_PACKAGE,
+			nil,
+		),
 	}).Componetize(component.ComponetizeInput{
-		TemplateName: restConstant.REST_BASE_SERVER_MIDDLEWARE,
+		TemplateName: constant.REST_BASE_SERVER_MIDDLEWARE,
 		FileName:     "middleware",
 	})
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type RegistryParams struct {
-	Module               string
+	Package              string
 	RegistryName         string
 	DestinationDirectory string
 	TemplateName         string
@@ -15,7 +15,7 @@ type RegistryParams struct {
 
 func MakeRegistryComponent(params RegistryParams) filesystem.File {
 	return component.New(component.ComponentInput{
-		Module:               params.Module,
+		Package:              params.Package,
 		Name:                 params.RegistryName,
 		DestinationDirectory: params.DestinationDirectory,
 	}).Componetize(component.ComponetizeInput{

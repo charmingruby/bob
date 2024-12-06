@@ -32,7 +32,7 @@ func MakeService(m filesystem.Manager, repo string, module string) {
 
 	sampleActor := module
 
-	if err := m.GenerateFile(atom.MakeServiceComponent(m.SourceDirectory, module, sampleActor)); err != nil {
+	if err := m.GenerateFile(atom.MakeServiceComponent(m, module, sampleActor)); err != nil {
 		panic(err)
 	}
 }

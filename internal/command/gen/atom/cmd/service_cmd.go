@@ -22,7 +22,7 @@ func RunService(m filesystem.Manager) *cobra.Command {
 			}
 
 			if err := m.GenerateFile(atom.MakeServiceComponent(
-				m.SourceDirectory,
+				m,
 				module,
 				name,
 			)); err != nil {

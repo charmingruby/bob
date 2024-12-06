@@ -5,14 +5,13 @@ import (
 	"github.com/charmingruby/bob/internal/command/gen/atom/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
+	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
-
-var modelPath = "core/model"
 
 func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
-		DestinationDirectory: m.AppendToModuleDirectory(module, modelPath),
-		Module:               module,
+		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.MODEL_PACKAGE}),
+		Package:              module,
 		Name:                 name,
 		HasTest:              true,
 	}).Componetize(component.ComponetizeInput{

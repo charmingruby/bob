@@ -1,20 +1,20 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/command/shared/component/constant"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
+	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
 
 type Component struct {
-	DestinationDirectory string
-	Module               string
+	Package              string
 	Name                 string
 	Suffix               string
+	DestinationDirectory string
 	HasTest              bool
 }
 
 type ComponentInput struct {
-	Module               string
+	Package              string
 	Name                 string
 	Suffix               string
 	DestinationDirectory string
@@ -23,7 +23,7 @@ type ComponentInput struct {
 
 func New(in ComponentInput) *Component {
 	component := &Component{
-		Module:               in.Module,
+		Package:              in.Package,
 		Name:                 in.Name,
 		DestinationDirectory: in.DestinationDirectory,
 		Suffix:               in.Suffix,
@@ -42,7 +42,7 @@ type ComponetizeInput struct {
 
 func (c *Component) Componetize(in ComponetizeInput) filesystem.File {
 	return filesystem.File{
-		CommandType:          constant.GENERATE_COMMAND,
+		CommandType:          scaffold.GENERATE_COMMAND,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,
 		FileName:             in.FileName,

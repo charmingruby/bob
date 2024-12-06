@@ -1,4 +1,4 @@
-package constant
+package scaffold
 
 const (
 	GENERATE_COMMAND = "gen"

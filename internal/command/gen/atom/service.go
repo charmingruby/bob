@@ -5,16 +5,15 @@ import (
 	"github.com/charmingruby/bob/internal/command/gen/atom/structure"
 	"github.com/charmingruby/bob/internal/command/shared/component"
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
+	"github.com/charmingruby/bob/internal/command/shared/scaffold"
 )
 
-var servicePath = "core/service"
-
-func MakeServiceComponent(sourceDirectory, module, name string) filesystem.File {
+func MakeServiceComponent(m filesystem.Manager, module, name string) filesystem.File {
 	return component.New(component.ComponentInput{
-		Module:               module,
+		Package:              module,
 		Name:                 name,
 		Suffix:               "service",
-		DestinationDirectory: filesystem.ModulePath(sourceDirectory, module, servicePath),
+		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.SERVICE_PACKAGE}),
 	}).Componetize(component.ComponetizeInput{
 		TemplateName: constant.SERVICE_TEMPLATE,
 		TemplateData: structure.NewDefaultData(name),
