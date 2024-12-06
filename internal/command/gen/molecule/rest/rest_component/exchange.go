@@ -26,10 +26,21 @@ func makeExchangeComponent(m filesystem.Manager, module, name, exchange string) 
 	})
 }
 
+func prepareDirectoriesForExchange(m filesystem.Manager, module, exchange string) {
+	m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE, scaffold.DTO_PACKAGE, exchange},
+	)
+}
+
 func MakeRequest(m filesystem.Manager, module, handlerName string) filesystem.File {
-	return makeExchangeComponent(m, module, handlerName, "request")
+	exchange := "request"
+	prepareDirectoriesForExchange(m, module, exchange)
+	return makeExchangeComponent(m, module, handlerName, exchange)
 }
 
 func MakeResponse(m filesystem.Manager, module, handlerName string) filesystem.File {
-	return makeExchangeComponent(m, module, handlerName, "response")
+	exchange := "response"
+	prepareDirectoriesForExchange(m, module, exchange)
+	return makeExchangeComponent(m, module, handlerName, exchange)
 }

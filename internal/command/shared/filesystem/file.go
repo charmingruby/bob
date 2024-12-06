@@ -40,7 +40,7 @@ func (f *Manager) GenerateFile(file File) error {
 			return err
 		}
 
-		if err := createFile(file.FileName, "_test", file.DestinationDirectory, file.TemplateData, testTmpl); err != nil {
+		if err := generateFileIfNotExists(file.FileName, "_test", file.DestinationDirectory, file.TemplateData, testTmpl); err != nil {
 			return err
 		}
 	}
@@ -51,7 +51,7 @@ func (f *Manager) GenerateFile(file File) error {
 		return err
 	}
 
-	return createFile(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl)
+	return generateFileIfNotExists(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl)
 }
 
 func createTemplate(fileName, command string) (*template.Template, error) {
@@ -72,7 +72,7 @@ func createTemplate(fileName, command string) (*template.Template, error) {
 	return tmpl, err
 }
 
-func createFile(name, suffix, directory string, data any, template *template.Template) error {
+func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *template.Template) error {
 	destinyDir, err := getDestinationDirectory(directory)
 	if err != nil {
 		fmt.Println("Error getting destination directory:", err)
@@ -84,16 +84,24 @@ func createFile(name, suffix, directory string, data any, template *template.Tem
 		finalFileName += "_" + suffix
 	}
 
-	fileName := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
+	filePath := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
 
-	file, err := os.Create(fileName)
+	if _, err := os.Stat(filePath); err == nil {
+		fmt.Printf("File already exists: %s\n", filePath)
+		return nil
+	} else if !os.IsNotExist(err) {
+		fmt.Println("Error checking file existence:", err)
+		return err
+	}
+
+	file, err := os.Create(filePath)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return err
 	}
 	defer file.Close()
 
-	err = template.Execute(file, data)
+	err = tmpl.Execute(file, data)
 	if err != nil {
 		fmt.Println("Error executing template:", err)
 		return err

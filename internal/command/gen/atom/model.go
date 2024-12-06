@@ -9,6 +9,8 @@ import (
 )
 
 func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.File {
+	prepareDirectoriesForModel(m, module)
+
 	return component.New(component.ComponentInput{
 		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.MODEL_PACKAGE}),
 		Package:              module,
@@ -19,4 +21,11 @@ func MakeModelComponent(m filesystem.Manager, module, name string) filesystem.Fi
 		TemplateData: structure.NewDefaultData(name),
 		FileName:     name,
 	})
+}
+
+func prepareDirectoriesForModel(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{scaffold.CORE_PACKAGE, scaffold.MODEL_PACKAGE},
+	)
 }

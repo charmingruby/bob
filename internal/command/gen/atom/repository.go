@@ -9,6 +9,8 @@ import (
 )
 
 func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesystem.File {
+	prepareDirectoriesForRepository(m, module)
+
 	return component.New(component.ComponentInput{
 		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.REPOSITORY_PACKAGE}),
 		Package:              module,
@@ -20,4 +22,11 @@ func MakeRepositoryComponent(m filesystem.Manager, module, name string) filesyst
 		FileName:     name,
 		FileSuffix:   "repository",
 	})
+}
+
+func prepareDirectoriesForRepository(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{scaffold.CORE_PACKAGE, scaffold.REPOSITORY_PACKAGE},
+	)
 }

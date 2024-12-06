@@ -21,11 +21,9 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := m.GenerateFile(atom.MakeServiceComponent(
-				m,
-				module,
-				name,
-			)); err != nil {
+			service := atom.MakeServiceComponent(m, module, name)
+
+			if err := m.GenerateFile(service); err != nil {
 				panic(err)
 			}
 		},

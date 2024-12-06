@@ -9,6 +9,8 @@ import (
 )
 
 func MakeServiceComponent(m filesystem.Manager, module, name string) filesystem.File {
+	prepareDirectoriesForService(m, module)
+
 	return component.New(component.ComponentInput{
 		Package:              module,
 		Name:                 name,
@@ -20,4 +22,11 @@ func MakeServiceComponent(m filesystem.Manager, module, name string) filesystem.
 		FileName:     name,
 		FileSuffix:   "service",
 	})
+}
+
+func prepareDirectoriesForService(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{scaffold.CORE_PACKAGE, scaffold.SERVICE_PACKAGE},
+	)
 }

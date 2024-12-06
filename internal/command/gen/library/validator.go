@@ -9,12 +9,7 @@ import (
 )
 
 func MakeValidatorComponent(m filesystem.Manager) filesystem.File {
-	if err := m.GenerateNestedDirectories(
-		m.SourceDirectory,
-		[]string{scaffold.SHARED_MODULE, "validation"},
-	); err != nil {
-		panic(err)
-	}
+	prepareDirectoriesForValidator(m, scaffold.SHARED_MODULE)
 
 	return component.New(component.ComponentInput{
 		Package:              scaffold.SHARED_MODULE,
@@ -24,4 +19,11 @@ func MakeValidatorComponent(m filesystem.Manager) filesystem.File {
 		TemplateName: constant.VALIDATION_TEMPLATE,
 		FileName:     "validator",
 	})
+}
+
+func prepareDirectoriesForValidator(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.SourceDirectory,
+		[]string{module, "validation"},
+	)
 }

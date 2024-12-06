@@ -9,12 +9,7 @@ import (
 )
 
 func MakeRequestHelperComponent(m filesystem.Manager) filesystem.File {
-	if err := m.GenerateNestedDirectories(
-		m.ModuleDirectory(scaffold.SHARED_MODULE),
-		[]string{scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE},
-	); err != nil {
-		panic(err)
-	}
+	prepareDirectoriesForRequestHelper(m, scaffold.SHARED_MODULE)
 
 	return component.New(component.ComponentInput{
 		Package: scaffold.REST_PACKAGE,
@@ -28,4 +23,11 @@ func MakeRequestHelperComponent(m filesystem.Manager) filesystem.File {
 		TemplateData: structure.NewRequestHelperData(m.DependencyPath()),
 		FileName:     "request",
 	})
+}
+
+func prepareDirectoriesForRequestHelper(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.SourceDirectory,
+		[]string{module, scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE},
+	)
 }

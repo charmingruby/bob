@@ -9,6 +9,8 @@ import (
 )
 
 func MakeHandlerComponent(m filesystem.Manager, module, name string) filesystem.File {
+	prepareDirectoriesForHandler(m, module)
+
 	return component.New(component.ComponentInput{
 		Package: module,
 		Name:    name,
@@ -29,4 +31,11 @@ func MakeHandlerComponent(m filesystem.Manager, module, name string) filesystem.
 		FileName:   name,
 		FileSuffix: "handler",
 	})
+}
+
+func prepareDirectoriesForHandler(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE, scaffold.HANDLER_PACKAGE},
+	)
 }

@@ -6,14 +6,16 @@ import (
 	"github.com/charmingruby/bob/internal/command/shared/filesystem"
 )
 
-func ServicePath() string {
-	return "core/service"
-}
-
 func MakeService(m filesystem.Manager, repo string, module string) {
-	hasRepo := repo != ""
+	sampleActor := module
 
-	if !hasRepo {
+	service := atom.MakeServiceComponent(m, module, sampleActor)
+
+	if err := m.GenerateFile(service); err != nil {
+		panic(err)
+	}
+
+	if repo == "" {
 		if err := m.GenerateFile(service_component.MakeIndependentServiceRegistryComponent(
 			m,
 			module,
@@ -28,11 +30,5 @@ func MakeService(m filesystem.Manager, repo string, module string) {
 		)); err != nil {
 			panic(err)
 		}
-	}
-
-	sampleActor := module
-
-	if err := m.GenerateFile(atom.MakeServiceComponent(m, module, sampleActor)); err != nil {
-		panic(err)
 	}
 }

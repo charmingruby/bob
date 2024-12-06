@@ -21,11 +21,9 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			if err := m.GenerateFile(atom.MakeRepositoryComponent(
-				m,
-				module,
-				name,
-			)); err != nil {
+			repository := atom.MakeRepositoryComponent(m, module, name)
+
+			if err := m.GenerateFile(repository); err != nil {
 				panic(err)
 			}
 		},

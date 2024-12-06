@@ -8,12 +8,7 @@ import (
 )
 
 func MakeResponseHelperComponent(m filesystem.Manager) filesystem.File {
-	if err := m.GenerateNestedDirectories(
-		m.ModuleDirectory(scaffold.SHARED_MODULE),
-		[]string{"transport", scaffold.REST_PACKAGE},
-	); err != nil {
-		panic(err)
-	}
+	prepareDirectoriesForResponseHelper(m, scaffold.SHARED_MODULE)
 
 	return component.New(component.ComponentInput{
 		Package: scaffold.REST_PACKAGE,
@@ -26,4 +21,11 @@ func MakeResponseHelperComponent(m filesystem.Manager) filesystem.File {
 		TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
 		FileName:     "response",
 	})
+}
+
+func prepareDirectoriesForResponseHelper(m filesystem.Manager, module string) {
+	m.GenerateNestedDirectories(
+		m.SourceDirectory,
+		[]string{module, scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE},
+	)
 }
