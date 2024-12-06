@@ -9,7 +9,7 @@ type ServiceWithRepositoryData struct {
 	PrivateRepositoryName string
 }
 
-func NewServiceWithRepository(sourcePath, module, name string) ServiceWithRepositoryData {
+func NewServiceWithRepositoryData(sourcePath, module, name string) ServiceWithRepositoryData {
 	return ServiceWithRepositoryData{
 		SourcePath:            sourcePath,
 		Module:                structure.ModuleFormat(module),
