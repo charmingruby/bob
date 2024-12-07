@@ -1,12 +1,12 @@
 package opt
 
 const (
-	POSTGRES_DATABASE_OPTION = "postgres"
+	POSTGRES_DATABASE = "postgres"
 )
 
 func IsDatabaseOption(value string) bool {
 	opts := map[string]bool{
-		POSTGRES_DATABASE_OPTION: true,
+		POSTGRES_DATABASE: true,
 	}
 
 	_, ok := opts[value]

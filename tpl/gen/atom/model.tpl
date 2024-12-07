@@ -6,10 +6,11 @@ import (
 )
 
 type {{ .Name }} struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID        string     `json:"id"`
+	Name      string     `json:"name"`
+	CreatedAt time.Time  `json:"created_at"`
+	UpdatedAt time.Time  `json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 }
 
 type New{{ .Name }}Input struct {
@@ -22,6 +23,7 @@ func New{{ .Name }}(in New{{ .Name }}Input) *{{ .Name }} {
 		Name:      in.Name,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
+		DeletedAt: nil,
 	}
 }
 

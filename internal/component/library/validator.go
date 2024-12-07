@@ -2,6 +2,7 @@ package library
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
+	"github.com/charmingruby/bob/internal/component/library/constant"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
@@ -14,7 +15,7 @@ func MakeValidator(m filesystem.Manager) filesystem.File {
 		Name:                 "validator",
 		DestinationDirectory: m.AppendToModuleDirectory(scaffold.SHARED_MODULE, "validation"),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: VALIDATION_TEMPLATE,
+		TemplateName: constant.VALIDATION_TEMPLATE,
 		FileName:     "validator",
 	})
 }

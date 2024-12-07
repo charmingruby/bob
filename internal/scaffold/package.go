@@ -12,4 +12,5 @@ const (
 	MODEL_PACKAGE       = "model"
 	REPOSITORY_PACKAGE  = "repository"
 	PERSISTENCE_PACKAGE = "database"
+	LIBRARY_PACKAGE     = "pkg"
 )

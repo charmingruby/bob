@@ -14,7 +14,7 @@ func MakeCore(m filesystem.Manager, module, database string) {
 
 	MakeService(m, sampleActor, module)
 
-	repository := atom.MakeRepository(m, module, sampleActor, opt.POSTGRES_DATABASE_OPTION)
+	repository := atom.MakeRepository(m, module, sampleActor, opt.POSTGRES_DATABASE)
 	if err := m.GenerateFile(repository); err != nil {
 		panic(err)
 	}

@@ -1,4 +1,4 @@
-package library
+package constant
 
 const LIBRARY_PREFIX = "library"
 
