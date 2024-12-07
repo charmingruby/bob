@@ -2,8 +2,8 @@ package library
 
 import (
 	"github.com/charmingruby/bob/internal/component/library/constant"
-	"github.com/charmingruby/bob/internal/component/library/custom_err/persistence_err"
-	"github.com/charmingruby/bob/internal/component/library/custom_err/persistence_err/sql_err"
+	persistence_err "github.com/charmingruby/bob/internal/component/library/custom_err/database_err"
+	"github.com/charmingruby/bob/internal/component/library/custom_err/database_err/sql_err"
 	"github.com/charmingruby/bob/internal/component/library/postgres"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
