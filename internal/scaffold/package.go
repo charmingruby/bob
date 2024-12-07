@@ -8,6 +8,7 @@ const (
 	RESPONSE_PACKAGE    = "response"
 	REQUEST_PACKAGE     = "request"
 	CORE_PACKAGE        = "core"
+	CUSTOM_ERR_PACKAGE  = "custom_err"
 	SERVICE_PACKAGE     = "service"
 	MODEL_PACKAGE       = "model"
 	REPOSITORY_PACKAGE  = "repository"

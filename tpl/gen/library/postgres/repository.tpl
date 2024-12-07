@@ -1,10 +1,11 @@
 package postgres_repository
 
 import (
-	"log/slog"
+	"database/sql"
 	"time"
 
-	"{{ .SourcePath }}/common/core/custom_err"
+	"{{ .SourcePath }}/shared/custom_err/database_err"
+	"{{ .SourcePath }}/shared/custom_err/database_err/postgres_err"
 	"{{ .SourcePath }}/{{ .Module }}/core/model"
 	"github.com/jmoiron/sqlx"
 )
@@ -36,7 +37,7 @@ func New{{ .UpperCaseModel }}Repository(db *sqlx.DB) (*{{ .UpperCaseModel }}Repo
 		stmt, err := db.Preparex(statement)
 		if err != nil {
 			return nil,
-				custom_err.NewPreparationErr(queryName, "{{ .LowerCaseModel }}", err)
+				postgres_err.NewPreparationErr(queryName, "{{ .LowerCaseModel }}", err)
 		}
 
 		stmts[queryName] = stmt
@@ -58,7 +59,7 @@ func (r *{{ .UpperCaseModel }}Repository) statement(queryName string) (*sqlx.Stm
 
 	if !ok {
 		return nil,
-			custom_err.NewStatementNotPreparedErr(queryName, "{{ .LowerCaseModel }}")
+			postgres_err.NewStatementNotPreparedErr(queryName, "{{ .LowerCaseModel }}")
 	}
 
 	return stmt, nil
@@ -76,7 +77,7 @@ func (r *{{ .UpperCaseModel }}Repository) Store(model *model.{{ .UpperCaseModel 
 		mappedEntity.ID,
 		mappedEntity.Name,
 	); err != nil {
-		return err
+		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} store", "postgres")
 	}
 
 	return nil
@@ -90,7 +91,11 @@ func (r *{{ .UpperCaseModel }}Repository) FindByID(id string) (*model.{{ .UpperC
 
 	var {{ .LowerCaseModel }} Postgres{{ .UpperCaseModel }}
 	if err := stmt.Get(&{{ .LowerCaseModel }}, id); err != nil {
-		return nil, err
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+
+		return nil, database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} find_by_id", "postgres")
 	}
 
 	mapped{{ .UpperCaseModel }} := Postgres{{ .UpperCaseModel }}ToDomain({{ .LowerCaseModel }})
@@ -104,12 +109,18 @@ func (r *{{ .UpperCaseModel }}Repository) Delete(model model.{{ .UpperCaseModel 
 		return err
 	}
 
-	if _, err := stmt.Exec(model.DeletedAt, model.GetID()); err != nil {
-		slog.Error(err.Error())
-		return err
+	if _, err := stmt.Exec(model.DeletedAt, model.ID); err != nil {
+		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} delete", "postgres")
 	}
 
 	return nil
+}
+
+type Postgres{{ .UpperCaseModel }} struct {
+	ID        string    `json:"id" db:"id"`
+	Name      string    `json:"name" db:"name"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
+    DeletedAt *time.Time `json:"deleted_at" db:"deleted_at"`
 }
 
 func Domain{{ .UpperCaseModel }}ToPostgres(model model.{{ .UpperCaseModel }}) Postgres{{ .UpperCaseModel }} {
@@ -128,11 +139,4 @@ func Postgres{{ .UpperCaseModel }}ToDomain(persistenceModel Postgres{{ .UpperCas
         CreatedAt: persistenceModel.CreatedAt,
         DeletedAt: persistenceModel.DeletedAt,
     }
-}
-
-type Postgres{{ .UpperCaseModel }} struct {
-	ID        string    `json:"id" db:"id"`
-	Name      string    `json:"name" db:"name"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-    DeletedAt *time.Time `json:"deleted_at" db:"deleted_at"`
 }

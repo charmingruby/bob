@@ -1,0 +1,13 @@
+package constant
+
+const (
+	DATABASE_ERR_TEMPLATE      = "error/database"
+	PERSISTENCE_ERR_TEMPLATE   = DATABASE_ERR_TEMPLATE + "/persistence"
+	SQL_STATEMENT_ERR_TEMPLATE = DATABASE_ERR_TEMPLATE + "/sql/statement"
+
+	ERR_PACKAGE_SUFFIX = "_err"
+
+	CUSTOM_ERR_PACKAGE      = "custom" + ERR_PACKAGE_SUFFIX
+	PERSISTENCE_ERR_PACKAGE = "database" + ERR_PACKAGE_SUFFIX
+	SQL_ERROR_PACKAGE       = "postgres" + ERR_PACKAGE_SUFFIX
+)
