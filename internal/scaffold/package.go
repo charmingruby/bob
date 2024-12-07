@@ -1,17 +1,26 @@
 package scaffold
 
 const (
-	TRANSPORT_PACKAGE   = "transport"
-	REST_PACKAGE        = "rest"
-	DTO_PACKAGE         = "dto"
-	HANDLER_PACKAGE     = "endpoint"
-	RESPONSE_PACKAGE    = "response"
-	REQUEST_PACKAGE     = "request"
-	CORE_PACKAGE        = "core"
-	CUSTOM_ERR_PACKAGE  = "custom_err"
-	SERVICE_PACKAGE     = "service"
-	MODEL_PACKAGE       = "model"
-	REPOSITORY_PACKAGE  = "repository"
+	// HTTP
+	REST_PACKAGE      = "rest"
+	TRANSPORT_PACKAGE = "transport"
+	HANDLER_PACKAGE   = "endpoint"
+	DTO_PACKAGE       = "dto"
+	REQUEST_PACKAGE   = "request"
+	RESPONSE_PACKAGE  = "response"
+
+	// Core
+	CORE_PACKAGE       = "core"
+	SERVICE_PACKAGE    = "service"
+	MODEL_PACKAGE      = "model"
+	REPOSITORY_PACKAGE = "repository"
+
+	// Database
 	PERSISTENCE_PACKAGE = "database"
-	LIBRARY_PACKAGE     = "pkg"
+
+	// Libs
+	LIBRARY_PACKAGE = "pkg"
+
+	// Errors
+	CUSTOM_ERR_PACKAGE = "custom_err"
 )
