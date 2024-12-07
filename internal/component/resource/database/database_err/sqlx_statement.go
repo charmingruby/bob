@@ -1,9 +1,9 @@
-package sql_err
+package database_err
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/library/constant"
-	"github.com/charmingruby/bob/internal/component/library/data"
+	"github.com/charmingruby/bob/internal/component/resource/database/database_err/constant"
+	"github.com/charmingruby/bob/internal/component/resource/database/database_err/data"
 	"github.com/charmingruby/bob/internal/component/shared/opt"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"

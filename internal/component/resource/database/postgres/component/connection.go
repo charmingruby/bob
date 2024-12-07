@@ -1,8 +1,8 @@
-package postgres
+package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/library/constant"
+	"github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 

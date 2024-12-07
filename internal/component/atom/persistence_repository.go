@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/library"
+	"github.com/charmingruby/bob/internal/component/resource"
 	"github.com/charmingruby/bob/internal/component/shared/opt"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
@@ -23,8 +23,8 @@ func MakePersistenceRepository(m filesystem.Manager, module, name, database stri
 
 	switch database {
 	case opt.POSTGRES_DATABASE:
-		library.MakePostgresDependencies(m)
-		return library.MakePostgresRepository(m, module, name)
+		resource.MakePostgresDependencies(m)
+		return resource.MakePostgresRepository(m, module, name)
 	default:
 		return makeUnimplementedRepository(m, module, name, repoDir, repoDB)
 	}
