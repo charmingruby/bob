@@ -13,7 +13,7 @@ func MakePostgresRepository(m filesystem.Manager, module, modelName string) file
 	return component.MakePostgresRepository(m, module, modelName)
 }
 
-func MakePostgresDependencies(m filesystem.Manager) {
+func MakePostgresDependencies(m filesystem.Manager, module string) {
 	prepareDirectoriesForPostgresDependencies(m)
 
 	conn := component.MakePostgresConnection(m)
@@ -30,12 +30,19 @@ func MakePostgresDependencies(m filesystem.Manager) {
 	if err := m.GenerateFile(sqlErr); err != nil {
 		panic(err)
 	}
+
+	component.RunMigration(m, module)
 }
 
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
 		[]string{scaffold.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
+	)
+
+	m.GenerateNestedDirectories(
+		m.MainDirectory(),
+		[]string{pgConst.MIGRATIONS_DIR},
 	)
 
 	m.GenerateNestedDirectories(

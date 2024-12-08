@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/charmingruby/bob/pkg/formatter"
-	"github.com/charmingruby/bob/tpl"
+	"github.com/charmingruby/bob/tooling/tpl"
 )
 
 const (

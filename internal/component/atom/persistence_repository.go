@@ -23,7 +23,7 @@ func MakePersistenceRepository(m filesystem.Manager, module, name, database stri
 
 	switch database {
 	case opt.POSTGRES_DATABASE:
-		resource.MakePostgresDependencies(m)
+		resource.MakePostgresDependencies(m, module)
 		return resource.MakePostgresRepository(m, module, name)
 	default:
 		return makeUnimplementedRepository(m, module, name, repoDir, repoDB)
