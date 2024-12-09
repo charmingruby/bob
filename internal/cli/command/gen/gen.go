@@ -4,6 +4,7 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/gen/atom"
 	"github.com/charmingruby/bob/internal/cli/command/gen/molecule"
+	"github.com/charmingruby/bob/internal/cli/command/gen/resource"
 	"github.com/charmingruby/bob/internal/filesystem"
 
 	"github.com/spf13/cobra"
@@ -27,27 +28,11 @@ func (c *Command) Setup() {
 		Short: "Generates components",
 	}
 
-	atomCmd := &cobra.Command{
-		Use:   "atm",
-		Short: "Generates pure components (or atoms)",
-	}
-
-	atomCmd.AddCommand(atom.RunModel(c.fs))
-	atomCmd.AddCommand(atom.RunService(c.fs))
-	atomCmd.AddCommand(atom.RunRepository(c.fs))
-	atomCmd.AddCommand(atom.RunHandler(c.fs))
-
-	moleculeCmd := &cobra.Command{
-		Use:   "mol",
-		Short: "Generates conventional molecules, grouping atoms",
-	}
-
-	moleculeCmd.AddCommand(molecule.RunRest(c.fs))
-	moleculeCmd.AddCommand(molecule.RunService(c.fs))
-	moleculeCmd.AddCommand(molecule.RunCore(c.fs))
-
-	genCmd.AddCommand(atomCmd)
-	genCmd.AddCommand(moleculeCmd)
+	genCmd.AddCommand(
+		atom.SetupCMD(c.fs),
+		molecule.SetupCMD(c.fs),
+		resource.SetupCMD(c.fs),
+	)
 
 	c.cmd.AddCommand(genCmd)
 }
