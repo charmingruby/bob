@@ -11,7 +11,10 @@ func SetupCMD(fs filesystem.Manager) *cobra.Command {
 		Short: "Postgres resources",
 	}
 
-	cmd.AddCommand(RunRepository(fs))
+	cmd.AddCommand(
+		RunRepository(fs),
+		RunDependecies(fs),
+	)
 
 	return cmd
 }
