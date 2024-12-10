@@ -26,7 +26,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository")
+	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository, if it is not set, it will be not created")
 
 	return cmd
 }

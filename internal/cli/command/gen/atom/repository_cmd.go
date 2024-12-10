@@ -27,16 +27,18 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			persistenceRepository := atom.MakePersistenceRepository(m, module, name, database)
-			if err := m.GenerateFile(persistenceRepository); err != nil {
-				panic(err)
+			if database != "" {
+				persistenceRepository := atom.MakePersistenceRepository(m, module, name, database)
+				if err := m.GenerateFile(persistenceRepository); err != nil {
+					panic(err)
+				}
 			}
 		},
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
 	cmd.Flags().StringVarP(&name, "name", "n", "", "model to be managed by the repository")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository")
+	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository, if it is not set, it will be not created")
 
 	return cmd
 }
