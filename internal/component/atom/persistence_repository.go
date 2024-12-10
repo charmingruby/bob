@@ -4,30 +4,16 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/resource"
-	"github.com/charmingruby/bob/internal/component/shared/opt"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
 func MakePersistenceRepository(m filesystem.Manager, module, name, database string) filesystem.File {
-	var repoDB string = database
-
-	if !opt.IsDatabaseOption(database) {
-		repoDB = "exampledb"
-	}
-
-	repoDir := repoDB + "_repository"
+	repoDir := database + "_repository"
 
 	prepareDirectoriesForPersistenceRepository(m, module, repoDir)
 
-	switch database {
-	case opt.POSTGRES_DATABASE:
-		resource.MakePostgresDependencies(m, module)
-		return resource.MakePostgresRepository(m, module, name)
-	default:
-		return makeUnimplementedRepository(m, module, name, repoDir, repoDB)
-	}
+	return makeUnimplementedRepository(m, module, name, repoDir, database)
 }
 
 func makeUnimplementedRepository(m filesystem.Manager, module, name, repoDir, repoDB string) filesystem.File {
