@@ -30,7 +30,7 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			molecule.MakeService(m, repo, module)
+			molecule.MakeAndRunService(m, repo, module)
 		},
 	}
 

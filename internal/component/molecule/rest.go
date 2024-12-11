@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeRest(m filesystem.Manager, module string) {
+func MakeAndRunRest(m filesystem.Manager, module string) {
 	if err := m.GenerateFile(
 		library.MakeValidator(m),
 	); err != nil {

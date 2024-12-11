@@ -21,7 +21,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			molecule.MakeCore(m, module, database)
+			molecule.MakeAndRunCore(m, module, database)
 		},
 	}
 

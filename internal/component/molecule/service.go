@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeService(m filesystem.Manager, repo string, module string) {
+func MakeAndRunService(m filesystem.Manager, repo string, module string) {
 	sampleActor := module
 
 	service := atom.MakeService(m, module, sampleActor)

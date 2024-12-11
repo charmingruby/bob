@@ -13,7 +13,7 @@ func MakePostgresRepository(m filesystem.Manager, module, modelName string) file
 	return component.MakePostgresRepository(m, module, modelName)
 }
 
-func MakePostgresDependencies(m filesystem.Manager) {
+func MakeAndRunPostgresDependencies(m filesystem.Manager) {
 	prepareDirectoriesForPostgresDependencies(m)
 
 	conn := component.MakePostgresConnection(m)
@@ -30,6 +30,10 @@ func MakePostgresDependencies(m filesystem.Manager) {
 	if err := m.GenerateFile(sqlErr); err != nil {
 		panic(err)
 	}
+}
+
+func MakeAndRunPostgresMigration(m filesystem.Manager, tableName string) {
+	component.RunMigration(m, tableName)
 }
 
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {

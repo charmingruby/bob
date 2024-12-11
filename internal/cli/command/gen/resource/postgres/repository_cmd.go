@@ -3,7 +3,6 @@ package postgres
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/component/resource"
-	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -30,11 +29,11 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 			}
 
 			if tableName != "" {
-				component.RunMigration(m, tableName)
+				resource.MakeAndRunPostgresMigration(m, tableName)
 			}
 
 			if needDependencies {
-				resource.MakePostgresDependencies(m)
+				resource.MakeAndRunPostgresDependencies(m)
 			}
 		},
 	}
