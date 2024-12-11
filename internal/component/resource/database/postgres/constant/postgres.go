@@ -3,8 +3,7 @@ package constant
 const (
 	MIGRATIONS_DIR = "/db/migration"
 
-	POSTGRES_PACKAGE            = "postgres"
-	POSTGRES_REPOSITORY_PACKAGE = POSTGRES_PACKAGE + "_repository"
+	POSTGRES_PACKAGE = "postgres"
 
 	POSTGRES_PREFIX = "resource/postgres"
 

@@ -1,22 +1,25 @@
-package database_err
+package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/resource/database/database_err/constant"
+	"github.com/charmingruby/bob/internal/component/resource/database/database_err/data"
+	"github.com/charmingruby/bob/internal/component/resource/database/opt"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakePersistenceError(m filesystem.Manager) filesystem.File {
+func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
 	return base.New(base.ComponentInput{
 		Package: constant.SQL_ERROR_PACKAGE,
 		DestinationDirectory: scaffold.CustomErrPath(
 			m.ModuleDirectory(scaffold.SHARED_MODULE),
-			[]string{constant.PERSISTENCE_ERR_PACKAGE},
+			[]string{constant.PERSISTENCE_ERR_PACKAGE, constant.SQL_ERROR_PACKAGE},
 		),
 	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.PERSISTENCE_ERR_TEMPLATE,
-		FileName:     "persistence",
+		TemplateName: constant.SQL_STATEMENT_ERR_TEMPLATE,
+		TemplateData: data.NewSQLXStatementErrData(m.DependencyPath(), opt.POSTGRES_DATABASE),
+		FileName:     "sqlx_statement",
 		FileSuffix:   "err",
 	})
 }

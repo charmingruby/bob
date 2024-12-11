@@ -9,30 +9,28 @@ import (
 )
 
 func MakePersistenceRepository(m filesystem.Manager, module, name, database string) filesystem.File {
-	repoDir := database + "_repository"
+	prepareDirectoriesForPersistenceRepository(m, module, database)
 
-	prepareDirectoriesForPersistenceRepository(m, module, repoDir)
-
-	return makeUnimplementedRepository(m, module, name, repoDir, database)
+	return makeUnimplementedRepository(m, module, name, database)
 }
 
-func makeUnimplementedRepository(m filesystem.Manager, module, name, repoDir, repoDB string) filesystem.File {
+func makeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	return base.New(base.ComponentInput{
-		DestinationDirectory: scaffold.PersistencePath(m.ModuleDirectory(module), []string{repoDir}),
+		DestinationDirectory: scaffold.PersistencePath(m.ModuleDirectory(module), []string{database}),
 		Package:              module,
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(base.ComponetizeInput{
 		TemplateName: constant.REPOSITORY_UNIMPLEMENTED_TEMPLATE,
-		TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, repoDB),
+		TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
 		FileName:     name,
 		FileSuffix:   "repository",
 	})
 }
 
-func prepareDirectoriesForPersistenceRepository(m filesystem.Manager, module, repoDir string) {
+func prepareDirectoriesForPersistenceRepository(m filesystem.Manager, module, database string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{scaffold.PERSISTENCE_PACKAGE, repoDir},
+		[]string{scaffold.PERSISTENCE_PACKAGE, database},
 	)
 }

@@ -1,7 +1,7 @@
 package resource
 
 import (
-	"github.com/charmingruby/bob/internal/component/resource/database/database_err"
+	errComponent "github.com/charmingruby/bob/internal/component/resource/database/database_err/component"
 	errConst "github.com/charmingruby/bob/internal/component/resource/database/database_err/constant"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	pgConst "github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
@@ -13,7 +13,7 @@ func MakePostgresRepository(m filesystem.Manager, module, modelName string) file
 	return component.MakePostgresRepository(m, module, modelName)
 }
 
-func MakePostgresDependencies(m filesystem.Manager, module string) {
+func MakePostgresDependencies(m filesystem.Manager) {
 	prepareDirectoriesForPostgresDependencies(m)
 
 	conn := component.MakePostgresConnection(m)
@@ -21,17 +21,15 @@ func MakePostgresDependencies(m filesystem.Manager, module string) {
 		panic(err)
 	}
 
-	persistenceErr := database_err.MakePersistenceError(m)
+	persistenceErr := errComponent.MakePersistenceError(m)
 	if err := m.GenerateFile(persistenceErr); err != nil {
 		panic(err)
 	}
 
-	sqlErr := database_err.MakeSQLXStatementError(m)
+	sqlErr := errComponent.MakeSQLXStatementError(m)
 	if err := m.GenerateFile(sqlErr); err != nil {
 		panic(err)
 	}
-
-	component.RunMigration(m, module)
 }
 
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {

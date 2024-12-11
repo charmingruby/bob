@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-xwx
+
 	"github.com/jmoiron/sqlx"
 
 	_ "github.com/lib/pq"

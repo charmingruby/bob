@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/component/resource"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
@@ -23,7 +24,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			repo := component.MakePostgresRepository(m, module, modelName)
+			repo := resource.MakePostgresRepository(m, module, modelName)
 			if err := m.GenerateFile(repo); err != nil {
 				panic(err)
 			}
@@ -33,10 +34,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 			}
 
 			if needDependencies {
-				conn := component.MakePostgresConnection(m)
-				if err := m.GenerateFile(conn); err != nil {
-					panic(err)
-				}
+				resource.MakePostgresDependencies(m)
 			}
 		},
 	}
