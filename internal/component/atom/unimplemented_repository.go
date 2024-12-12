@@ -8,13 +8,9 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakePersistenceRepository(m filesystem.Manager, module, name, database string) filesystem.File {
-	prepareDirectoriesForPersistenceRepository(m, module, database)
+func MakeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
+	prepareDirectoriesForUnimplementedRepository(m, module, database)
 
-	return makeUnimplementedRepository(m, module, name, database)
-}
-
-func makeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	return base.New(base.ComponentInput{
 		DestinationDirectory: scaffold.PersistencePath(m.ModuleDirectory(module), []string{database}),
 		Package:              module,
@@ -28,7 +24,7 @@ func makeUnimplementedRepository(m filesystem.Manager, module, name, database st
 	})
 }
 
-func prepareDirectoriesForPersistenceRepository(m filesystem.Manager, module, database string) {
+func prepareDirectoriesForUnimplementedRepository(m filesystem.Manager, module, database string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
 		[]string{scaffold.PERSISTENCE_PACKAGE, database},

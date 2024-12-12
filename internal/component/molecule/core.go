@@ -13,16 +13,9 @@ func MakeAndRunCore(m filesystem.Manager, module, database string) {
 
 	MakeAndRunService(m, sampleActor, module)
 
-	repository := atom.MakeRepository(m, module, sampleActor, database)
+	repository := atom.MakeRepository(m, module, sampleActor)
 	if err := m.GenerateFile(repository); err != nil {
 		panic(err)
-	}
-
-	if database != "" {
-		persistenceRepository := atom.MakePersistenceRepository(m, module, sampleActor, database)
-		if err := m.GenerateFile(persistenceRepository); err != nil {
-			panic(err)
-		}
 	}
 
 	model := atom.MakeModel(m, module, sampleActor)

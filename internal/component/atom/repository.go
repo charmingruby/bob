@@ -8,7 +8,7 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeRepository(m filesystem.Manager, module, name, database string) filesystem.File {
+func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForRepository(m, module)
 
 	return base.New(base.ComponentInput{

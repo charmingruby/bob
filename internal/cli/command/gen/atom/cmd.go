@@ -11,10 +11,12 @@ func SetupCMD(fs filesystem.Manager) *cobra.Command {
 		Short: "Generates pure components (or atoms)",
 	}
 
-	cmd.AddCommand(RunModel(fs))
-	cmd.AddCommand(RunService(fs))
-	cmd.AddCommand(RunRepository(fs))
-	cmd.AddCommand(RunHandler(fs))
+	cmd.AddCommand(
+		RunModel(fs),
+		RunService(fs),
+		RunRepository(fs),
+		RunUnimplementedRepository(fs),
+	)
 
 	return cmd
 }
