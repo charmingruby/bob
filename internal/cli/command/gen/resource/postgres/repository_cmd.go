@@ -23,18 +23,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			repo := resource.MakePostgresRepository(m, module, modelName)
-			if err := m.GenerateFile(repo); err != nil {
-				panic(err)
-			}
-
-			if tableName != "" {
-				resource.MakeAndRunPostgresMigration(m, tableName)
-			}
-
-			if needDependencies {
-				resource.MakeAndRunPostgresDependencies(m)
-			}
+			resource.MakeAndRunPostgresRepository(m, module, modelName, tableName, needDependencies)
 		},
 	}
 

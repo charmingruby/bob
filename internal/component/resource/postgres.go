@@ -9,7 +9,20 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakePostgresRepository(m filesystem.Manager, module, modelName string) filesystem.File {
+func MakeAndRunPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) filesystem.File {
+	repo := component.MakePostgresRepository(m, module, modelName)
+	if err := m.GenerateFile(repo); err != nil {
+		panic(err)
+	}
+
+	if tableName != "" {
+		MakeAndRunPostgresMigration(m, tableName)
+	}
+
+	if needDeps {
+		MakeAndRunPostgresDependencies(m)
+	}
+
 	return component.MakePostgresRepository(m, module, modelName)
 }
 

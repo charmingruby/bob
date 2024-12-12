@@ -7,6 +7,8 @@ import (
 )
 
 func MakeAndRunService(m filesystem.Manager, repo string, module string) {
+	prepareDirectoriesForService(m, module)
+
 	sampleActor := module
 
 	service := atom.MakeService(m, module, sampleActor)
@@ -30,5 +32,14 @@ func MakeAndRunService(m filesystem.Manager, repo string, module string) {
 		)); err != nil {
 			panic(err)
 		}
+	}
+}
+
+func prepareDirectoriesForService(m filesystem.Manager, module string) {
+	if err := m.GenerateNestedDirectories(
+		m.ModuleDirectory(module),
+		[]string{"core", "service"},
+	); err != nil {
+		panic(err)
 	}
 }

@@ -1,8 +1,6 @@
 package molecule
 
 import (
-	"fmt"
-
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/component/molecule"
 	"github.com/charmingruby/bob/internal/filesystem"
@@ -19,12 +17,6 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		Use:   "service",
 		Short: "Generates a new service molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := m.GenerateNestedDirectories(
-				fmt.Sprintf("%s/%s", m.SourceDirectory, module),
-				[]string{"core", "service"},
-			); err != nil {
-				panic(err)
-			}
 
 			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
 				panic(err)
