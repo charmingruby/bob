@@ -5,7 +5,7 @@ import (
 
 	"{{ .SourcePath }}/{{ .Module }}/transport/rest/dto/response"
 	"{{ .SourcePath }}/{{ .Module }}/transport/rest/dto/request"
-	"{{ .SourcePath }}/{{ .CommonModule }}/transport/rest"
+	"{{ .SourcePath }}/shared/transport/rest"
 )
 
 func (e *Endpoint) make{{ .Name }}Handler() http.HandlerFunc {

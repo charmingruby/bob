@@ -13,3 +13,7 @@ func ModuleFormat(module string) string {
 func PrivateNameFormat(name string) string {
 	return formatter.ToCamelLowerCase(name)
 }
+
+func PackagePathFormat(path string) string {
+	return formatter.ToCamelLowerCase(path)
+}

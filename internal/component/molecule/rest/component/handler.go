@@ -24,7 +24,6 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 		TemplateName: constant.REST_HANDLER_TEMPLATE,
 		TemplateData: data.NewHandlerData(
 			m.DependencyPath(),
-			scaffold.SHARED_MODULE,
 			module,
 			name,
 		),

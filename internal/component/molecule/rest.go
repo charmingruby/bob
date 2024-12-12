@@ -7,72 +7,40 @@ import (
 )
 
 func MakeAndRunRest(m filesystem.Manager, module string) {
-	if err := m.GenerateFile(
-		library.MakeValidator(m),
-	); err != nil {
-		panic(err)
-	}
-
-	if err := m.GenerateFile(
-		component.MakeRequestHelper(m),
-	); err != nil {
-		panic(err)
-	}
-	if err := m.GenerateFile(
-		component.MakeBaseServerMiddleware(
-			m,
-		)); err != nil {
-		panic(err)
-	}
-
-	if err := m.GenerateFile(
-		component.MakeServer(
-			m,
-		)); err != nil {
-		panic(err)
-	}
-
 	actioName := "ping"
 
-	if err := m.GenerateFile(component.MakeHandler(
-		m,
-		module,
-		actioName,
-	)); err != nil {
-		panic(err)
-	}
-
-	if err := m.GenerateFile(
+	components := []filesystem.File{
+		library.MakeValidator(m),
+		component.MakeRequestHelper(m),
+		component.MakeBaseServerMiddleware(m),
+		component.MakeServer(m),
+		component.MakeHandler(
+			m,
+			module,
+			actioName,
+		),
 		component.MakeHandlerRegistry(
 			m.AppendToModuleDirectory(module, "transport/rest/endpoint"),
 			m.DependencyPath(),
 			module,
-		)); err != nil {
-		panic(err)
+		),
+		component.MakeRequestHelper(m),
+		component.MakeResponseHelper(m),
+		component.MakeRequest(
+			m,
+			module,
+			actioName,
+		),
+		component.MakeResponse(
+			m,
+			module,
+			actioName,
+		),
 	}
 
-	if err := m.GenerateFile(component.MakeRequestHelper(m)); err != nil {
-		panic(err)
+	for _, f := range components {
+		if err := m.GenerateFile(f); err != nil {
+			panic(err)
+		}
 	}
-
-	if err := m.GenerateFile(component.MakeResponseHelper(m)); err != nil {
-		panic(err)
-	}
-
-	if err := m.GenerateFile(component.MakeRequest(
-		m,
-		module,
-		actioName,
-	)); err != nil {
-		panic(err)
-	}
-
-	if err := m.GenerateFile(component.MakeResponse(
-		m,
-		module,
-		actioName,
-	)); err != nil {
-		panic(err)
-	}
-
 }
