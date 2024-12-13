@@ -9,10 +9,6 @@ import (
 	"github.com/charmingruby/bob/tooling/tpl"
 )
 
-const (
-	TEMPLATE_DIR = "tpl/gen/"
-)
-
 type File struct {
 	FileName             string // file name
 	FileSuffix           string // file suffix
