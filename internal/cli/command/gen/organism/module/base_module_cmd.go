@@ -1,4 +1,4 @@
-package organism
+package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -9,43 +9,32 @@ import (
 
 func RunModule(m filesystem.Manager) *cobra.Command {
 	var (
-		module   string
-		database string
+		module string
 	)
 
 	cmd := &cobra.Command{
-		Use:   "mod",
-		Short: "Generates a module",
+		Use:   "base",
+		Short: "Generates a base module",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
 				panic(err)
 			}
 
-			organism.MakeAndRunBaseModule(m, module, database)
+			organism.MakeAndRunBaseModule(m, module)
 		},
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository, if it is not set, it will be not created")
 
 	return cmd
 }
 
-func ValidateRepositoryCommandInput(module, name, database string) error {
+func ValidateRepositoryCommandInput(module string) error {
 	args := []input.Arg{
 		{
 			FieldName:  "module",
 			Value:      module,
 			IsRequired: true,
-		},
-		{
-			FieldName:  "name",
-			Value:      name,
-			IsRequired: true,
-		},
-		{
-			FieldName: "database",
-			Value:     database,
 		},
 	}
 

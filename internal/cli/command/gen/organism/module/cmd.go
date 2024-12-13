@@ -1,19 +1,20 @@
-package organism
+package module
 
 import (
-	"github.com/charmingruby/bob/internal/cli/command/gen/organism/module"
 	"github.com/charmingruby/bob/internal/filesystem"
 	"github.com/spf13/cobra"
 )
 
 func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "org",
-		Short: "Generates organisms",
+		Use:   "module",
+		Short: "Module generator",
 	}
 
 	cmd.AddCommand(
-		module.SetupCMD(fs),
+		RunModule(fs),
+		RunModuleWithPostgresDatabase(fs),
+		RunModuleWithCustomDatabase(fs),
 	)
 
 	return cmd

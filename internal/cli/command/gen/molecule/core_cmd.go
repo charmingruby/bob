@@ -9,8 +9,7 @@ import (
 
 func RunCore(m filesystem.Manager) *cobra.Command {
 	var (
-		module   string
-		database string
+		module string
 	)
 
 	cmd := &cobra.Command{
@@ -21,12 +20,11 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			molecule.MakeAndRunCore(m, module, database)
+			molecule.MakeAndRunCore(m, module)
 		},
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database to implement repository, if it is not set, it will be not created")
 
 	return cmd
 }
@@ -37,15 +35,6 @@ func ValidateRepositoryCommandInput(module, name, database string) error {
 			FieldName:  "module",
 			Value:      module,
 			IsRequired: true,
-		},
-		{
-			FieldName:  "name",
-			Value:      name,
-			IsRequired: true,
-		},
-		{
-			FieldName: "database",
-			Value:     database,
 		},
 	}
 

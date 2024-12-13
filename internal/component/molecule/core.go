@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeAndRunCore(m filesystem.Manager, module, database string) {
+func MakeAndRunCore(m filesystem.Manager, module string) {
 	prepareDirectoriesForCore(m, module)
 
 	sampleActor := module
