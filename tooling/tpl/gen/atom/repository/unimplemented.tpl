@@ -1,4 +1,4 @@
-package {{ .Database }}_repository
+package {{ .Database }}
 
 import (
 	"errors"

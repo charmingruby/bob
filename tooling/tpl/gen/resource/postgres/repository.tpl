@@ -65,13 +65,13 @@ func (r *{{ .UpperCaseModel }}Repository) statement(queryName string) (*sqlx.Stm
 	return stmt, nil
 }
 
-func (r *{{ .UpperCaseModel }}Repository) Store(model *model.{{ .UpperCaseModel }}) error {
+func (r *{{ .UpperCaseModel }}Repository) Store(model model.{{ .UpperCaseModel }}) error {
 	stmt, err := r.statement(create{{ .UpperCaseModel }})
 	if err != nil {
 		return err
 	}
 
-	mappedEntity := Domain{{ .UpperCaseModel }}ToPostgres(*model)
+	mappedEntity := Domain{{ .UpperCaseModel }}ToPostgres(model)
 
 	if _, err := stmt.Exec(
 		mappedEntity.ID,

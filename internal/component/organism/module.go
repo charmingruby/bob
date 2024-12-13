@@ -8,13 +8,13 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunBaseModule(m filesystem.Manager, module string) {
+func MakeAndRunBaseModule(m filesystem.Manager, module, modelName string) {
 	newModule := component.MakeBaseRegistry(m, module)
 	if err := m.GenerateFile(newModule); err != nil {
 		panic(err)
 	}
 
-	molecule.MakeAndRunCore(m, module)
+	molecule.MakeAndRunCore(m, module, modelName)
 	molecule.MakeAndRunRest(m, module)
 }
 
@@ -26,16 +26,21 @@ func MakeAndRunModuleWithPostgresDatabase(m filesystem.Manager, module, modelNam
 
 	resource.MakeAndRunPostgresRepository(m, module, modelName, tableName, true)
 
-	molecule.MakeAndRunCore(m, module)
+	molecule.MakeAndRunCore(m, module, modelName)
 	molecule.MakeAndRunRest(m, module)
 }
 
 func MakeAndRunModuleWithCustomDatabase(m filesystem.Manager, module, modelName, database string) {
+	newModule := component.MakeRegistryWithCustomDatabase(m, module, modelName, database)
+	if err := m.GenerateFile(newModule); err != nil {
+		panic(err)
+	}
+
 	repo := atom.MakeUnimplementedRepository(m, module, modelName, database)
 	if err := m.GenerateFile(repo); err != nil {
 		panic(err)
 	}
 
-	molecule.MakeAndRunCore(m, module)
+	molecule.MakeAndRunCore(m, module, modelName)
 	molecule.MakeAndRunRest(m, module)
 }

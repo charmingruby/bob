@@ -17,7 +17,7 @@ func NewService(
 }
 
 func New{{ .UpperCaseRepository }}Repository() repository.{{ .UpperCaseRepository }}Repository {
-	return mysql.New{{ .UpperCaseRepository }}Repository()
+	return {{ .Database }}.New{{ .UpperCaseRepository }}Repository()
 }
 
 func NewHTTPHandler(r *chi.Mux, service *service.Service) {

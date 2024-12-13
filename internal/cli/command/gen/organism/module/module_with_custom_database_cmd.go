@@ -15,8 +15,8 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "w-pg",
-		Short: "Generates a module with postgres database",
+		Use:   "w-db",
+		Short: "Generates a module with custom database",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateModuleWithCustomDatabaseCommandInput(module, modelName, database); err != nil {
 				panic(err)
@@ -28,7 +28,7 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
 	cmd.Flags().StringVarP(&modelName, "modelName", "n", "", "model name")
-	cmd.Flags().StringVarP(&database, "database", "t", "", "database name")
+	cmd.Flags().StringVarP(&database, "database", "d", "", "database name")
 
 	return cmd
 }

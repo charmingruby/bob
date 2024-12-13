@@ -1,13 +1,12 @@
 package {{ .Module }}
 
 import (
-	"database/sql"
-
 	"{{ .SourcePath }}/{{ .Module }}/core/repository"
 	"{{ .SourcePath }}/{{ .Module }}/core/service"
 	"{{ .SourcePath }}/{{ .Module }}/database/postgres"
 	"{{ .SourcePath }}/{{ .Module }}/transport/rest/endpoint"
 	"github.com/go-chi/chi/v5"
+	"github.com/jmoiron/sqlx"
 )
 
 func NewService(
@@ -18,7 +17,7 @@ func NewService(
 	)
 }
 
-func New{{ .UpperCaseRepository }}Repository(db *sql.DB) repository.{{ .UpperCaseRepository }}Repository {
+func New{{ .UpperCaseRepository }}Repository(db *sqlx.DB) (repository.{{ .UpperCaseRepository }}Repository, error) {
 	return postgres.New{{ .UpperCaseRepository }}Repository(db)
 }
 

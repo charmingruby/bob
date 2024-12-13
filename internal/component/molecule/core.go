@@ -6,19 +6,17 @@ import (
 	"github.com/charmingruby/bob/internal/scaffold"
 )
 
-func MakeAndRunCore(m filesystem.Manager, module string) {
+func MakeAndRunCore(m filesystem.Manager, module, baseModelName string) {
 	prepareDirectoriesForCore(m, module)
 
-	sampleActor := module
+	MakeAndRunService(m, baseModelName, module)
 
-	MakeAndRunService(m, sampleActor, module)
-
-	repository := atom.MakeRepository(m, module, sampleActor)
+	repository := atom.MakeRepository(m, module, baseModelName)
 	if err := m.GenerateFile(repository); err != nil {
 		panic(err)
 	}
 
-	model := atom.MakeModel(m, module, sampleActor)
+	model := atom.MakeModel(m, module, baseModelName)
 	if err := m.GenerateFile(model); err != nil {
 		panic(err)
 	}
