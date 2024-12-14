@@ -13,10 +13,12 @@ func MakePostgresConnection(m filesystem.Manager) filesystem.File {
 	return base.New(base.ComponentInput{
 		Package:              constant.POSTGRES_PACKAGE,
 		DestinationDirectory: m.ExternalLibraryDirectory(constant.POSTGRES_PACKAGE),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.POSTGRES_CONNECTION_TEMPLATE,
-		FileName:     "connection",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.POSTGRES_CONNECTION_TEMPLATE,
+			FileName:     "connection",
+		})
 }
 
 func prepareDirectoriesForConnection(m filesystem.Manager) {

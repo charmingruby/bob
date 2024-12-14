@@ -16,11 +16,13 @@ func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 		Package:              module,
 		Name:                 name,
 		HasTest:              true,
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.MODEL_TEMPLATE,
-		TemplateData: data.NewDefaultData(name),
-		FileName:     name,
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.MODEL_TEMPLATE,
+			TemplateData: data.NewDefaultData(name),
+			FileName:     name,
+		})
 }
 
 func prepareDirectoriesForModel(m filesystem.Manager, module string) {

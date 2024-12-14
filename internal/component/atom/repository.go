@@ -16,12 +16,14 @@ func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 		Package:              module,
 		Name:                 name,
 		Suffix:               "repository",
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REPOSITORY_CONTRACT_TEMPLATE,
-		TemplateData: data.NewDependentPackageData(m.DependencyPath(), module, name),
-		FileName:     name,
-		FileSuffix:   "repository",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REPOSITORY_CONTRACT_TEMPLATE,
+			TemplateData: data.NewDependentPackageData(m.DependencyPath(), module, name),
+			FileName:     name,
+			FileSuffix:   "repository",
+		})
 }
 
 func prepareDirectoriesForRepository(m filesystem.Manager, module string) {

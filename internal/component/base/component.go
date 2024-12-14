@@ -2,7 +2,6 @@ package base
 
 import (
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
 )
 
 type Component struct {
@@ -40,9 +39,9 @@ type ComponetizeInput struct {
 	FileSuffix   string
 }
 
-func (c *Component) Componetize(in ComponetizeInput) filesystem.File {
+func (c *Component) Componetize(commandType string, in ComponetizeInput) filesystem.File {
 	return filesystem.File{
-		CommandType:          scaffold.GENERATE_COMMAND,
+		CommandType:          commandType,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,
 		FileName:             in.FileName,

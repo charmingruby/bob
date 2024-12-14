@@ -17,10 +17,12 @@ func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 			scaffold.REST_PACKAGE,
 			nil,
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
-		FileName:     "response",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
+			FileName:     "response",
+		})
 }
 
 func prepareDirectoriesForResponseHelper(m filesystem.Manager, module string) {

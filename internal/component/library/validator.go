@@ -14,10 +14,12 @@ func MakeValidator(m filesystem.Manager) filesystem.File {
 		Package:              scaffold.SHARED_MODULE,
 		Name:                 "validator",
 		DestinationDirectory: m.AppendToModuleDirectory(scaffold.SHARED_MODULE, "validation"),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.VALIDATION_TEMPLATE,
-		FileName:     "validator",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.VALIDATION_TEMPLATE,
+			FileName:     "validator",
+		})
 }
 
 func prepareDirectoriesForValidator(m filesystem.Manager, module string) {

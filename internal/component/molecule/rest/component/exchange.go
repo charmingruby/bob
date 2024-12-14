@@ -18,12 +18,14 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 			scaffold.REST_PACKAGE,
 			[]string{scaffold.DTO_PACKAGE, exchange},
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_EXCHANGE_TEMPLATE,
-		TemplateData: data.NewExchangeData(exchange, name),
-		FileName:     name,
-		FileSuffix:   exchange,
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_EXCHANGE_TEMPLATE,
+			TemplateData: data.NewExchangeData(exchange, name),
+			FileName:     name,
+			FileSuffix:   exchange,
+		})
 }
 
 func prepareDirectoriesForExchange(m filesystem.Manager, module, exchange string) {

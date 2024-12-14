@@ -16,12 +16,14 @@ func MakeUnimplementedRepository(m filesystem.Manager, module, name, database st
 		Package:              module,
 		Name:                 name,
 		Suffix:               "repository",
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REPOSITORY_UNIMPLEMENTED_TEMPLATE,
-		TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
-		FileName:     name,
-		FileSuffix:   "repository",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REPOSITORY_UNIMPLEMENTED_TEMPLATE,
+			TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
+			FileName:     name,
+			FileSuffix:   "repository",
+		})
 }
 
 func prepareDirectoriesForUnimplementedRepository(m filesystem.Manager, module, database string) {

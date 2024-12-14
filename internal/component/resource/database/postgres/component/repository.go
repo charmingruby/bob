@@ -14,12 +14,14 @@ func MakePostgresRepository(m filesystem.Manager, module, model string) filesyst
 	return base.New(base.ComponentInput{
 		Package:              constant.POSTGRES_PACKAGE,
 		DestinationDirectory: scaffold.PersistencePath(m.ModuleDirectory(module), []string{constant.POSTGRES_PACKAGE}),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.POSTGRES_REPOSITORY_TEMPLATE,
-		TemplateData: data.NewPostgresRepositoryData(m.DependencyPath(), module, model),
-		FileName:     model,
-		FileSuffix:   "repository",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.POSTGRES_REPOSITORY_TEMPLATE,
+			TemplateData: data.NewPostgresRepositoryData(m.DependencyPath(), module, model),
+			FileName:     model,
+			FileSuffix:   "repository",
+		})
 }
 
 func prepareDirectoriesForRepository(m filesystem.Manager, module string) {

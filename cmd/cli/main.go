@@ -15,7 +15,7 @@ func main() {
 	}
 
 	cmd := command.New(rootCmd, config)
-	cmd.SetupGenerate()
+	cmd.Setup()
 
 	rootCmd.Execute()
 }

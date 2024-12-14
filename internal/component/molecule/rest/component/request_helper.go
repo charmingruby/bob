@@ -18,11 +18,13 @@ func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 			scaffold.REST_PACKAGE,
 			nil,
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
-		TemplateData: data.NewRequestHelperData(m.DependencyPath()),
-		FileName:     "request",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
+			TemplateData: data.NewRequestHelperData(m.DependencyPath()),
+			FileName:     "request",
+		})
 }
 
 func prepareDirectoriesForRequestHelper(m filesystem.Manager, module string) {

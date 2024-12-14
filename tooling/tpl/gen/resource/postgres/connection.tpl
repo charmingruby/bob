@@ -1,4 +1,4 @@
-package main
+package postgres
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type ConnectionInput struct {
 	SSL          string
 }
 
-func NewPostgresConnection(in ConnectionInput) (*sqlx.DB, error) {
+func New(in ConnectionInput) (*sqlx.DB, error) {
 	connectionString := fmt.Sprintf(
 		"postgresql://%s:%s@%s/%s?sslmode=%s",
 		in.User,

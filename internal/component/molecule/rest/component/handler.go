@@ -20,16 +20,18 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 			scaffold.REST_PACKAGE,
 			[]string{scaffold.HANDLER_PACKAGE},
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_HANDLER_TEMPLATE,
-		TemplateData: data.NewHandlerData(
-			m.DependencyPath(),
-			module,
-			name,
-		),
-		FileName:   name,
-		FileSuffix: "handler",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_HANDLER_TEMPLATE,
+			TemplateData: data.NewHandlerData(
+				m.DependencyPath(),
+				module,
+				name,
+			),
+			FileName:   name,
+			FileSuffix: "handler",
+		})
 }
 
 func prepareDirectoriesForHandler(m filesystem.Manager, module string) {

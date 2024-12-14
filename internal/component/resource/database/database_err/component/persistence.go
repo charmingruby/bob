@@ -14,9 +14,11 @@ func MakePersistenceError(m filesystem.Manager) filesystem.File {
 			m.ModuleDirectory(scaffold.SHARED_MODULE),
 			[]string{constant.PERSISTENCE_ERR_PACKAGE},
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.PERSISTENCE_ERR_TEMPLATE,
-		FileName:     "persistence",
-		FileSuffix:   "err",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.PERSISTENCE_ERR_TEMPLATE,
+			FileName:     "persistence",
+			FileSuffix:   "err",
+		})
 }

@@ -17,10 +17,12 @@ func MakeServer(m filesystem.Manager) filesystem.File {
 			scaffold.REST_PACKAGE,
 			nil,
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_SERVER,
-		FileName:     "server",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_SERVER,
+			FileName:     "server",
+		})
 }
 
 func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
@@ -31,10 +33,12 @@ func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
 			scaffold.REST_PACKAGE,
 			nil,
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.REST_BASE_SERVER_MIDDLEWARE,
-		FileName:     "middleware",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.REST_BASE_SERVER_MIDDLEWARE,
+			FileName:     "middleware",
+		})
 }
 
 func prepareDirectoriesForServer(m filesystem.Manager, module string) {

@@ -16,12 +16,14 @@ func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 		Name:                 name,
 		Suffix:               "service",
 		DestinationDirectory: scaffold.CorePath(m.ModuleDirectory(module), []string{scaffold.SERVICE_PACKAGE}),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.SERVICE_TEMPLATE,
-		TemplateData: data.NewDefaultData(name),
-		FileName:     name,
-		FileSuffix:   "service",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.SERVICE_TEMPLATE,
+			TemplateData: data.NewDefaultData(name),
+			FileName:     name,
+			FileSuffix:   "service",
+		})
 }
 
 func prepareDirectoriesForService(m filesystem.Manager, module string) {

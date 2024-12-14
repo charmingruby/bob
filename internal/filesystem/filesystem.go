@@ -7,6 +7,7 @@ import (
 )
 
 type Manager struct {
+	ProjectName      string
 	Data             string
 	RootDirectory    string
 	SourceDirectory  string
@@ -23,6 +24,7 @@ func New(config config.Configuration) Manager {
 	}
 
 	return Manager{
+		ProjectName:      config.BaseConfiguration.ProjectName,
 		Data:             config.BaseConfiguration.BaseURL + "/" + config.BaseConfiguration.ProjectName,
 		RootDirectory:    config.BaseConfiguration.RootDir,
 		SourceDirectory:  sourceDirectory,
@@ -32,6 +34,10 @@ func New(config config.Configuration) Manager {
 
 func (m *Manager) MainDirectory() string {
 	return m.RootDirectory
+}
+
+func (m *Manager) EntryDirectory() string {
+	return m.MainDirectory() + "/cmd/" + m.ProjectName
 }
 
 func (m *Manager) ModuleDirectory(module string) string {
@@ -48,4 +54,8 @@ func (m *Manager) ExternalLibraryDirectory(lib string) string {
 
 func (m *Manager) DependencyPath() string {
 	return fmt.Sprintf("%s/%s", m.Data, m.SourceDirectory)
+}
+
+func (m *Manager) RootPath() string {
+	return m.Data
 }

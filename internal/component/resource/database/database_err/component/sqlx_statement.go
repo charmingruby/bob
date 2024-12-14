@@ -16,10 +16,12 @@ func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
 			m.ModuleDirectory(scaffold.SHARED_MODULE),
 			[]string{constant.PERSISTENCE_ERR_PACKAGE, constant.SQL_ERROR_PACKAGE},
 		),
-	}).Componetize(base.ComponetizeInput{
-		TemplateName: constant.SQL_STATEMENT_ERR_TEMPLATE,
-		TemplateData: data.NewSQLXStatementErrData(m.DependencyPath(), opt.POSTGRES_DATABASE),
-		FileName:     "sqlx_statement",
-		FileSuffix:   "err",
-	})
+	}).Componetize(
+		scaffold.GENERATE_COMMAND,
+		base.ComponetizeInput{
+			TemplateName: constant.SQL_STATEMENT_ERR_TEMPLATE,
+			TemplateData: data.NewSQLXStatementErrData(m.DependencyPath(), opt.POSTGRES_DATABASE),
+			FileName:     "sqlx_statement",
+			FileSuffix:   "err",
+		})
 }
