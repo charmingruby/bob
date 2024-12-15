@@ -8,23 +8,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared"
 )
 
-func MakeGoMod(m filesystem.Manager, module, repositoryModel string) filesystem.File {
-	prepareDirectoriesForGoMod(m)
-
+func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.MainDirectory(),
 	}).Componetize(
 		shared.BOOTSTRAP_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.ENTRY_TEMPLATE,
-			TemplateData: data.NewGoModData(m.RootPath(), module, repositoryModel),
-			FileName:     "main",
+			TemplateName: constant.GO_MOD_TEMPLATE,
+			TemplateData: data.NewGoModData(m.Data, goVersion),
+			FileName:     "go",
+			Extension:    "mod",
 		})
-}
-
-func prepareDirectoriesForGoMod(m filesystem.Manager) {
-	m.GenerateNestedDirectories(
-		m.MainDirectory(),
-		[]string{"cmd", m.ProjectName},
-	)
 }

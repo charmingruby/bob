@@ -1,5 +1,5 @@
 package constant
 
 const (
-	ENTRY_TEMPLATE = "setup/entry"
+	ENTRY_TEMPLATE = "entry"
 )

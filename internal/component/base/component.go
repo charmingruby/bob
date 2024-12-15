@@ -2,6 +2,8 @@ package base
 
 import (
 	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/pkg/util"
 )
 
 type Component struct {
@@ -37,9 +39,15 @@ type ComponetizeInput struct {
 	TemplateData any
 	FileName     string
 	FileSuffix   string
+	Extension    string
 }
 
 func (c *Component) Componetize(commandType string, in ComponetizeInput) filesystem.File {
+	var extension string = util.Ternary[string](in.Extension == "", shared.GO_EXTENSION, in.Extension)
+	if extension == shared.NO_EXTENSION {
+		extension = ""
+	}
+
 	return filesystem.File{
 		CommandType:          commandType,
 		TemplateName:         in.TemplateName,
@@ -48,5 +56,6 @@ func (c *Component) Componetize(commandType string, in ComponetizeInput) filesys
 		FileSuffix:           in.FileSuffix,
 		DestinationDirectory: c.DestinationDirectory,
 		HasTest:              c.HasTest,
+		Extension:            extension,
 	}
 }

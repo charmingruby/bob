@@ -5,17 +5,19 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/charmingruby/bob/internal/shared"
 	"github.com/charmingruby/bob/pkg/formatter"
 	"github.com/charmingruby/bob/tooling/tpl"
 )
 
 type File struct {
+	CommandType          string // ex: gen, new...
+	Extension            string
+	DestinationDirectory string // directory where the file will be created
 	FileName             string // file name
 	FileSuffix           string // file suffix
-	CommandType          string // ex: gen, new...
 	TemplateName         string // handler, model...
 	TemplateData         any    // data to be used in the template
-	DestinationDirectory string // directory where the file will be created
 	HasTest              bool
 }
 
@@ -36,7 +38,7 @@ func (f *Manager) GenerateFile(file File) error {
 			return err
 		}
 
-		if err := generateFileIfNotExists(file.FileName, "_test", file.DestinationDirectory, file.TemplateData, testTmpl); err != nil {
+		if err := generateFileIfNotExists(file.FileName, "_test", file.DestinationDirectory, file.TemplateData, testTmpl, file.Extension); err != nil {
 			return err
 		}
 	}
@@ -47,7 +49,7 @@ func (f *Manager) GenerateFile(file File) error {
 		return err
 	}
 
-	return generateFileIfNotExists(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl)
+	return generateFileIfNotExists(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl, file.Extension)
 }
 
 func createTemplate(fileName, command string) (*template.Template, error) {
@@ -68,7 +70,7 @@ func createTemplate(fileName, command string) (*template.Template, error) {
 	return tmpl, err
 }
 
-func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *template.Template) error {
+func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *template.Template, extension string) error {
 	destinyDir, err := getDestinationDirectory(directory)
 	if err != nil {
 		fmt.Println("Error getting destination directory:", err)
@@ -80,7 +82,12 @@ func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *tem
 		finalFileName += "_" + suffix
 	}
 
-	filePath := fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
+	var filePath string
+	if extension == shared.GO_EXTENSION {
+		filePath = fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
+	} else {
+		filePath = fmt.Sprintf("%s/%s.%s", destinyDir, finalFileName, extension)
+	}
 
 	if _, err := os.Stat(filePath); err == nil {
 		fmt.Printf("File already exists: %s\n", filePath)

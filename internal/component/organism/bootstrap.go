@@ -12,9 +12,15 @@ func MakeAndRunSetup(m filesystem.Manager) {
 	baseTableName := "examples"
 	baseModelName := "example"
 
-	entry := component.MakeEntry(m, baseModule, baseModelName)
-	if err := m.GenerateFile(entry); err != nil {
-		panic(err)
+	components := []filesystem.File{
+		component.MakeEntry(m, baseModule, baseModelName),
+		component.MakeGoMod(m, "1.23.3"),
+	}
+
+	for _, c := range components {
+		if err := m.GenerateFile(c); err != nil {
+			panic(err)
+		}
 	}
 
 	MakeAndRunModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)

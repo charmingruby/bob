@@ -1,3 +1,3 @@
-module {{ .BaseURL }}/{{ .ProjectName }}
+module {{ .RepoURL }}
 
 go {{ .GoVersion }}
