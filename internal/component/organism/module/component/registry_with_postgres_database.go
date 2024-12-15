@@ -4,9 +4,8 @@ import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/organism/module/constant"
 	"github.com/charmingruby/bob/internal/component/organism/module/data"
-	"github.com/charmingruby/bob/internal/component/resource/database/opt"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryModel string) filesystem.File {
@@ -18,13 +17,13 @@ func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryMo
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.MODULE_WITH_POSTGRES_DATABASE_TEMPLATE,
 			TemplateData: data.NewModuleWithDatabaseData(
 				m.DependencyPath(),
 				module,
-				opt.POSTGRES_DATABASE,
+				"postgres",
 				repositoryModel,
 			),
 			FileName: module,

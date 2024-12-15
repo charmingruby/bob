@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	pgConst "github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeAndRunPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) filesystem.File {
@@ -52,7 +52,7 @@ func MakeAndRunPostgresMigration(m filesystem.Manager, tableName string) {
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{scaffold.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
+		[]string{shared.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
 	)
 
 	m.GenerateNestedDirectories(
@@ -62,6 +62,6 @@ func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{scaffold.SHARED_MODULE, errConst.CUSTOM_ERR_PACKAGE, errConst.PERSISTENCE_ERR_PACKAGE, errConst.SQL_ERROR_PACKAGE},
+		[]string{shared.SHARED_MODULE, errConst.CUSTOM_ERR_PACKAGE, errConst.PERSISTENCE_ERR_PACKAGE, errConst.SQL_ERROR_PACKAGE},
 	)
 }

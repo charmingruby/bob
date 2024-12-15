@@ -2,7 +2,7 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/atom"
-	"github.com/charmingruby/bob/internal/component/molecule/constant"
+	"github.com/charmingruby/bob/internal/component/molecule/service/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/service/data"
 	"github.com/charmingruby/bob/internal/filesystem"
 )

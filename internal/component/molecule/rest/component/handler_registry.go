@@ -2,10 +2,10 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/atom"
-	"github.com/charmingruby/bob/internal/component/molecule/constant"
+	"github.com/charmingruby/bob/internal/component/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeHandlerRegistry(destinationDirectory, sourcePath, module string) filesystem.File {
@@ -16,7 +16,7 @@ func MakeHandlerRegistry(destinationDirectory, sourcePath, module string) filesy
 			Module:     module,
 			SourcePath: sourcePath,
 		},
-		RegistryName:         scaffold.HANDLER_PACKAGE,
+		RegistryName:         shared.HANDLER_PACKAGE,
 		DestinationDirectory: destinationDirectory,
 	})
 }

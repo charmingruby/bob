@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/organism/module/constant"
 	"github.com/charmingruby/bob/internal/component/organism/module/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeRegistryWithCustomDatabase(m filesystem.Manager, module, repositoryModel, database string) filesystem.File {
@@ -17,7 +17,7 @@ func MakeRegistryWithCustomDatabase(m filesystem.Manager, module, repositoryMode
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.MODULE_WITH_CUSTOM_DATABASE_TEMPLATE,
 			TemplateData: data.NewModuleWithDatabaseData(

@@ -2,10 +2,10 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/organism/setup/constant"
-	"github.com/charmingruby/bob/internal/component/organism/setup/data"
+	"github.com/charmingruby/bob/internal/component/organism/bootstrap/constant"
+	"github.com/charmingruby/bob/internal/component/organism/bootstrap/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
@@ -14,7 +14,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.EntryDirectory(),
 	}).Componetize(
-		scaffold.BOOTSTRAP_COMMAND,
+		shared.BOOTSTRAP_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.ENTRY_TEMPLATE,
 			TemplateData: data.NewEntryData(m.RootPath(), module, repositoryModel),

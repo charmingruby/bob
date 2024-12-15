@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/organism/module/constant"
 	"github.com/charmingruby/bob/internal/component/organism/module/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
@@ -17,7 +17,7 @@ func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.BASE_MODULE_TEMPLATE,
 			TemplateData: data.NewBaseModuleData(

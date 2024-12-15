@@ -3,7 +3,7 @@ package atom
 import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 type RegistryParams struct {
@@ -20,7 +20,7 @@ func MakeRegistry(params RegistryParams) filesystem.File {
 		Name:                 params.RegistryName,
 		DestinationDirectory: params.DestinationDirectory,
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: params.TemplateName,
 			TemplateData: params.TemplateData,

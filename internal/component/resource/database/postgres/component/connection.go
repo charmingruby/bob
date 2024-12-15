@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakePostgresConnection(m filesystem.Manager) filesystem.File {
@@ -14,7 +14,7 @@ func MakePostgresConnection(m filesystem.Manager) filesystem.File {
 		Package:              constant.POSTGRES_PACKAGE,
 		DestinationDirectory: m.ExternalLibraryDirectory(constant.POSTGRES_PACKAGE),
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.POSTGRES_CONNECTION_TEMPLATE,
 			FileName:     "connection",
@@ -24,6 +24,6 @@ func MakePostgresConnection(m filesystem.Manager) filesystem.File {
 func prepareDirectoriesForConnection(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{scaffold.LIBRARY_PACKAGE, constant.POSTGRES_PACKAGE},
+		[]string{shared.LIBRARY_PACKAGE, constant.POSTGRES_PACKAGE},
 	)
 }

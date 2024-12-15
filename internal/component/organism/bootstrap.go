@@ -1,7 +1,7 @@
 package organism
 
 import (
-	"github.com/charmingruby/bob/internal/component/organism/setup/component"
+	"github.com/charmingruby/bob/internal/component/organism/bootstrap/component"
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 

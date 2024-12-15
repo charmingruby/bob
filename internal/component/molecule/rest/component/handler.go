@@ -2,10 +2,10 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule/constant"
+	"github.com/charmingruby/bob/internal/component/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
@@ -15,13 +15,13 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 		Package: module,
 		Name:    name,
 		Suffix:  "handler",
-		DestinationDirectory: scaffold.TransportPath(
+		DestinationDirectory: shared.TransportPath(
 			m.ModuleDirectory(module),
-			scaffold.REST_PACKAGE,
-			[]string{scaffold.HANDLER_PACKAGE},
+			shared.REST_PACKAGE,
+			[]string{shared.HANDLER_PACKAGE},
 		),
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_HANDLER_TEMPLATE,
 			TemplateData: data.NewHandlerData(
@@ -37,6 +37,6 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 func prepareDirectoriesForHandler(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE, scaffold.HANDLER_PACKAGE},
+		[]string{shared.TRANSPORT_PACKAGE, shared.REST_PACKAGE, shared.HANDLER_PACKAGE},
 	)
 }

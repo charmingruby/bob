@@ -1,4 +1,4 @@
-package scaffold
+package shared
 
 func TransportPath(moduleDir, protocol string, complementaryPath []string) string {
 	var path = moduleDir + "/" + TRANSPORT_PACKAGE + "/" + REST_PACKAGE

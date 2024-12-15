@@ -1,4 +1,4 @@
-package scaffold
+package shared
 
 const (
 	GENERATE_COMMAND  = "gen"

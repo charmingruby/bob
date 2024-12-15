@@ -2,10 +2,10 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule/constant"
+	"github.com/charmingruby/bob/internal/component/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
@@ -13,13 +13,13 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 		Package: module,
 		Name:    name,
 		Suffix:  exchange,
-		DestinationDirectory: scaffold.TransportPath(
+		DestinationDirectory: shared.TransportPath(
 			m.ModuleDirectory(module),
-			scaffold.REST_PACKAGE,
-			[]string{scaffold.DTO_PACKAGE, exchange},
+			shared.REST_PACKAGE,
+			[]string{shared.DTO_PACKAGE, exchange},
 		),
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_EXCHANGE_TEMPLATE,
 			TemplateData: data.NewExchangeData(exchange, name),
@@ -31,7 +31,7 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 func prepareDirectoriesForExchange(m filesystem.Manager, module, exchange string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE, scaffold.DTO_PACKAGE, exchange},
+		[]string{shared.TRANSPORT_PACKAGE, shared.REST_PACKAGE, shared.DTO_PACKAGE, exchange},
 	)
 }
 

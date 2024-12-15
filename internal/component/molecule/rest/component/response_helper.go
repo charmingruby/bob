@@ -2,23 +2,23 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/molecule/constant"
+	"github.com/charmingruby/bob/internal/component/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/scaffold"
+	"github.com/charmingruby/bob/internal/shared"
 )
 
 func MakeResponseHelper(m filesystem.Manager) filesystem.File {
-	prepareDirectoriesForResponseHelper(m, scaffold.SHARED_MODULE)
+	prepareDirectoriesForResponseHelper(m, shared.SHARED_MODULE)
 
 	return base.New(base.ComponentInput{
-		Package: scaffold.REST_PACKAGE,
-		DestinationDirectory: scaffold.TransportPath(
-			m.ModuleDirectory(scaffold.SHARED_MODULE),
-			scaffold.REST_PACKAGE,
+		Package: shared.REST_PACKAGE,
+		DestinationDirectory: shared.TransportPath(
+			m.ModuleDirectory(shared.SHARED_MODULE),
+			shared.REST_PACKAGE,
 			nil,
 		),
 	}).Componetize(
-		scaffold.GENERATE_COMMAND,
+		shared.GENERATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
 			FileName:     "response",
@@ -28,6 +28,6 @@ func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 func prepareDirectoriesForResponseHelper(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{module, scaffold.TRANSPORT_PACKAGE, scaffold.REST_PACKAGE},
+		[]string{module, shared.TRANSPORT_PACKAGE, shared.REST_PACKAGE},
 	)
 }
