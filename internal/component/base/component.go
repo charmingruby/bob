@@ -44,9 +44,6 @@ type ComponetizeInput struct {
 
 func (c *Component) Componetize(commandType string, in ComponetizeInput) filesystem.File {
 	var extension string = util.Ternary[string](in.Extension == "", shared.GO_EXTENSION, in.Extension)
-	if extension == shared.NO_EXTENSION {
-		extension = ""
-	}
 
 	return filesystem.File{
 		CommandType:          commandType,

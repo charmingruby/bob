@@ -22,8 +22,10 @@ type File struct {
 }
 
 func (f *File) format() {
-	f.FileName = formatter.ToSnakeCase(f.FileName)
-	f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
+	if f.Extension == shared.GO_EXTENSION {
+		f.FileName = formatter.ToSnakeCase(f.FileName)
+		f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
+	}
 }
 
 func (f *Manager) GenerateFile(file File) error {
@@ -83,9 +85,12 @@ func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *tem
 	}
 
 	var filePath string
-	if extension == shared.GO_EXTENSION {
+	switch extension {
+	case shared.GO_EXTENSION:
 		filePath = fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
-	} else {
+	case shared.NO_EXTENSION:
+		filePath = fmt.Sprintf("%s/%s", destinyDir, finalFileName)
+	default:
 		filePath = fmt.Sprintf("%s/%s.%s", destinyDir, finalFileName, extension)
 	}
 

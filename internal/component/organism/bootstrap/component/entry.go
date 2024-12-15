@@ -9,10 +9,12 @@ import (
 )
 
 func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
-	prepareDirectoriesForEntry(m)
+	app := "api"
+
+	prepareDirectoriesForEntry(m, app)
 
 	return base.New(base.ComponentInput{
-		DestinationDirectory: m.EntryDirectory("api"),
+		DestinationDirectory: m.EntryDirectory(app),
 	}).Componetize(
 		shared.BOOTSTRAP_COMMAND,
 		base.ComponetizeInput{
@@ -22,9 +24,9 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 		})
 }
 
-func prepareDirectoriesForEntry(m filesystem.Manager) {
+func prepareDirectoriesForEntry(m filesystem.Manager, app string) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{"cmd", m.ProjectName},
+		[]string{"cmd", app},
 	)
 }
