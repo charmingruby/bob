@@ -12,7 +12,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 	prepareDirectoriesForEntry(m)
 
 	return base.New(base.ComponentInput{
-		DestinationDirectory: m.EntryDirectory(),
+		DestinationDirectory: m.EntryDirectory("api"),
 	}).Componetize(
 		shared.BOOTSTRAP_COMMAND,
 		base.ComponetizeInput{

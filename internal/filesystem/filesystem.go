@@ -36,8 +36,8 @@ func (m *Manager) MainDirectory() string {
 	return m.RootDirectory
 }
 
-func (m *Manager) EntryDirectory() string {
-	return m.MainDirectory() + "/cmd/" + m.ProjectName
+func (m *Manager) EntryDirectory(project string) string {
+	return m.MainDirectory() + "/cmd/" + project
 }
 
 func (m *Manager) ModuleDirectory(module string) string {

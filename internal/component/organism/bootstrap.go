@@ -15,6 +15,7 @@ func MakeAndRunSetup(m filesystem.Manager) {
 	components := []filesystem.File{
 		component.MakeEntry(m, baseModule, baseModelName),
 		component.MakeGoMod(m, "1.23.3"),
+		component.MakeConfig(m),
 	}
 
 	for _, c := range components {
