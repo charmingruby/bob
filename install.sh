@@ -17,7 +17,7 @@ echo_error() {
 MIN_GO_VERSION="1.23"
 
 version_greater_equal() {
-   local IFS=.
+    local IFS=.
     local i ver1=($1) ver2=($2)
     for ((i=${#ver1[@]}; i<${#ver2[@]}; i++)); do
         ver1[i]=0
@@ -64,22 +64,19 @@ if [[ -d "$BOB_DIR" ]]; then
 else
     echo_info "Cloning the Bob repository..."
     git clone https://github.com/charmingruby/bob.git "$BOB_DIR"
+    cd "$BOB_DIR"
 fi
-
-cd "$BOB_DIR"
 
 echo_info "Building Bob..."
 go build -o bob ./cmd/cli/main.go
 
-echo_info "Installing Bob to /usr/local/bin..."
-sudo mv bob /usr/local/bin/
+echo_info "Installing Bob to /usr/local/bin/..."
+sudo mv -f bob /usr/local/bin/
 
 CONFIG_DIR="$HOME/.config/bob"
 mkdir -p "$CONFIG_DIR"
 
-echo_info "Copying messages directory to $CONFIG_DIR..."
-cp -r "$BOB_DIR/messages" "$CONFIG_DIR/"
+echo_info "Cleaning up..."
+rm -rf "$BOB_DIR"
 
 echo_info "Installation complete! Verify by running 'bob'"
-
-echo_info "Installation finished."

@@ -26,16 +26,16 @@ type BaseConfiguration struct {
 	LibraryDir  string `yaml:"library_dir"`
 }
 
-func New() (Configuration, error) {
+func New() (*Configuration, error) {
 	yamlData, err := os.ReadFile(CONFIG_FILE)
 	if err != nil {
-		return Configuration{}, err
+		return &Configuration{}, err
 	}
 
 	var config Configuration
 	if err := yaml.Unmarshal(yamlData, &config); err != nil {
-		return Configuration{}, err
+		return &Configuration{}, err
 	}
 
-	return config, nil
+	return &config, nil
 }
