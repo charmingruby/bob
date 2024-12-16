@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunSetup(m filesystem.Manager) {
+func MakeAndRunSetup(m filesystem.Manager, goVersion string) {
 	prepareDirectoriesForSetup(m)
 
 	baseModule := "example"
@@ -14,9 +14,13 @@ func MakeAndRunSetup(m filesystem.Manager) {
 
 	components := []filesystem.File{
 		component.MakeEntry(m, baseModule, baseModelName),
-		component.MakeGoMod(m, "1.23.3"),
+		component.MakeGoMod(m, goVersion),
 		component.MakeConfig(m),
 		component.MakeEnvironmentExample(m),
+		component.MakeCompose(m),
+		component.MakeContainer(m, goVersion),
+		component.MakeMakefile(m),
+		component.MakeGitIgnore(m),
 	}
 
 	for _, c := range components {
