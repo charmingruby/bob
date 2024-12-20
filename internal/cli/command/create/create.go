@@ -32,7 +32,7 @@ func (c *Command) Setup() {
 				panic(err)
 			}
 
-			organism.MakeAndRunSetup(c.fs, goVersion)
+			organism.PerformSetup(c.fs, goVersion)
 		},
 	}
 

@@ -22,7 +22,7 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			organism.MakeAndRunModuleWithCustomDatabase(m, module, modelName, database)
+			organism.PerformModuleWithCustomDatabase(m, module, modelName, database)
 		},
 	}
 

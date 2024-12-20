@@ -9,24 +9,24 @@ import (
 	"github.com/charmingruby/bob/internal/shared"
 )
 
-func MakeAndRunPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) filesystem.File {
+func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) filesystem.File {
 	repo := component.MakePostgresRepository(m, module, modelName)
 	if err := m.GenerateFile(repo); err != nil {
 		panic(err)
 	}
 
 	if tableName != "" {
-		MakeAndRunPostgresMigration(m, tableName)
+		PerformPostgresMigration(m, tableName)
 	}
 
 	if needDeps {
-		MakeAndRunPostgresDependencies(m)
+		PerformPostgresDependencies(m)
 	}
 
 	return component.MakePostgresRepository(m, module, modelName)
 }
 
-func MakeAndRunPostgresDependencies(m filesystem.Manager) {
+func PerformPostgresDependencies(m filesystem.Manager) {
 	prepareDirectoriesForPostgresDependencies(m)
 
 	conn := component.MakePostgresConnection(m)
@@ -45,7 +45,7 @@ func MakeAndRunPostgresDependencies(m filesystem.Manager) {
 	}
 }
 
-func MakeAndRunPostgresMigration(m filesystem.Manager, tableName string) {
+func PerformPostgresMigration(m filesystem.Manager, tableName string) {
 	component.RunMigration(m, tableName)
 }
 

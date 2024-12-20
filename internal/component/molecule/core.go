@@ -6,10 +6,10 @@ import (
 	"github.com/charmingruby/bob/internal/shared"
 )
 
-func MakeAndRunCore(m filesystem.Manager, module, baseModelName string) {
+func PerformCore(m filesystem.Manager, module, baseModelName string) {
 	prepareDirectoriesForCore(m, module)
 
-	MakeAndRunService(m, baseModelName, module)
+	PerformService(m, baseModelName, module)
 
 	repository := atom.MakeRepository(m, module, baseModelName)
 	if err := m.GenerateFile(repository); err != nil {

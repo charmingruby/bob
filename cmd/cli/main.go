@@ -13,7 +13,7 @@ func main() {
 	rootCmd := &cobra.Command{}
 
 	if _, err := os.Stat(config.CONFIG_FILE); os.IsNotExist(err) {
-		organism.MakeAndRunConfigure()
+		organism.PerformConfigure()
 	}
 
 	config, err := config.New()

@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunSetup(m filesystem.Manager, goVersion string) {
+func PerformSetup(m filesystem.Manager, goVersion string) {
 	prepareDirectoriesForSetup(m)
 
 	baseModule := "example"
@@ -29,7 +29,7 @@ func MakeAndRunSetup(m filesystem.Manager, goVersion string) {
 		}
 	}
 
-	MakeAndRunModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)
+	PerformModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)
 }
 
 func prepareDirectoriesForSetup(m filesystem.Manager) {

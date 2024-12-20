@@ -20,7 +20,7 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			molecule.MakeAndRunRest(m, module)
+			molecule.PerformRest(m, module)
 		},
 	}
 

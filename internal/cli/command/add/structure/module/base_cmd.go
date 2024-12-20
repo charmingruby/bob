@@ -21,7 +21,7 @@ func RunModule(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			organism.MakeAndRunBaseModule(m, module, modelName)
+			organism.PerformBaseModule(m, module, modelName)
 		},
 	}
 

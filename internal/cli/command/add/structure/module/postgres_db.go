@@ -22,7 +22,7 @@ func RunModuleWithPostgresDatabase(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			organism.MakeAndRunModuleWithPostgresDatabase(m, module, modelName, tableName)
+			organism.PerformModuleWithPostgresDatabase(m, module, modelName, tableName)
 		},
 	}
 

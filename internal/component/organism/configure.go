@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunConfigure() {
+func PerformConfigure() {
 	manager := filesystem.Manager{
 		ProjectName:      "bob-project",
 		Data:             "github.com/your-user",

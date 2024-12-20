@@ -11,7 +11,7 @@ func RunDependecies(m filesystem.Manager) *cobra.Command {
 		Use:   "deps",
 		Short: "Generates a dependencies",
 		Run: func(cmd *cobra.Command, args []string) {
-			resource.MakeAndRunPostgresDependencies(m)
+			resource.PerformPostgresDependencies(m)
 		},
 	}
 

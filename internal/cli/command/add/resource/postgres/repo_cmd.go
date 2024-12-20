@@ -23,7 +23,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			resource.MakeAndRunPostgresRepository(m, module, modelName, tableName, needDependencies)
+			resource.PerformPostgresRepository(m, module, modelName, tableName, needDependencies)
 		},
 	}
 

@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunRest(m filesystem.Manager, module string) {
+func PerformRest(m filesystem.Manager, module string) {
 	actioName := "ping"
 
 	components := []filesystem.File{

@@ -20,7 +20,7 @@ func RunMigration(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			resource.MakeAndRunPostgresMigration(m, tableName)
+			resource.PerformPostgresMigration(m, tableName)
 		},
 	}
 

@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunService(m filesystem.Manager, repo string, module string) {
+func PerformService(m filesystem.Manager, repo string, module string) {
 	prepareDirectoriesForService(m, module)
 
 	sampleActor := module

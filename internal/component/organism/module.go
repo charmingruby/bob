@@ -8,29 +8,29 @@ import (
 	"github.com/charmingruby/bob/internal/filesystem"
 )
 
-func MakeAndRunBaseModule(m filesystem.Manager, module, modelName string) {
+func PerformBaseModule(m filesystem.Manager, module, modelName string) {
 	newModule := component.MakeBaseRegistry(m, module)
 	if err := m.GenerateFile(newModule); err != nil {
 		panic(err)
 	}
 
-	molecule.MakeAndRunCore(m, module, modelName)
-	molecule.MakeAndRunRest(m, module)
+	molecule.PerformCore(m, module, modelName)
+	molecule.PerformRest(m, module)
 }
 
-func MakeAndRunModuleWithPostgresDatabase(m filesystem.Manager, module, modelName, tableName string) {
+func PerformModuleWithPostgresDatabase(m filesystem.Manager, module, modelName, tableName string) {
 	newModule := component.MakeRegistryWithPostgresDatabase(m, module, modelName)
 	if err := m.GenerateFile(newModule); err != nil {
 		panic(err)
 	}
 
-	resource.MakeAndRunPostgresRepository(m, module, modelName, tableName, true)
+	resource.PerformPostgresRepository(m, module, modelName, tableName, true)
 
-	molecule.MakeAndRunCore(m, module, modelName)
-	molecule.MakeAndRunRest(m, module)
+	molecule.PerformCore(m, module, modelName)
+	molecule.PerformRest(m, module)
 }
 
-func MakeAndRunModuleWithCustomDatabase(m filesystem.Manager, module, modelName, database string) {
+func PerformModuleWithCustomDatabase(m filesystem.Manager, module, modelName, database string) {
 	newModule := component.MakeRegistryWithCustomDatabase(m, module, modelName, database)
 	if err := m.GenerateFile(newModule); err != nil {
 		panic(err)
@@ -41,6 +41,6 @@ func MakeAndRunModuleWithCustomDatabase(m filesystem.Manager, module, modelName,
 		panic(err)
 	}
 
-	molecule.MakeAndRunCore(m, module, modelName)
-	molecule.MakeAndRunRest(m, module)
+	molecule.PerformCore(m, module, modelName)
+	molecule.PerformRest(m, module)
 }
