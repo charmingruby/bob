@@ -17,7 +17,7 @@ func MakeRegistryWithCustomDatabase(m filesystem.Manager, module, repositoryMode
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.MODULE_WITH_CUSTOM_DATABASE_TEMPLATE,
 			TemplateData: data.NewModuleWithDatabaseData(

@@ -1,4 +1,4 @@
-package atom
+package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -14,7 +14,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "repository",
+		Use:   "repo",
 		Short: "Generates a new repository",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := input.ValidateDefaultCommandInput(module, name); err != nil {

@@ -17,7 +17,7 @@ func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REPOSITORY_CONTRACT_TEMPLATE,
 			TemplateData: data.NewDependentPackageData(m.DependencyPath(), module, name),

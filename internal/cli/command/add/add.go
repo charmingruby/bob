@@ -1,11 +1,11 @@
-package gen
+package add
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/cli/command/gen/atom"
-	"github.com/charmingruby/bob/internal/cli/command/gen/molecule"
-	"github.com/charmingruby/bob/internal/cli/command/gen/organism"
-	"github.com/charmingruby/bob/internal/cli/command/gen/resource"
+	"github.com/charmingruby/bob/internal/cli/command/add/bundle"
+	"github.com/charmingruby/bob/internal/cli/command/add/resource"
+	"github.com/charmingruby/bob/internal/cli/command/add/structure/module"
+	"github.com/charmingruby/bob/internal/cli/command/add/unit"
 	"github.com/charmingruby/bob/internal/filesystem"
 
 	"github.com/spf13/cobra"
@@ -25,15 +25,15 @@ func New(cmd *cobra.Command, config config.Configuration) *Command {
 
 func (c *Command) Setup() {
 	genCmd := &cobra.Command{
-		Use:   "gen",
+		Use:   "add",
 		Short: "Generates components",
 	}
 
 	genCmd.AddCommand(
-		atom.SetupCMD(c.fs),
-		molecule.SetupCMD(c.fs),
+		unit.SetupCMD(c.fs),
+		bundle.SetupCMD(c.fs),
+		module.SetupCMD(c.fs),
 		resource.SetupCMD(c.fs),
-		organism.SetupCMD(c.fs),
 	)
 
 	c.cmd.AddCommand(genCmd)

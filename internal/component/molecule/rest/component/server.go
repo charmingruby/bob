@@ -18,7 +18,7 @@ func MakeServer(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_SERVER,
 			FileName:     "server",
@@ -34,7 +34,7 @@ func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_BASE_SERVER_MIDDLEWARE,
 			FileName:     "middleware",

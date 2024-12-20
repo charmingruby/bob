@@ -19,7 +19,7 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 			[]string{shared.DTO_PACKAGE, exchange},
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_EXCHANGE_TEMPLATE,
 			TemplateData: data.NewExchangeData(exchange, name),

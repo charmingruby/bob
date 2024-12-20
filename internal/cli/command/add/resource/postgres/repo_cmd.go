@@ -16,7 +16,7 @@ func RunRepository(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "repository",
+		Use:   "repo",
 		Short: "Generates a new repository",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateRepositoryCommandInput(module, modelName); err != nil {

@@ -1,4 +1,4 @@
-package molecule
+package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -7,24 +7,26 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunRest(m filesystem.Manager) *cobra.Command {
+func RunCore(m filesystem.Manager) *cobra.Command {
 	var (
-		module string
+		module    string
+		modelName string
 	)
 
 	cmd := &cobra.Command{
-		Use:   "rest",
-		Short: "Generates a new rest molecule",
+		Use:   "core",
+		Short: "Generates a new core molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
+			if err := input.ValidateDefaultCommandInput(module, modelName); err != nil {
 				panic(err)
 			}
 
-			molecule.MakeAndRunRest(m, module)
+			molecule.MakeAndRunCore(m, module, modelName)
 		},
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
+	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model name")
 
 	return cmd
 }

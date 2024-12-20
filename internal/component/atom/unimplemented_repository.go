@@ -17,7 +17,7 @@ func MakeUnimplementedRepository(m filesystem.Manager, module, name, database st
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REPOSITORY_UNIMPLEMENTED_TEMPLATE,
 			TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),

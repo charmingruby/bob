@@ -12,7 +12,7 @@ func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.MainDirectory(),
 	}).Componetize(
-		shared.BOOTSTRAP_COMMAND,
+		shared.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.GO_MOD_TEMPLATE,
 			TemplateData: data.NewGoModData(m.Data, goVersion),

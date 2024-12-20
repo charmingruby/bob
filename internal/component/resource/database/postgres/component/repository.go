@@ -15,7 +15,7 @@ func MakePostgresRepository(m filesystem.Manager, module, model string) filesyst
 		Package:              constant.POSTGRES_PACKAGE,
 		DestinationDirectory: shared.PersistencePath(m.ModuleDirectory(module), []string{constant.POSTGRES_PACKAGE}),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.POSTGRES_REPOSITORY_TEMPLATE,
 			TemplateData: data.NewPostgresRepositoryData(m.DependencyPath(), module, model),

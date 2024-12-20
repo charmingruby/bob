@@ -13,7 +13,7 @@ func MakeConfig(m filesystem.Manager) filesystem.File {
 	return base.New(base.ComponentInput{
 		DestinationDirectory: shared.RootPath([]string{"config"}),
 	}).Componetize(
-		shared.BOOTSTRAP_COMMAND,
+		shared.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.CONFIG_TEMPLATE,
 			FileName:     "config",

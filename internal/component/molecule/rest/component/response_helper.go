@@ -18,7 +18,7 @@ func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
 			FileName:     "response",

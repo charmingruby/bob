@@ -17,7 +17,7 @@ func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.BASE_MODULE_TEMPLATE,
 			TemplateData: data.NewBaseModuleData(

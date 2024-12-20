@@ -21,7 +21,7 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 			[]string{shared.HANDLER_PACKAGE},
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_HANDLER_TEMPLATE,
 			TemplateData: data.NewHandlerData(

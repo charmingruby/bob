@@ -20,7 +20,7 @@ func MakeRegistry(params RegistryParams) filesystem.File {
 		Name:                 params.RegistryName,
 		DestinationDirectory: params.DestinationDirectory,
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: params.TemplateName,
 			TemplateData: params.TemplateData,

@@ -15,7 +15,7 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "w-db",
+		Use:   "custom-db",
 		Short: "Generates a module with custom database",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateModuleWithCustomDatabaseCommandInput(module, modelName, database); err != nil {

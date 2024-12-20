@@ -16,7 +16,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.EntryDirectory(app),
 	}).Componetize(
-		shared.BOOTSTRAP_COMMAND,
+		shared.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.ENTRY_TEMPLATE,
 			TemplateData: data.NewEntryData(m.RootPath(), module, repositoryModel),

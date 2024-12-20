@@ -11,7 +11,7 @@ func MakeGitIgnore(m filesystem.Manager) filesystem.File {
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
-		shared.BOOTSTRAP_COMMAND,
+		shared.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.GIT_IGNORE_TEMPLATE,
 			FileName:     ".gitignore",

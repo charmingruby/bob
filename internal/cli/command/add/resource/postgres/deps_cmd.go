@@ -8,7 +8,7 @@ import (
 
 func RunDependecies(m filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "dependencies",
+		Use:   "deps",
 		Short: "Generates a dependencies",
 		Run: func(cmd *cobra.Command, args []string) {
 			resource.MakeAndRunPostgresDependencies(m)

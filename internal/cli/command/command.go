@@ -2,8 +2,9 @@ package command
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/cli/command/bootstrap"
-	"github.com/charmingruby/bob/internal/cli/command/gen"
+	"github.com/charmingruby/bob/internal/cli/command/add"
+	"github.com/charmingruby/bob/internal/cli/command/create"
+
 	"github.com/spf13/cobra"
 )
 
@@ -20,6 +21,6 @@ func New(cmd *cobra.Command, config config.Configuration) *command {
 }
 
 func (c *command) Setup() {
-	gen.New(c.cmd, c.config).Setup()
-	bootstrap.New(c.cmd, c.config).Setup()
+	add.New(c.cmd, c.config).Setup()
+	create.New(c.cmd, c.config).Setup()
 }

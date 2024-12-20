@@ -1,4 +1,4 @@
-package atom
+package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -15,7 +15,7 @@ func RunUnimplementedRepository(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "unimplemented-repository",
+		Use:   "unimpl-repo",
 		Short: "Generates a new unimplemented repository",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateUnimplementedRepositoryCommandInput(module, name, database); err != nil {

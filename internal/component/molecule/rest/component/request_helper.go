@@ -19,7 +19,7 @@ func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
 			TemplateData: data.NewRequestHelperData(m.DependencyPath()),

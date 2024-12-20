@@ -1,4 +1,4 @@
-package atom
+package unit
 
 import (
 	"github.com/charmingruby/bob/internal/filesystem"
@@ -7,7 +7,7 @@ import (
 
 func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "atm",
+		Use:   "unit",
 		Short: "Generates pure components (or atoms)",
 	}
 

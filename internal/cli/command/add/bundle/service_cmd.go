@@ -1,4 +1,4 @@
-package molecule
+package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -7,26 +7,27 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunCore(m filesystem.Manager) *cobra.Command {
+func RunService(m filesystem.Manager) *cobra.Command {
 	var (
-		module    string
-		modelName string
+		module string
+		repo   string
 	)
 
 	cmd := &cobra.Command{
-		Use:   "core",
-		Short: "Generates a new core molecule",
+		Use:   "service",
+		Short: "Generates a new service molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandInput(module, modelName); err != nil {
+
+			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
 				panic(err)
 			}
 
-			molecule.MakeAndRunCore(m, module, modelName)
+			molecule.MakeAndRunService(m, repo, module)
 		},
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model name")
+	cmd.Flags().StringVarP(&repo, "repo", "r", "", "repository dependency")
 
 	return cmd
 }

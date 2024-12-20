@@ -17,7 +17,7 @@ func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 		Name:                 name,
 		HasTest:              true,
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.MODEL_TEMPLATE,
 			TemplateData: data.NewDefaultData(name),

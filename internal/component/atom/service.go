@@ -17,7 +17,7 @@ func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 		Suffix:               "service",
 		DestinationDirectory: shared.CorePath(m.ModuleDirectory(module), []string{shared.SERVICE_PACKAGE}),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.SERVICE_TEMPLATE,
 			TemplateData: data.NewDefaultData(name),

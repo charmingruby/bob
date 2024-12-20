@@ -15,7 +15,7 @@ func RunModuleWithPostgresDatabase(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "w-pg",
+		Use:   "postgres-db",
 		Short: "Generates a module with postgres database",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {

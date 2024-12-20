@@ -15,7 +15,7 @@ func MakeValidator(m filesystem.Manager) filesystem.File {
 		Name:                 "validator",
 		DestinationDirectory: m.AppendToModuleDirectory(shared.SHARED_MODULE, "validation"),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.VALIDATION_TEMPLATE,
 			FileName:     "validator",

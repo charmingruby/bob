@@ -17,7 +17,7 @@ func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryMo
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.MODULE_WITH_POSTGRES_DATABASE_TEMPLATE,
 			TemplateData: data.NewModuleWithDatabaseData(

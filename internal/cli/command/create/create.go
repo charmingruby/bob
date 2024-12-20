@@ -1,4 +1,4 @@
-package bootstrap
+package create
 
 import (
 	"github.com/charmingruby/bob/config"
@@ -25,7 +25,7 @@ func (c *Command) Setup() {
 	var goVersion string
 
 	cmd := &cobra.Command{
-		Use:   "new",
+		Use:   "create",
 		Short: "Creates a new project",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateNewCommandInput(goVersion); err != nil {

@@ -15,7 +15,7 @@ func MakePersistenceError(m filesystem.Manager) filesystem.File {
 			[]string{constant.PERSISTENCE_ERR_PACKAGE},
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.PERSISTENCE_ERR_TEMPLATE,
 			FileName:     "persistence",

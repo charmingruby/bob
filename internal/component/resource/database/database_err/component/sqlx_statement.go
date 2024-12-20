@@ -16,7 +16,7 @@ func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
 			[]string{constant.PERSISTENCE_ERR_PACKAGE, constant.SQL_ERROR_PACKAGE},
 		),
 	}).Componetize(
-		shared.GENERATE_COMMAND,
+		shared.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.SQL_STATEMENT_ERR_TEMPLATE,
 			TemplateData: data.NewSQLXStatementErrData(m.DependencyPath(), "postgres"),

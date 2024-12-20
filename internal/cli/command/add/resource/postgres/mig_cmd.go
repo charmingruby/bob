@@ -13,7 +13,7 @@ func RunMigration(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "migration",
+		Use:   "mig",
 		Short: "Generates a new migration",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := ValidateMigrationCommandInput(tableName); err != nil {
