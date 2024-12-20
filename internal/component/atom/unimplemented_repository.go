@@ -4,20 +4,20 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	prepareDirectoriesForUnimplementedRepository(m, module, database)
 
 	return base.New(base.ComponentInput{
-		DestinationDirectory: shared.PersistencePath(m.ModuleDirectory(module), []string{database}),
+		DestinationDirectory: definition.PersistencePath(m.ModuleDirectory(module), []string{database}),
 		Package:              module,
 		Name:                 name,
 		Suffix:               "repository",
 	}).Componetize(
-		shared.ADD_COMMAND,
+		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REPOSITORY_UNIMPLEMENTED_TEMPLATE,
 			TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
@@ -29,6 +29,6 @@ func MakeUnimplementedRepository(m filesystem.Manager, module, name, database st
 func prepareDirectoriesForUnimplementedRepository(m filesystem.Manager, module, database string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{shared.PERSISTENCE_PACKAGE, database},
+		[]string{definition.PERSISTENCE_PACKAGE, database},
 	)
 }

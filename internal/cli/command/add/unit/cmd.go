@@ -1,7 +1,7 @@
 package unit
 
 import (
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 

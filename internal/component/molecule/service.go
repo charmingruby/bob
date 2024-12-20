@@ -3,7 +3,7 @@ package molecule
 import (
 	"github.com/charmingruby/bob/internal/component/atom"
 	"github.com/charmingruby/bob/internal/component/molecule/service/component"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/charmingruby/bob/pkg/util"
 )
 

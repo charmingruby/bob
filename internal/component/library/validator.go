@@ -3,19 +3,19 @@ package library
 import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/library/constant"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeValidator(m filesystem.Manager) filesystem.File {
-	prepareDirectoriesForValidator(m, shared.SHARED_MODULE)
+	prepareDirectoriesForValidator(m, definition.SHARED_MODULE)
 
 	return base.New(base.ComponentInput{
-		Package:              shared.SHARED_MODULE,
+		Package:              definition.SHARED_MODULE,
 		Name:                 "validator",
-		DestinationDirectory: m.AppendToModuleDirectory(shared.SHARED_MODULE, "validation"),
+		DestinationDirectory: m.AppendToModuleDirectory(definition.SHARED_MODULE, "validation"),
 	}).Componetize(
-		shared.ADD_COMMAND,
+		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.VALIDATION_TEMPLATE,
 			FileName:     "validator",

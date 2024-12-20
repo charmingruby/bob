@@ -1,4 +1,4 @@
-package shared
+package definition
 
 const (
 	GO_EXTENSION  = "go"

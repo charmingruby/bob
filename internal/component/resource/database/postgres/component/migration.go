@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/charmingruby/bob/tooling/makefile"
 )
 

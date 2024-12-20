@@ -3,17 +3,17 @@ package component
 import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/organism/bootstrap/constant"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeConfig(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForConfig(m)
 
 	return base.New(base.ComponentInput{
-		DestinationDirectory: shared.RootPath([]string{"config"}),
+		DestinationDirectory: definition.RootPath([]string{"config"}),
 	}).Componetize(
-		shared.CREATE_COMMAND,
+		definition.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.CONFIG_TEMPLATE,
 			FileName:     "config",

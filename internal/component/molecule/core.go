@@ -2,8 +2,8 @@ package molecule
 
 import (
 	"github.com/charmingruby/bob/internal/component/atom"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func PerformCore(m filesystem.Manager, module, baseModelName string) {
@@ -26,6 +26,6 @@ func PerformCore(m filesystem.Manager, module, baseModelName string) {
 func prepareDirectoriesForCore(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{shared.CORE_PACKAGE},
+		[]string{definition.CORE_PACKAGE},
 	)
 }

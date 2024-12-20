@@ -1,8 +1,8 @@
 package base
 
 import (
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/charmingruby/bob/pkg/util"
 )
 
@@ -43,7 +43,7 @@ type ComponetizeInput struct {
 }
 
 func (c *Component) Componetize(commandType string, in ComponetizeInput) filesystem.File {
-	var extension string = util.Ternary[string](in.Extension == "", shared.GO_EXTENSION, in.Extension)
+	var extension string = util.Ternary[string](in.Extension == "", definition.GO_EXTENSION, in.Extension)
 
 	return filesystem.File{
 		CommandType:          commandType,

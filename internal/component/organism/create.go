@@ -2,7 +2,7 @@ package organism
 
 import (
 	"github.com/charmingruby/bob/internal/component/organism/bootstrap/component"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func PerformSetup(m filesystem.Manager, goVersion string) {

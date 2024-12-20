@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"github.com/charmingruby/bob/internal/component/resource"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
 

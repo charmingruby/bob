@@ -4,22 +4,22 @@ import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/data"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeRequestHelper(m filesystem.Manager) filesystem.File {
-	prepareDirectoriesForRequestHelper(m, shared.SHARED_MODULE)
+	prepareDirectoriesForRequestHelper(m, definition.SHARED_MODULE)
 
 	return base.New(base.ComponentInput{
-		Package: shared.REST_PACKAGE,
-		DestinationDirectory: shared.TransportPath(
-			m.ModuleDirectory(shared.SHARED_MODULE),
-			shared.REST_PACKAGE,
+		Package: definition.REST_PACKAGE,
+		DestinationDirectory: definition.TransportPath(
+			m.ModuleDirectory(definition.SHARED_MODULE),
+			definition.REST_PACKAGE,
 			nil,
 		),
 	}).Componetize(
-		shared.ADD_COMMAND,
+		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
 			TemplateData: data.NewRequestHelperData(m.DependencyPath()),
@@ -30,6 +30,6 @@ func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 func prepareDirectoriesForRequestHelper(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{module, shared.TRANSPORT_PACKAGE, shared.REST_PACKAGE},
+		[]string{module, definition.TRANSPORT_PACKAGE, definition.REST_PACKAGE},
 	)
 }

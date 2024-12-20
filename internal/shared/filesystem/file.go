@@ -5,7 +5,7 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/pkg/formatter"
 	"github.com/charmingruby/bob/tooling/tpl"
 )
@@ -22,7 +22,7 @@ type File struct {
 }
 
 func (f *File) format() {
-	if f.Extension == shared.GO_EXTENSION {
+	if f.Extension == definition.GO_EXTENSION {
 		f.FileName = formatter.ToSnakeCase(f.FileName)
 		f.FileSuffix = formatter.ToSnakeCase(f.FileSuffix)
 	}
@@ -86,9 +86,9 @@ func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *tem
 
 	var filePath string
 	switch extension {
-	case shared.GO_EXTENSION:
+	case definition.GO_EXTENSION:
 		filePath = fmt.Sprintf("%s/%s", destinyDir, formatGoFile(finalFileName))
-	case shared.NO_EXTENSION:
+	case definition.NO_EXTENSION:
 		filePath = fmt.Sprintf("%s/%s", destinyDir, finalFileName)
 	default:
 		filePath = fmt.Sprintf("%s/%s.%s", destinyDir, finalFileName, extension)

@@ -5,8 +5,8 @@ import (
 	errConst "github.com/charmingruby/bob/internal/component/resource/database/database_err/constant"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	pgConst "github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) {
@@ -50,7 +50,7 @@ func PerformPostgresMigration(m filesystem.Manager, tableName string) {
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{shared.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
+		[]string{definition.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
 	)
 
 	m.GenerateNestedDirectories(
@@ -60,6 +60,6 @@ func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{shared.SHARED_MODULE, errConst.CUSTOM_ERR_PACKAGE, errConst.PERSISTENCE_ERR_PACKAGE, errConst.SQL_ERROR_PACKAGE},
+		[]string{definition.SHARED_MODULE, errConst.CUSTOM_ERR_PACKAGE, errConst.PERSISTENCE_ERR_PACKAGE, errConst.SQL_ERROR_PACKAGE},
 	)
 }

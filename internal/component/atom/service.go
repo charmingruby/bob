@@ -4,8 +4,8 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom/constant"
 	"github.com/charmingruby/bob/internal/component/atom/data"
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeService(m filesystem.Manager, module, name string) filesystem.File {
@@ -15,9 +15,9 @@ func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 		Package:              module,
 		Name:                 name,
 		Suffix:               "service",
-		DestinationDirectory: shared.CorePath(m.ModuleDirectory(module), []string{shared.SERVICE_PACKAGE}),
+		DestinationDirectory: definition.CorePath(m.ModuleDirectory(module), []string{definition.SERVICE_PACKAGE}),
 	}).Componetize(
-		shared.ADD_COMMAND,
+		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.SERVICE_TEMPLATE,
 			TemplateData: data.NewDefaultData(name),
@@ -29,6 +29,6 @@ func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 func prepareDirectoriesForService(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{shared.CORE_PACKAGE, shared.SERVICE_PACKAGE},
+		[]string{definition.CORE_PACKAGE, definition.SERVICE_PACKAGE},
 	)
 }

@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/molecule"
 	"github.com/charmingruby/bob/internal/component/organism/module/component"
 	"github.com/charmingruby/bob/internal/component/resource"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func PerformBaseModule(m filesystem.Manager, module, modelName string) {

@@ -4,8 +4,8 @@ import (
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/organism/bootstrap/constant"
 	"github.com/charmingruby/bob/internal/component/organism/bootstrap/data"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
@@ -16,7 +16,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.EntryDirectory(app),
 	}).Componetize(
-		shared.CREATE_COMMAND,
+		definition.CREATE_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: constant.ENTRY_TEMPLATE,
 			TemplateData: data.NewEntryData(m.RootPath(), module, repositoryModel),

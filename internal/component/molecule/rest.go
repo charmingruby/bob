@@ -3,7 +3,7 @@ package molecule
 import (
 	"github.com/charmingruby/bob/internal/component/library"
 	"github.com/charmingruby/bob/internal/component/molecule/rest/component"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func PerformRest(m filesystem.Manager, module string) {

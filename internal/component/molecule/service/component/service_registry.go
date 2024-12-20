@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom"
 	"github.com/charmingruby/bob/internal/component/molecule/service/constant"
 	"github.com/charmingruby/bob/internal/component/molecule/service/data"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeServiceRegistry(m filesystem.Manager, module, name string) filesystem.File {

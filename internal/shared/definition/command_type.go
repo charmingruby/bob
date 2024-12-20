@@ -1,4 +1,4 @@
-package shared
+package definition
 
 const (
 	ADD_COMMAND    = "add"

@@ -2,8 +2,8 @@ package atom
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/filesystem"
-	"github.com/charmingruby/bob/internal/shared"
+	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 type RegistryParams struct {
@@ -20,7 +20,7 @@ func MakeRegistry(params RegistryParams) filesystem.File {
 		Name:                 params.RegistryName,
 		DestinationDirectory: params.DestinationDirectory,
 	}).Componetize(
-		shared.ADD_COMMAND,
+		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: params.TemplateName,
 			TemplateData: params.TemplateData,

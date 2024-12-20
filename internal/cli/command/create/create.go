@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/component/organism"
-	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 
 	"github.com/spf13/cobra"
 )
