@@ -4,6 +4,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/atom"
 	"github.com/charmingruby/bob/internal/component/molecule/service/component"
 	"github.com/charmingruby/bob/internal/filesystem"
+	"github.com/charmingruby/bob/pkg/util"
 )
 
 func PerformService(m filesystem.Manager, repo string, module string) {
@@ -11,25 +12,19 @@ func PerformService(m filesystem.Manager, repo string, module string) {
 
 	sampleActor := module
 
-	service := atom.MakeService(m, module, sampleActor)
+	registry := util.Ternary[filesystem.File](
+		repo == "",
+		component.MakeIndependentServiceRegistry(m, module),
+		component.MakeServiceRegistry(m, module, repo),
+	)
 
-	if err := m.GenerateFile(service); err != nil {
-		panic(err)
+	components := []filesystem.File{
+		registry,
+		atom.MakeService(m, module, sampleActor),
 	}
 
-	if repo == "" {
-		if err := m.GenerateFile(component.MakeIndependentServiceRegistry(
-			m,
-			module,
-		)); err != nil {
-			panic(err)
-		}
-	} else {
-		if err := m.GenerateFile(component.MakeServiceRegistry(
-			m,
-			module,
-			repo,
-		)); err != nil {
+	for _, component := range components {
+		if err := m.GenerateFile(component); err != nil {
 			panic(err)
 		}
 	}

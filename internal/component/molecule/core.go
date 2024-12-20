@@ -11,14 +11,15 @@ func PerformCore(m filesystem.Manager, module, baseModelName string) {
 
 	PerformService(m, baseModelName, module)
 
-	repository := atom.MakeRepository(m, module, baseModelName)
-	if err := m.GenerateFile(repository); err != nil {
-		panic(err)
+	components := []filesystem.File{
+		atom.MakeModel(m, module, baseModelName),
+		atom.MakeRepository(m, module, baseModelName),
 	}
 
-	model := atom.MakeModel(m, module, baseModelName)
-	if err := m.GenerateFile(model); err != nil {
-		panic(err)
+	for _, component := range components {
+		if err := m.GenerateFile(component); err != nil {
+			panic(err)
+		}
 	}
 }
 

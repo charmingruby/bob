@@ -9,7 +9,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared"
 )
 
-func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) filesystem.File {
+func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) {
 	repo := component.MakePostgresRepository(m, module, modelName)
 	if err := m.GenerateFile(repo); err != nil {
 		panic(err)
@@ -22,8 +22,6 @@ func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableNam
 	if needDeps {
 		PerformPostgresDependencies(m)
 	}
-
-	return component.MakePostgresRepository(m, module, modelName)
 }
 
 func PerformPostgresDependencies(m filesystem.Manager) {
