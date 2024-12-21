@@ -12,9 +12,9 @@ func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		RunRepository(fs),
-		RunDependecies(fs),
-		RunMigration(fs),
+		RunRepo(fs),
+		RunDeps(fs),
+		RunMig(fs),
 	)
 
 	return cmd

@@ -9,19 +9,19 @@ import (
 
 func RunService(m filesystem.Manager) *cobra.Command {
 	var (
-		module string
-		name   string
+		module      string
+		serviceName string
 	)
 
 	cmd := &cobra.Command{
 		Use:   "service",
 		Short: "Generates a new service",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandInput(module, name); err != nil {
+			if err := parseServiceInput(module, serviceName); err != nil {
 				panic(err)
 			}
 
-			service := atom.MakeService(m, module, name)
+			service := atom.MakeService(m, module, serviceName)
 
 			if err := m.GenerateFile(service); err != nil {
 				panic(err)
@@ -29,8 +29,27 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "service name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
+	cmd.Flags().StringVarP(&serviceName, "name", "n", "", "service name")
 
 	return cmd
+}
+
+func parseServiceInput(module, serviceName string) error {
+	inputs := []input.Arg{
+		{
+			FieldName:  "module",
+			IsRequired: true,
+			Value:      module,
+			Type:       input.StringType,
+		},
+		{
+			FieldName:  "service name",
+			IsRequired: true,
+			Value:      serviceName,
+			Type:       input.StringType,
+		},
+	}
+
+	return input.Validate(inputs)
 }

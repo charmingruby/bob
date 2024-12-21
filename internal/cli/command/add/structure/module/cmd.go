@@ -12,9 +12,9 @@ func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		RunModule(fs),
-		RunModuleWithPostgresDatabase(fs),
-		RunModuleWithCustomDatabase(fs),
+		RunBase(fs),
+		RunPostgresDB(fs),
+		RunCustomDB(fs),
 	)
 
 	return cmd

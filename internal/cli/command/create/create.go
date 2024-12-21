@@ -28,7 +28,7 @@ func (c *Command) Setup() {
 		Use:   "create",
 		Short: "Creates a new project",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := ValidateNewCommandInput(goVersion); err != nil {
+			if err := parseCreateInput(goVersion); err != nil {
 				panic(err)
 			}
 
@@ -41,7 +41,7 @@ func (c *Command) Setup() {
 	c.cmd.AddCommand(cmd)
 }
 
-func ValidateNewCommandInput(goVersion string) error {
+func parseCreateInput(goVersion string) error {
 	args := []input.Arg{
 		{
 			FieldName: "go version",
@@ -49,9 +49,5 @@ func ValidateNewCommandInput(goVersion string) error {
 		},
 	}
 
-	if err := input.ValidateArgsList(args); err != nil {
-		return err
-	}
-
-	return nil
+	return input.Validate(args)
 }

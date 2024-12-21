@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunDependecies(m filesystem.Manager) *cobra.Command {
+func RunDeps(m filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "deps",
 		Short: "Generates a dependencies",

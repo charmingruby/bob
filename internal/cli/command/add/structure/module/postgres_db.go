@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunModuleWithPostgresDatabase(m filesystem.Manager) *cobra.Command {
+func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 	var (
 		module    string
 		modelName string
@@ -18,7 +18,7 @@ func RunModuleWithPostgresDatabase(m filesystem.Manager) *cobra.Command {
 		Use:   "postgres-db",
 		Short: "Generates a module with postgres database",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
+			if err := parsePostgresDBInput(module, modelName, tableName); err != nil {
 				panic(err)
 			}
 
@@ -26,14 +26,14 @@ func RunModuleWithPostgresDatabase(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&modelName, "modelName", "n", "", "model name")
-	cmd.Flags().StringVarP(&tableName, "tableName", "t", "", "tableName name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
+	cmd.Flags().StringVarP(&modelName, "modelName", "n", "", "base model name")
+	cmd.Flags().StringVarP(&tableName, "tableName", "t", "", "base table name")
 
 	return cmd
 }
 
-func ValidateModuleWithPostgresDatabaseCommandInput(module, model, tableName string) error {
+func parsePostgresDBInput(module, model, tableName string) error {
 	args := []input.Arg{
 		{
 			FieldName:  "module",
@@ -41,7 +41,7 @@ func ValidateModuleWithPostgresDatabaseCommandInput(module, model, tableName str
 			IsRequired: true,
 		},
 		{
-			FieldName:  "model",
+			FieldName:  "model name",
 			Value:      model,
 			IsRequired: true,
 		},
@@ -52,9 +52,5 @@ func ValidateModuleWithPostgresDatabaseCommandInput(module, model, tableName str
 		},
 	}
 
-	if err := input.ValidateArgsList(args); err != nil {
-		return err
-	}
-
-	return nil
+	return input.Validate(args)
 }

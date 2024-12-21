@@ -16,7 +16,7 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 		Use:   "rest",
 		Short: "Generates a new rest molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateOnlyModuleCommandInput(module); err != nil {
+			if err := parseRestInput(module); err != nil {
 				panic(err)
 			}
 
@@ -27,4 +27,17 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
 
 	return cmd
+}
+
+func parseRestInput(module string) error {
+	inputs := []input.Arg{
+		{
+			FieldName:  "module",
+			IsRequired: true,
+			Value:      module,
+			Type:       input.StringType,
+		},
+	}
+
+	return input.Validate(inputs)
 }

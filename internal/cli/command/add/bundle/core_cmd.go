@@ -17,7 +17,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 		Use:   "core",
 		Short: "Generates a new core molecule",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandInput(module, modelName); err != nil {
+			if err := parseCoreInput(module, modelName); err != nil {
 				panic(err)
 			}
 
@@ -25,8 +25,27 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
+	cmd.Flags().StringVarP(&modelName, "model", "n", "", "base model name")
 
 	return cmd
+}
+
+func parseCoreInput(module, modelName string) error {
+	inputs := []input.Arg{
+		{
+			FieldName:  "module",
+			IsRequired: true,
+			Value:      module,
+			Type:       input.StringType,
+		},
+		{
+			FieldName:  "model name",
+			IsRequired: true,
+			Value:      modelName,
+			Type:       input.StringType,
+		},
+	}
+
+	return input.Validate(inputs)
 }

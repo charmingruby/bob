@@ -7,36 +7,37 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunUnimplementedRepository(m filesystem.Manager) *cobra.Command {
+func RunUnimplRepo(m filesystem.Manager) *cobra.Command {
 	var (
-		module   string
-		name     string
-		database string
+		module       string
+		modelName    string
+		databaseName string
 	)
 
 	cmd := &cobra.Command{
 		Use:   "unimpl-repo",
 		Short: "Generates a new unimplemented repository",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := ValidateUnimplementedRepositoryCommandInput(module, name, database); err != nil {
+			if err := parseUnimplRepoInput(module, modelName, databaseName); err != nil {
 				panic(err)
 			}
 
-			repository := atom.MakeUnimplementedRepository(m, module, name, database)
+			repository := atom.MakeUnimplementedRepository(m, module, modelName, databaseName)
+
 			if err := m.GenerateFile(repository); err != nil {
 				panic(err)
 			}
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&name, "name", "n", "", "model to be managed by the repository")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database for the repository")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
+	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model to be managed by the repository")
+	cmd.Flags().StringVarP(&databaseName, "database", "d", "", "database that will implement the repository")
 
 	return cmd
 }
 
-func ValidateUnimplementedRepositoryCommandInput(module, name, database string) error {
+func parseUnimplRepoInput(module, modelName, databaseName string) error {
 	args := []input.Arg{
 		{
 			FieldName:  "module",
@@ -44,19 +45,16 @@ func ValidateUnimplementedRepositoryCommandInput(module, name, database string) 
 			IsRequired: true,
 		},
 		{
-			FieldName:  "name",
-			Value:      name,
+			FieldName:  "model name",
+			Value:      modelName,
 			IsRequired: true,
 		},
 		{
-			FieldName: "database",
-			Value:     database,
+			FieldName:  "database",
+			Value:      databaseName,
+			IsRequired: true,
 		},
 	}
 
-	if err := input.ValidateArgsList(args); err != nil {
-		return err
-	}
-
-	return nil
+	return input.Validate(args)
 }

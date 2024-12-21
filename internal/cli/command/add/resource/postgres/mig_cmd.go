@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunMigration(m filesystem.Manager) *cobra.Command {
+func RunMig(m filesystem.Manager) *cobra.Command {
 	var (
 		tableName string
 	)
@@ -16,7 +16,7 @@ func RunMigration(m filesystem.Manager) *cobra.Command {
 		Use:   "mig",
 		Short: "Generates a new migration",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := ValidateMigrationCommandInput(tableName); err != nil {
+			if err := parseMigInput(tableName); err != nil {
 				panic(err)
 			}
 
@@ -24,12 +24,12 @@ func RunMigration(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&tableName, "table name", "t", "", "table name on migrations, by default, if it is not set, it will be not created")
+	cmd.Flags().StringVarP(&tableName, "table name", "t", "examples", "table name to be created, by default, it will be named examples")
 
 	return cmd
 }
 
-func ValidateMigrationCommandInput(tableName string) error {
+func parseMigInput(tableName string) error {
 	args := []input.Arg{
 		{
 			FieldName:  "table name",
@@ -38,9 +38,5 @@ func ValidateMigrationCommandInput(tableName string) error {
 		},
 	}
 
-	if err := input.ValidateArgsList(args); err != nil {
-		return err
-	}
-
-	return nil
+	return input.Validate(args)
 }

@@ -7,26 +7,45 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunModule(m filesystem.Manager) *cobra.Command {
+func RunBase(m filesystem.Manager) *cobra.Command {
 	var (
-		module    string
-		modelName string
+		module        string
+		baseModelName string
 	)
 
 	cmd := &cobra.Command{
 		Use:   "base",
 		Short: "Generates a base module",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := input.ValidateDefaultCommandInput(module, modelName); err != nil {
+			if err := parseBaseInput(module, baseModelName); err != nil {
 				panic(err)
 			}
 
-			organism.PerformBaseModule(m, module, modelName)
+			organism.PerformBaseModule(m, module, baseModelName)
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
+	cmd.Flags().StringVarP(&baseModelName, "model", "n", "", "base model name to be created as example")
 
 	return cmd
+}
+
+func parseBaseInput(module, baseModelName string) error {
+	inputs := []input.Arg{
+		{
+			FieldName:  "module",
+			IsRequired: true,
+			Value:      module,
+			Type:       input.StringType,
+		},
+		{
+			FieldName:  "base model name",
+			IsRequired: true,
+			Value:      baseModelName,
+			Type:       input.StringType,
+		},
+	}
+
+	return input.Validate(inputs)
 }

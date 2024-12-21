@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
+func RunCustomDB(m filesystem.Manager) *cobra.Command {
 	var (
 		module    string
 		modelName string
@@ -18,7 +18,7 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 		Use:   "custom-db",
 		Short: "Generates a module with custom database",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := ValidateModuleWithCustomDatabaseCommandInput(module, modelName, database); err != nil {
+			if err := parseCustomDBInput(module, modelName, database); err != nil {
 				panic(err)
 			}
 
@@ -26,14 +26,14 @@ func RunModuleWithCustomDatabase(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
 	cmd.Flags().StringVarP(&modelName, "modelName", "n", "", "model name")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "database name")
+	cmd.Flags().StringVarP(&database, "database", "d", "", "base database name to be created as example")
 
 	return cmd
 }
 
-func ValidateModuleWithCustomDatabaseCommandInput(module, model, database string) error {
+func parseCustomDBInput(module, model, database string) error {
 	args := []input.Arg{
 		{
 			FieldName:  "module",
@@ -52,9 +52,5 @@ func ValidateModuleWithCustomDatabaseCommandInput(module, model, database string
 		},
 	}
 
-	if err := input.ValidateArgsList(args); err != nil {
-		return err
-	}
-
-	return nil
+	return input.Validate(args)
 }

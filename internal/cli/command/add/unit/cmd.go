@@ -14,8 +14,8 @@ func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	cmd.AddCommand(
 		RunModel(fs),
 		RunService(fs),
-		RunRepository(fs),
-		RunUnimplementedRepository(fs),
+		RunRepo(fs),
+		RunUnimplRepo(fs),
 	)
 
 	return cmd
