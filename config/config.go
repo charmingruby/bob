@@ -26,7 +26,27 @@ type BaseConfiguration struct {
 	LibraryDir  string `yaml:"library_dir"`
 }
 
-func New() (*Configuration, error) {
+func New() (*Configuration, bool, error) {
+	configFileExists := validateExistence()
+
+	if configFileExists {
+		cfg, err := parseConfigFile()
+
+		return cfg, configFileExists, err
+	}
+
+	return nil, configFileExists, nil
+}
+
+func validateExistence() bool {
+	_, err := os.Stat(CONFIG_FILE)
+
+	isConfigFileInvalid := os.IsNotExist(err)
+
+	return !isConfigFileInvalid
+}
+
+func parseConfigFile() (*Configuration, error) {
 	yamlData, err := os.ReadFile(CONFIG_FILE)
 	if err != nil {
 		return &Configuration{}, err

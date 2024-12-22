@@ -16,7 +16,7 @@ type Command struct {
 	fs  filesystem.Manager
 }
 
-func New(cmd *cobra.Command, config config.Configuration) *Command {
+func New(cmd *cobra.Command, config *config.Configuration) *Command {
 	return &Command{
 		cmd: cmd,
 		fs:  filesystem.New(config),

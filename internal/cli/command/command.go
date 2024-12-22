@@ -10,17 +10,23 @@ import (
 
 type command struct {
 	cmd    *cobra.Command
-	config config.Configuration
+	config *config.Configuration
 }
 
-func New(cmd *cobra.Command, config config.Configuration) *command {
+func New(cmd *cobra.Command, config *config.Configuration) *command {
 	return &command{
 		cmd:    cmd,
 		config: config,
 	}
 }
 
-func (c *command) Setup() {
-	add.New(c.cmd, c.config).Setup()
+func (c *command) Setup(cfgFileExists bool) {
+	create.Init(c.cmd)
+
+	if !cfgFileExists {
+		return
+	}
+
 	create.New(c.cmd, c.config).Setup()
+	add.New(c.cmd, c.config).Setup()
 }

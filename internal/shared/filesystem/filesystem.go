@@ -14,7 +14,7 @@ type Manager struct {
 	LibraryDirectory string
 }
 
-func New(config config.Configuration) Manager {
+func New(config *config.Configuration) Manager {
 	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir
 	var libraryDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.LibraryDir
 
