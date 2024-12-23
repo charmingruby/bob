@@ -30,10 +30,10 @@ func (c *Command) Setup() {
 	}
 
 	cmd.AddCommand(
-		unit.SetupCMD(c.fs),
-		bundle.SetupCMD(c.fs),
-		module.SetupCMD(c.fs),
-		resource.SetupCMD(c.fs),
+		unit.SetupCmd(c.fs),
+		bundle.SetupCmd(c.fs),
+		module.SetupCmd(c.fs),
+		resource.SetupCmd(c.fs),
 	)
 
 	c.cmd.AddCommand(cmd)

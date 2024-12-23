@@ -6,14 +6,14 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func SetupCMD(fs filesystem.Manager) *cobra.Command {
+func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "structure",
 		Short: "Generates organisms",
 	}
 
 	cmd.AddCommand(
-		module.SetupCMD(fs),
+		module.SetupCmd(fs),
 	)
 
 	return cmd

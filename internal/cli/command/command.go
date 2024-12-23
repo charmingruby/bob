@@ -4,6 +4,7 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/add"
 	"github.com/charmingruby/bob/internal/cli/command/create"
+	"github.com/charmingruby/bob/internal/cli/command/doc"
 	"github.com/charmingruby/bob/internal/cli/command/initialize"
 
 	"github.com/spf13/cobra"
@@ -23,6 +24,7 @@ func New(cmd *cobra.Command, config *config.Configuration) *command {
 
 func (c *command) Setup(cfgFileExists bool) {
 	initialize.New(c.cmd)
+	doc.New(c.cmd).Setup()
 
 	if !cfgFileExists {
 		return

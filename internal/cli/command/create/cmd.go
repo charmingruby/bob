@@ -26,7 +26,7 @@ func (c *Command) Setup() {
 	}
 
 	cmd.AddCommand(
-		template.SetupCMD(c.fs),
+		template.SetupCmd(c.fs),
 	)
 
 	c.cmd.AddCommand(cmd)

@@ -1,5 +1,7 @@
-#  Base modular structure panoramic view
-```
+package definition
+
+const (
+	ARCHITECTURE_PROPOSAL = `
 .
 ├─── cmd -> e.g.: all executables
 │    └── api
@@ -50,4 +52,5 @@
         ├── helper
         ├── integration -> e.g.: actions in case of test modules needs integrated actions
         └── container
-```
+	`
+)
