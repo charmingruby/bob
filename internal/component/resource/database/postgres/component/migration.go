@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
+	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/charmingruby/bob/tooling/makefile"
 )
@@ -54,7 +54,7 @@ func RunMigration(m filesystem.Manager, tableName string) {
 		log.Fatal(err)
 	}
 
-	migrationsDir := m.MainDirectory() + constant.MIGRATIONS_DIR
+	migrationsDir := m.MainDirectory() + definition.SQL_MIGRATION
 	files, err := os.ReadDir(migrationsDir)
 	if err != nil {
 		log.Fatal(err)

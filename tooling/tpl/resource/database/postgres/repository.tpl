@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"{{ .SourcePath }}/shared/custom_err/database_err"
-	"{{ .SourcePath }}/shared/custom_err/database_err/postgres_err"
+	"{{ .SourcePath }}/shared/custom_err/database_err/sql_err"
 	"{{ .SourcePath }}/{{ .Module }}/core/model"
 	"github.com/jmoiron/sqlx"
 )
@@ -37,7 +37,7 @@ func New{{ .UpperCaseModel }}Repository(db *sqlx.DB) (*{{ .UpperCaseModel }}Repo
 		stmt, err := db.Preparex(statement)
 		if err != nil {
 			return nil,
-				postgres_err.NewPreparationErr(queryName, "{{ .LowerCaseModel }}", err)
+				sql_err.NewPreparationErr(queryName, "{{ .LowerCaseModel }}", err)
 		}
 
 		stmts[queryName] = stmt
@@ -59,7 +59,7 @@ func (r *{{ .UpperCaseModel }}Repository) statement(queryName string) (*sqlx.Stm
 
 	if !ok {
 		return nil,
-			postgres_err.NewStatementNotPreparedErr(queryName, "{{ .LowerCaseModel }}")
+			sql_err.NewStatementNotPreparedErr(queryName, "{{ .LowerCaseModel }}")
 	}
 
 	return stmt, nil

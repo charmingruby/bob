@@ -1,7 +1,6 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/constant"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,6 +8,8 @@ import (
 
 func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForResponseHelper(m, definition.SHARED_MODULE)
+
+	template := "architecture/bundle/rest/response_helper"
 
 	return base.New(base.ComponentInput{
 		Package: definition.REST_PACKAGE,
@@ -18,9 +19,8 @@ func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_RESPONSE_HELPER_TEMPLATE,
+			TemplateName: template,
 			FileName:     "response",
 		})
 }

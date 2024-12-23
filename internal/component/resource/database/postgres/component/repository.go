@@ -2,31 +2,32 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakePostgresRepository(m filesystem.Manager, module, model string) filesystem.File {
-	prepareDirectoriesForRepository(m, module)
+
+	prepareDirectoriesForRepository(m, module, definition.POSTGRES_PACKAGE)
+
+	template := "resource/database/postgres/repository"
 
 	return base.New(base.ComponentInput{
-		Package:              constant.POSTGRES_PACKAGE,
-		DestinationDirectory: definition.PersistencePath(m.ModuleDirectory(module), []string{constant.POSTGRES_PACKAGE}),
+		Package:              definition.POSTGRES_PACKAGE,
+		DestinationDirectory: definition.PersistencePath(m.ModuleDirectory(module), []string{definition.POSTGRES_PACKAGE}),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.POSTGRES_REPOSITORY_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewPostgresRepositoryData(m.DependencyPath(), module, model),
 			FileName:     model,
 			FileSuffix:   "repository",
 		})
 }
 
-func prepareDirectoriesForRepository(m filesystem.Manager, module string) {
+func prepareDirectoriesForRepository(m filesystem.Manager, module, pkg string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
-		[]string{definition.PERSISTENCE_PACKAGE, constant.POSTGRES_PACKAGE},
+		[]string{definition.PERSISTENCE_PACKAGE, pkg},
 	)
 }

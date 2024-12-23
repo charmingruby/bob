@@ -2,7 +2,6 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -20,7 +19,6 @@ func MakeRegistry(params RegistryParams) filesystem.File {
 		Name:                 params.RegistryName,
 		DestinationDirectory: params.DestinationDirectory,
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
 			TemplateName: params.TemplateName,
 			TemplateData: params.TemplateData,

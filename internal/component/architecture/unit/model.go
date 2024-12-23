@@ -1,7 +1,6 @@
 package unit
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/unit/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/unit/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -11,15 +10,16 @@ import (
 func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForModel(m, module)
 
+	template := "architecture/unit/model"
+
 	return base.New(base.ComponentInput{
 		DestinationDirectory: definition.CorePath(m.ModuleDirectory(module), []string{definition.MODEL_PACKAGE}),
 		Package:              module,
 		Name:                 name,
 		HasTest:              true,
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.MODEL_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewDefaultData(name),
 			FileName:     name,
 		})

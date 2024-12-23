@@ -14,7 +14,7 @@ func PerformConfigure() {
 		LibraryDirectory: "pkg",
 	}
 
-	component := component.MakeConfigure(manager)
+	component := component.MakeBobConfig(manager)
 
 	if err := manager.GenerateFile(component); err != nil {
 		panic(err)

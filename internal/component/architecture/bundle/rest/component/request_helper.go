@@ -1,7 +1,6 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -11,6 +10,8 @@ import (
 func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForRequestHelper(m, definition.SHARED_MODULE)
 
+	template := "architecture/bundle/rest/request_helper"
+
 	return base.New(base.ComponentInput{
 		Package: definition.REST_PACKAGE,
 		DestinationDirectory: definition.TransportPath(
@@ -19,9 +20,8 @@ func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_REQUEST_HELPER_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewRequestHelperData(m.DependencyPath()),
 			FileName:     "request",
 		})

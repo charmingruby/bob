@@ -2,18 +2,18 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/resource/git/constant"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeGitIgnore(m filesystem.Manager) filesystem.File {
+	template := "resource/git/gitignore"
+
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
-		definition.CREATE_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.GITIGNORE_TEMPLATE,
+			TemplateName: template,
 			FileName:     ".gitignore",
 			Extension:    definition.NO_EXTENSION,
 		})

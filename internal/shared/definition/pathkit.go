@@ -1,5 +1,10 @@
 package definition
 
+const (
+	SOURCE_DIR = "internal"
+	LIB_DIR    = "pkg"
+)
+
 func TransportPath(moduleDir, protocol string, complementaryPath []string) string {
 	var path = moduleDir + "/" + TRANSPORT_PACKAGE + "/" + REST_PACKAGE
 

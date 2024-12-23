@@ -2,9 +2,7 @@ package resource
 
 import (
 	errComponent "github.com/charmingruby/bob/internal/component/resource/database/database_err/component"
-	errConst "github.com/charmingruby/bob/internal/component/resource/database/database_err/constant"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
-	pgConst "github.com/charmingruby/bob/internal/component/resource/database/postgres/constant"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
@@ -50,16 +48,16 @@ func PerformPostgresMigration(m filesystem.Manager, tableName string) {
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{definition.LIBRARY_PACKAGE, pgConst.POSTGRES_PACKAGE},
+		[]string{definition.LIBRARY_PACKAGE, definition.POSTGRES_PACKAGE},
 	)
 
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
-		[]string{pgConst.MIGRATIONS_DIR},
+		[]string{definition.SQL_MIGRATION},
 	)
 
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
-		[]string{definition.SHARED_MODULE, errConst.CUSTOM_ERR_PACKAGE, errConst.PERSISTENCE_ERR_PACKAGE, errConst.SQL_ERROR_PACKAGE},
+		[]string{definition.SHARED_MODULE, definition.CUSTOM_ERR_PACKAGE, definition.DATABASE_ERR_PACKAGE, definition.SQL_ERROR_PACKAGE},
 	)
 }

@@ -2,18 +2,18 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/setup/configure/constant"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeConfigure(m filesystem.Manager) filesystem.File {
+func MakeBobConfig(m filesystem.Manager) filesystem.File {
+	template := "setup/configure/bob_config"
+
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
-		definition.CREATE_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.CONFIGURE_TEMPLATE,
+			TemplateName: template,
 			FileName:     "bob",
 			Extension:    definition.YML_EXTENSION,
 		})

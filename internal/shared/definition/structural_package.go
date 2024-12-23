@@ -17,10 +17,14 @@ const (
 
 	// Database
 	PERSISTENCE_PACKAGE = "database"
+	POSTGRES_PACKAGE    = "postgres"
+	SQL_MIGRATION       = "/db/migration"
 
 	// Libs
 	LIBRARY_PACKAGE = "pkg"
 
 	// Errors
-	CUSTOM_ERR_PACKAGE = "custom_err"
+	CUSTOM_ERR_PACKAGE   = "custom_err"
+	DATABASE_ERR_PACKAGE = "database_err"
+	SQL_ERROR_PACKAGE    = "sql_err"
 )

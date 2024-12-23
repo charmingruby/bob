@@ -1,7 +1,6 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -9,6 +8,8 @@ import (
 )
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
+	template := "architecture/bundle/rest/exchange"
+
 	return base.New(base.ComponentInput{
 		Package: module,
 		Name:    name,
@@ -19,9 +20,8 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 			[]string{definition.DTO_PACKAGE, exchange},
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_EXCHANGE_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewExchangeData(exchange, name),
 			FileName:     name,
 			FileSuffix:   exchange,

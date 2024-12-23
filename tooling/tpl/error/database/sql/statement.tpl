@@ -1,4 +1,4 @@
-package {{ .SQLDatabase }}_err
+package sql_err
 
 import (
 	"fmt"

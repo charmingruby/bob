@@ -2,7 +2,6 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/setup/scaffold/constant"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
@@ -10,12 +9,13 @@ import (
 func MakeConfig(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForConfig(m)
 
+	template := "setup/scaffold/config"
+
 	return base.New(base.ComponentInput{
 		DestinationDirectory: definition.RootPath([]string{"config"}),
 	}).Componetize(
-		definition.CREATE_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.CONFIG_TEMPLATE,
+			TemplateName: template,
 			FileName:     "config",
 		})
 }

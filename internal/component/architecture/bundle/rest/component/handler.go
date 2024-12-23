@@ -1,7 +1,6 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -10,6 +9,8 @@ import (
 
 func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForHandler(m, module)
+
+	template := "architecture/bundle/rest/handler"
 
 	return base.New(base.ComponentInput{
 		Package: module,
@@ -21,9 +22,8 @@ func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 			[]string{definition.HANDLER_PACKAGE},
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_HANDLER_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewHandlerData(
 				m.DependencyPath(),
 				module,

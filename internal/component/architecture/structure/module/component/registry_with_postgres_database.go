@@ -1,15 +1,15 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/structure/module/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/structure/module/data"
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryModel string) filesystem.File {
 	prepareDirectoriesForRegistryWithPostgresDatabase(m, module)
+
+	template := "architecture/structure/module/module_with_postgres_database"
 
 	path := m.SourceDirectory + "/" + module
 
@@ -17,9 +17,8 @@ func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryMo
 		Package:              module,
 		DestinationDirectory: path,
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.MODULE_WITH_POSTGRES_DATABASE_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewModuleWithDatabaseData(
 				m.DependencyPath(),
 				module,

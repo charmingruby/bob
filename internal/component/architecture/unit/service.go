@@ -1,7 +1,6 @@
 package unit
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/unit/constant"
 	"github.com/charmingruby/bob/internal/component/architecture/unit/data"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -11,15 +10,16 @@ import (
 func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForService(m, module)
 
+	template := "architecture/unit/service"
+
 	return base.New(base.ComponentInput{
 		Package:              module,
 		Name:                 name,
 		Suffix:               "service",
 		DestinationDirectory: definition.CorePath(m.ModuleDirectory(module), []string{definition.SERVICE_PACKAGE}),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.SERVICE_TEMPLATE,
+			TemplateName: template,
 			TemplateData: data.NewDefaultData(name),
 			FileName:     name,
 			FileSuffix:   "service",

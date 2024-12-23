@@ -1,7 +1,6 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/constant"
 	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,6 +8,8 @@ import (
 
 func MakeServer(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForServer(m, definition.SHARED_MODULE)
+
+	template := "architecture/bundle/rest/server"
 
 	return base.New(base.ComponentInput{
 		Package: definition.REST_PACKAGE,
@@ -18,14 +19,15 @@ func MakeServer(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_SERVER,
+			TemplateName: template,
 			FileName:     "server",
 		})
 }
 
 func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
+	template := "architecture/bundle/rest/base_server_middleware"
+
 	return base.New(base.ComponentInput{
 		Package: definition.SERVICE_PACKAGE,
 		DestinationDirectory: definition.TransportPath(
@@ -34,9 +36,8 @@ func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
 			nil,
 		),
 	}).Componetize(
-		definition.ADD_COMMAND,
 		base.ComponetizeInput{
-			TemplateName: constant.REST_BASE_SERVER_MIDDLEWARE,
+			TemplateName: template,
 			FileName:     "middleware",
 		})
 }

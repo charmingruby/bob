@@ -42,11 +42,10 @@ type ComponetizeInput struct {
 	Extension    string
 }
 
-func (c *Component) Componetize(commandType string, in ComponetizeInput) filesystem.File {
+func (c *Component) Componetize(in ComponetizeInput) filesystem.File {
 	var extension string = util.Ternary[string](in.Extension == "", definition.GO_EXTENSION, in.Extension)
 
 	return filesystem.File{
-		CommandType:          commandType,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,
 		FileName:             in.FileName,

@@ -11,7 +11,6 @@ import (
 )
 
 type File struct {
-	CommandType          string // ex: gen, new...
 	Extension            string
 	DestinationDirectory string // directory where the file will be created
 	FileName             string // file name
@@ -34,7 +33,7 @@ func (f *Manager) GenerateFile(file File) error {
 	if file.HasTest {
 		testFile := fmt.Sprintf("%s_test", file.TemplateName)
 
-		testTmpl, err := createTemplate(testFile, file.CommandType)
+		testTmpl, err := createTemplate(testFile)
 		if err != nil {
 			fmt.Println("Error creating test template:", err)
 			return err
@@ -45,7 +44,7 @@ func (f *Manager) GenerateFile(file File) error {
 		}
 	}
 
-	tmpl, err := createTemplate(file.TemplateName, file.CommandType)
+	tmpl, err := createTemplate(file.TemplateName)
 	if err != nil {
 		fmt.Println("Error creating template:", err)
 		return err
@@ -54,10 +53,8 @@ func (f *Manager) GenerateFile(file File) error {
 	return generateFileIfNotExists(file.FileName, file.FileSuffix, file.DestinationDirectory, file.TemplateData, tmpl, file.Extension)
 }
 
-func createTemplate(fileName, command string) (*template.Template, error) {
-	templatePath := fmt.Sprintf("%s/%s", command, formatTplFile(fileName))
-
-	tplContent, err := tpl.GenerateTemplateFS.ReadFile(templatePath)
+func createTemplate(fileName string) (*template.Template, error) {
+	tplContent, err := tpl.GenerateTemplateFS.ReadFile(formatTplFile(fileName))
 	if err != nil {
 		fmt.Println("Error reading template:", err)
 		return nil, err

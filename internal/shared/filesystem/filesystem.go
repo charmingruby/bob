@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/charmingruby/bob/config"
+	"github.com/charmingruby/bob/internal/shared/definition"
 )
 
 type Manager struct {
@@ -15,12 +16,13 @@ type Manager struct {
 }
 
 func New(config *config.Configuration) Manager {
-	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.SourceDir
-	var libraryDirectory = config.BaseConfiguration.RootDir + "/" + config.BaseConfiguration.LibraryDir
+
+	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + definition.SOURCE_DIR
+	var libraryDirectory = config.BaseConfiguration.RootDir + "/" + definition.LIB_DIR
 
 	if config.BaseConfiguration.RootDir == "." {
-		sourceDirectory = config.BaseConfiguration.SourceDir
-		libraryDirectory = config.BaseConfiguration.LibraryDir
+		sourceDirectory = definition.SOURCE_DIR
+		libraryDirectory = definition.LIB_DIR
 	}
 
 	return Manager{
