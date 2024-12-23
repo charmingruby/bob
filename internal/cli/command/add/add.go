@@ -24,17 +24,17 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 }
 
 func (c *Command) Setup() {
-	genCmd := &cobra.Command{
+	cmd := &cobra.Command{
 		Use:   "add",
 		Short: "Generates components",
 	}
 
-	genCmd.AddCommand(
+	cmd.AddCommand(
 		unit.SetupCMD(c.fs),
 		bundle.SetupCMD(c.fs),
 		module.SetupCMD(c.fs),
 		resource.SetupCMD(c.fs),
 	)
 
-	c.cmd.AddCommand(genCmd)
+	c.cmd.AddCommand(cmd)
 }

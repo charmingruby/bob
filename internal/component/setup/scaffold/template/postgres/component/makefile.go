@@ -6,15 +6,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeCompose(m filesystem.Manager) filesystem.File {
-	template := "resource/container/raw_compose"
+func MakeMakefile(m filesystem.Manager) filesystem.File {
+	template := "setup/scaffold/template/postgres/makefile"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			FileName:     "docker-compose",
-			Extension:    definition.YML_EXTENSION,
+			FileName:     "Makefile",
+			Extension:    definition.NO_EXTENSION,
 		})
 }

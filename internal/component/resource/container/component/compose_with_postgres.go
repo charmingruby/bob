@@ -6,8 +6,8 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeCompose(m filesystem.Manager) filesystem.File {
-	template := "resource/container/raw_compose"
+func MakeComposeWithPostgres(m filesystem.Manager) filesystem.File {
+	template := "resource/container/compose_with_pg"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,

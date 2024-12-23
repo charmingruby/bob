@@ -9,7 +9,7 @@ import (
 func MakeConfig(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForConfig(m)
 
-	template := "setup/scaffold/config"
+	template := "setup/scaffold/template/postgres/config"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: definition.RootPath([]string{"config"}),

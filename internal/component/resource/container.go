@@ -11,6 +11,12 @@ func PerformDockerContainer(m filesystem.Manager, goVersion string) {
 	}
 }
 
+func PerformDockerComposeWithPostgres(m filesystem.Manager) {
+	if err := m.GenerateFile(component.MakeComposeWithPostgres(m)); err != nil {
+		panic(err)
+	}
+}
+
 func PerformDockerCompose(m filesystem.Manager) {
 	if err := m.GenerateFile(component.MakeCompose(m)); err != nil {
 		panic(err)

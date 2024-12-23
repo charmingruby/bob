@@ -6,15 +6,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeEnvironmentExample(m filesystem.Manager) filesystem.File {
-	template := "setup/scaffold/environment_example"
+func MakeMakefile(m filesystem.Manager) filesystem.File {
+	template := "setup/scaffold/template/base/makefile"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			FileName:     ".env.example",
+			FileName:     "Makefile",
 			Extension:    definition.NO_EXTENSION,
 		})
 }

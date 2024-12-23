@@ -2,7 +2,7 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/setup/scaffold/data"
+	"github.com/charmingruby/bob/internal/component/setup/scaffold/template/shared/data"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 

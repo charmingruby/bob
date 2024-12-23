@@ -2,7 +2,7 @@ package component
 
 import (
 	"github.com/charmingruby/bob/internal/component/base"
-	"github.com/charmingruby/bob/internal/component/setup/scaffold/data"
+	"github.com/charmingruby/bob/internal/component/setup/scaffold/template/postgres/data"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -11,7 +11,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 
 	prepareDirectoriesForEntry(m, app)
 
-	template := "setup/scaffold/entry"
+	template := "setup/scaffold/template/base/entry"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.EntryDirectory(app),

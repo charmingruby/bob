@@ -6,15 +6,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeCompose(m filesystem.Manager) filesystem.File {
-	template := "resource/container/raw_compose"
+func MakeEnvironmentExample(m filesystem.Manager) filesystem.File {
+	template := "setup/scaffold/template/base/environment_example"
 
 	return base.New(base.ComponentInput{
 		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			FileName:     "docker-compose",
-			Extension:    definition.YML_EXTENSION,
+			FileName:     ".env.example",
+			Extension:    definition.NO_EXTENSION,
 		})
 }

@@ -1,24 +1,25 @@
-package create
+package template
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/component/setup"
+	"github.com/charmingruby/bob/internal/shared/filesystem"
 
 	"github.com/spf13/cobra"
 )
 
-func (c *Command) RunCreate() *cobra.Command {
+func RunPostgres(m filesystem.Manager) *cobra.Command {
 	var goVersion string
 
 	cmd := &cobra.Command{
-		Use:   "create",
+		Use:   "pg",
 		Short: "Creates a new project",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCreateInput(goVersion); err != nil {
 				panic(err)
 			}
 
-			setup.PerformScaffold(c.fs, goVersion)
+			setup.PerformPostgresTemplate(m, goVersion)
 		},
 	}
 
