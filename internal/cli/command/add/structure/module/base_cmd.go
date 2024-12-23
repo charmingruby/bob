@@ -2,7 +2,7 @@ package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/organism"
+	"github.com/charmingruby/bob/internal/component/architecture/structure"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +21,7 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			organism.PerformBaseModule(m, module, baseModelName)
+			structure.PerformBaseModule(m, module, baseModelName)
 		},
 	}
 

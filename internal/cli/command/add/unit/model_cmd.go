@@ -2,7 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/atom"
+	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +21,7 @@ func RunModel(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			model := atom.MakeModel(m, module, modelName)
+			model := unit.MakeModel(m, module, modelName)
 
 			if err := m.GenerateFile(model); err != nil {
 				panic(err)

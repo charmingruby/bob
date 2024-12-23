@@ -2,7 +2,7 @@ package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/organism"
+	"github.com/charmingruby/bob/internal/component/architecture/structure"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -22,7 +22,7 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			organism.PerformModuleWithPostgresDatabase(m, module, modelName, tableName)
+			structure.PerformModuleWithPostgresDatabase(m, module, modelName, tableName)
 		},
 	}
 

@@ -2,7 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/atom"
+	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -22,7 +22,7 @@ func RunUnimplRepo(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			repository := atom.MakeUnimplementedRepository(m, module, modelName, databaseName)
+			repository := unit.MakeUnimplementedRepository(m, module, modelName, databaseName)
 
 			if err := m.GenerateFile(repository); err != nil {
 				panic(err)

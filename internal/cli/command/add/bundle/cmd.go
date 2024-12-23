@@ -8,7 +8,7 @@ import (
 func SetupCMD(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "bundle",
-		Short: "Generates conventional molecules, grouping atoms",
+		Short: "Generates conventional bundles, grouping units",
 	}
 
 	cmd.AddCommand(RunRest(fs))

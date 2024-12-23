@@ -2,7 +2,7 @@ package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/architecture/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -14,13 +14,13 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "rest",
-		Short: "Generates a new rest molecule",
+		Short: "Generates a new rest bundle",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseRestInput(module); err != nil {
 				panic(err)
 			}
 
-			molecule.PerformRest(m, module)
+			bundle.PerformRest(m, module)
 		},
 	}
 

@@ -2,7 +2,7 @@ package create
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/organism"
+	"github.com/charmingruby/bob/internal/component/setup"
 
 	"github.com/spf13/cobra"
 )
@@ -18,7 +18,7 @@ func (c *Command) RunCreate() *cobra.Command {
 				panic(err)
 			}
 
-			organism.PerformSetup(c.fs, goVersion)
+			setup.PerformScaffold(c.fs, goVersion)
 		},
 	}
 

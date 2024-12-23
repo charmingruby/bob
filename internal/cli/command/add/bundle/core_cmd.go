@@ -2,7 +2,7 @@ package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/architecture/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -15,13 +15,13 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "core",
-		Short: "Generates a new core molecule",
+		Short: "Generates a new core bundle",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCoreInput(module, modelName); err != nil {
 				panic(err)
 			}
 
-			molecule.PerformCore(m, module, modelName)
+			bundle.PerformCore(m, module, modelName)
 		},
 	}
 

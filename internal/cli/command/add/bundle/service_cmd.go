@@ -2,7 +2,7 @@ package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/molecule"
+	"github.com/charmingruby/bob/internal/component/architecture/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -15,13 +15,13 @@ func RunService(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "service",
-		Short: "Generates a new service molecule",
+		Short: "Generates a new service bundle",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseServiceInput(module, repoName); err != nil {
 				panic(err)
 			}
 
-			molecule.PerformService(m, repoName, module)
+			bundle.PerformService(m, repoName, module)
 		},
 	}
 

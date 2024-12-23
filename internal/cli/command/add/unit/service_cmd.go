@@ -2,7 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/atom"
+	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +21,7 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			service := atom.MakeService(m, module, serviceName)
+			service := unit.MakeService(m, module, serviceName)
 
 			if err := m.GenerateFile(service); err != nil {
 				panic(err)

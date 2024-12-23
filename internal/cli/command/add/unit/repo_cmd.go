@@ -2,7 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
-	"github.com/charmingruby/bob/internal/component/atom"
+	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -21,7 +21,7 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 				panic(err)
 			}
 
-			repository := atom.MakeRepository(m, module, modelName)
+			repository := unit.MakeRepository(m, module, modelName)
 
 			if err := m.GenerateFile(repository); err != nil {
 				panic(err)
