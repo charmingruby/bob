@@ -7,9 +7,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "module",
-		Short: "Generates modules",
-		Long:  "This command generates modules, which are sets of actions separated by bounded contexts.",
+		Use:     "module",
+		Aliases: []string{"mod"},
+		Short:   "Generates modules (aliases: mod)",
+		Long:    "This command generates modules, which are sets of actions separated by bounded contexts.",
 	}
 
 	cmd.AddCommand(

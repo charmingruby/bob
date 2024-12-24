@@ -1,4 +1,4 @@
-package organism
+package structure
 
 import (
 	"github.com/charmingruby/bob/internal/cli/command/add/structure/module"

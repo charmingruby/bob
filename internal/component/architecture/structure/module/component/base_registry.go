@@ -1,8 +1,10 @@
 package component
 
 import (
+	"fmt"
+
 	"github.com/charmingruby/bob/internal/component/architecture/structure/module/data"
-	"github.com/charmingruby/bob/internal/component/base"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -11,11 +13,14 @@ func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
 
 	template := "architecture/structure/module/base_module"
 
-	path := m.SourceDirectory + "/" + module
+	destination := m.SourceDirectory + "/" + module
+
+	content := fmt.Sprintf("%s module", module)
 
 	return base.New(base.ComponentInput{
+		Identifier:           base.BuildIdentifier(module, content, destination),
 		Package:              module,
-		DestinationDirectory: path,
+		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,

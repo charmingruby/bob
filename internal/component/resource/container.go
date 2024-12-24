@@ -1,24 +1,43 @@
 package resource
 
 import (
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/resource/container/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformDockerContainer(m filesystem.Manager, goVersion string) {
-	if err := m.GenerateFile(component.MakeContainer(m, goVersion)); err != nil {
-		panic(err)
+func PerformDockerContainer(m filesystem.Manager, goVersion string) error {
+	component := component.MakeContainer(m, goVersion)
+
+	if err := m.GenerateFile(component); err != nil {
+		return err
 	}
+
+	output.ComponentCreated(component.Identifier)
+
+	return nil
 }
 
-func PerformDockerComposeWithPostgres(m filesystem.Manager) {
-	if err := m.GenerateFile(component.MakeComposeWithPostgres(m)); err != nil {
-		panic(err)
+func PerformDockerComposeWithPostgres(m filesystem.Manager) error {
+	component := component.MakeComposeWithPostgres(m)
+
+	if err := m.GenerateFile(component); err != nil {
+		return err
 	}
+
+	output.ComponentCreated(component.Identifier)
+
+	return nil
 }
 
-func PerformDockerCompose(m filesystem.Manager) {
-	if err := m.GenerateFile(component.MakeCompose(m)); err != nil {
-		panic(err)
+func PerformDockerCompose(m filesystem.Manager) error {
+	component := component.MakeCompose(m)
+
+	if err := m.GenerateFile(component); err != nil {
+		return err
 	}
+
+	output.ComponentCreated(component.Identifier)
+
+	return nil
 }

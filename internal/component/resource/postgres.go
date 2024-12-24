@@ -1,48 +1,54 @@
 package resource
 
 import (
+	"github.com/charmingruby/bob/internal/cli/output"
 	errComponent "github.com/charmingruby/bob/internal/component/resource/database/database_err/component"
 	"github.com/charmingruby/bob/internal/component/resource/database/postgres/component"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) {
+func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) error {
 	repo := component.MakePostgresRepository(m, module, modelName)
 	if err := m.GenerateFile(repo); err != nil {
-		panic(err)
+		return err
 	}
 
+	output.ComponentCreated(repo.Identifier)
+
 	if tableName != "" {
-		PerformPostgresMigration(m, tableName)
+		return PerformPostgresMigration(m, tableName)
 	}
 
 	if needDeps {
-		PerformPostgresDependencies(m)
+		return PerformPostgresDependencies(m)
 	}
+
+	return nil
 }
 
-func PerformPostgresDependencies(m filesystem.Manager) {
+func PerformPostgresDependencies(m filesystem.Manager) error {
 	prepareDirectoriesForPostgresDependencies(m)
 
-	conn := component.MakePostgresConnection(m)
-	if err := m.GenerateFile(conn); err != nil {
-		panic(err)
+	components := []filesystem.File{
+		component.MakePostgresConnection(m),
+		errComponent.MakePersistenceError(m),
+		errComponent.MakeSQLXStatementError(m),
 	}
 
-	persistenceErr := errComponent.MakePersistenceError(m)
-	if err := m.GenerateFile(persistenceErr); err != nil {
-		panic(err)
+	for _, f := range components {
+		if err := m.GenerateFile(f); err != nil {
+			return err
+		}
+
+		output.ComponentCreated(f.Identifier)
 	}
 
-	sqlErr := errComponent.MakeSQLXStatementError(m)
-	if err := m.GenerateFile(sqlErr); err != nil {
-		panic(err)
-	}
+	return nil
 }
 
-func PerformPostgresMigration(m filesystem.Manager, tableName string) {
-	component.RunMigration(m, tableName)
+func PerformPostgresMigration(m filesystem.Manager, tableName string) error {
+	return component.RunMigration(m, tableName)
 }
 
 func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {

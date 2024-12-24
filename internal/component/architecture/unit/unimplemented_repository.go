@@ -1,9 +1,11 @@
 package unit
 
 import (
+	"fmt"
+
 	"github.com/charmingruby/bob/internal/component/architecture/unit/data"
-	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -12,11 +14,16 @@ func MakeUnimplementedRepository(m filesystem.Manager, module, name, database st
 
 	template := "architecture/unit/repository/unimplemented"
 
+	destination := definition.PersistencePath(m.ModuleDirectory(module), []string{database})
+
+	content := fmt.Sprintf("%s unimplemented repository", name)
+
 	return base.New(base.ComponentInput{
-		DestinationDirectory: definition.PersistencePath(m.ModuleDirectory(module), []string{database}),
+		Identifier:           base.BuildIdentifier(module, content, destination),
 		Package:              module,
 		Name:                 name,
 		Suffix:               "repository",
+		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,

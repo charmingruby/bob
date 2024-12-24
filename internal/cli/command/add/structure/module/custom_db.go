@@ -2,6 +2,7 @@ package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/structure"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -21,10 +22,14 @@ func RunCustomDB(m filesystem.Manager) *cobra.Command {
 		Long:    "This command generates a module with a custom database, allowing you to specify the implementation.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCustomDBInput(module, modelName, database); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			structure.PerformModuleWithCustomDatabase(m, module, modelName, database)
+			if err := structure.PerformModuleWithCustomDatabase(m, module, modelName, database); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("custom-db module")
 		},
 	}
 

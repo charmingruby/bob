@@ -11,6 +11,7 @@ import (
 )
 
 type File struct {
+	Identifier           string
 	Extension            string
 	DestinationDirectory string // directory where the file will be created
 	FileName             string // file name
@@ -35,7 +36,6 @@ func (f *Manager) GenerateFile(file File) error {
 
 		testTmpl, err := createTemplate(testFile)
 		if err != nil {
-			fmt.Println("Error creating test template:", err)
 			return err
 		}
 
@@ -46,7 +46,6 @@ func (f *Manager) GenerateFile(file File) error {
 
 	tmpl, err := createTemplate(file.TemplateName)
 	if err != nil {
-		fmt.Println("Error creating template:", err)
 		return err
 	}
 
@@ -56,13 +55,11 @@ func (f *Manager) GenerateFile(file File) error {
 func createTemplate(fileName string) (*template.Template, error) {
 	tplContent, err := tpl.GenerateTemplateFS.ReadFile(formatTplFile(fileName))
 	if err != nil {
-		fmt.Println("Error reading template:", err)
 		return nil, err
 	}
 
 	tmpl, err := template.New(fileName).Parse(string(tplContent))
 	if err != nil {
-		fmt.Println("Error parsing template:", err)
 		return nil, err
 	}
 
@@ -72,7 +69,6 @@ func createTemplate(fileName string) (*template.Template, error) {
 func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *template.Template, extension string) error {
 	destinyDir, err := getDestinationDirectory(directory)
 	if err != nil {
-		fmt.Println("Error getting destination directory:", err)
 		return err
 	}
 
@@ -92,23 +88,19 @@ func generateFileIfNotExists(name, suffix, directory string, data any, tmpl *tem
 	}
 
 	if _, err := os.Stat(filePath); err == nil {
-		fmt.Printf("File already exists: %s\n", filePath)
 		return nil
 	} else if !os.IsNotExist(err) {
-		fmt.Println("Error checking file existence:", err)
 		return err
 	}
 
 	file, err := os.Create(filePath)
 	if err != nil {
-		fmt.Println("Error creating file:", err)
 		return err
 	}
 	defer file.Close()
 
 	err = tmpl.Execute(file, data)
 	if err != nil {
-		fmt.Println("Error executing template:", err)
 		return err
 	}
 

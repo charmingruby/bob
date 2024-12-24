@@ -2,6 +2,7 @@ package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -20,10 +21,14 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		Long:    "This command generates a new service bundle, which includes business logic and the necessary constructors.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseServiceInput(module, repoName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			bundle.PerformService(m, repoName, module)
+			if err := bundle.PerformService(m, repoName, module); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("service bundle")
 		},
 	}
 

@@ -16,7 +16,7 @@ var (
 	baseModelName = "example"
 )
 
-func PerformPostgresTemplate(m filesystem.Manager, goVersion string) {
+func PerformPostgresTemplate(m filesystem.Manager, goVersion string) error {
 	prepareDirectoriesForScaffold(m)
 
 	baseTableName := "examples"
@@ -31,18 +31,26 @@ func PerformPostgresTemplate(m filesystem.Manager, goVersion string) {
 
 	for _, c := range components {
 		if err := m.GenerateFile(c); err != nil {
-			panic(err)
+			return err
 		}
 	}
 
-	resource.PerformDockerContainer(m, goVersion)
-	resource.PerformDockerComposeWithPostgres(m)
-	resource.PerformGitignore(m)
+	if err := resource.PerformDockerContainer(m, goVersion); err != nil {
+		return err
+	}
 
-	structure.PerformModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)
+	if err := resource.PerformDockerComposeWithPostgres(m); err != nil {
+		return err
+	}
+
+	if err := resource.PerformGitignore(m); err != nil {
+		return err
+	}
+
+	return structure.PerformModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)
 }
 
-func PerfomBaseTemplate(m filesystem.Manager, goVersion, database string) {
+func PerfomBaseTemplate(m filesystem.Manager, goVersion, database string) error {
 	prepareDirectoriesForScaffold(m)
 
 	components := []filesystem.File{
@@ -55,15 +63,23 @@ func PerfomBaseTemplate(m filesystem.Manager, goVersion, database string) {
 
 	for _, c := range components {
 		if err := m.GenerateFile(c); err != nil {
-			panic(err)
+			return err
 		}
 	}
 
-	resource.PerformDockerContainer(m, goVersion)
-	resource.PerformDockerCompose(m)
-	resource.PerformGitignore(m)
+	if err := resource.PerformDockerContainer(m, goVersion); err != nil {
+		return err
+	}
 
-	structure.PerformModuleWithCustomDatabase(m, baseModule, baseModelName, database)
+	if err := resource.PerformDockerComposeWithPostgres(m); err != nil {
+		return err
+	}
+
+	if err := resource.PerformGitignore(m); err != nil {
+		return err
+	}
+
+	return structure.PerformModuleWithCustomDatabase(m, baseModule, baseModelName, database)
 }
 
 func prepareDirectoriesForScaffold(m filesystem.Manager) {

@@ -2,6 +2,7 @@ package template
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/setup"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 
@@ -18,10 +19,14 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 		Long:  "This command creates a new project using a customizable base persistence layer.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseBaseInput(goVersion, database); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			setup.PerfomBaseTemplate(m, goVersion, "dynamo")
+			if err := setup.PerfomBaseTemplate(m, goVersion, database); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("base template")
 		},
 	}
 

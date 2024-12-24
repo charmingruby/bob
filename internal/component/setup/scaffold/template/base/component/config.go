@@ -1,8 +1,8 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -11,8 +11,15 @@ func MakeConfig(m filesystem.Manager) filesystem.File {
 
 	template := "setup/scaffold/template/base/config"
 
+	destination := definition.RootPath([]string{"config"})
+
+	resource := "env"
+
+	content := "environment variables loader"
+
 	return base.New(base.ComponentInput{
-		DestinationDirectory: definition.RootPath([]string{"config"}),
+		Identifier:           base.BuildNonModuleIdentifier(resource, content, destination),
+		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,

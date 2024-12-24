@@ -4,7 +4,7 @@ import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/add/bundle"
 	"github.com/charmingruby/bob/internal/cli/command/add/resource"
-	"github.com/charmingruby/bob/internal/cli/command/add/structure/module"
+	"github.com/charmingruby/bob/internal/cli/command/add/structure"
 	"github.com/charmingruby/bob/internal/cli/command/add/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 
@@ -32,7 +32,7 @@ func (c *Command) Setup() {
 	cmd.AddCommand(
 		unit.SetupCmd(c.fs),
 		bundle.SetupCmd(c.fs),
-		module.SetupCmd(c.fs),
+		structure.SetupCmd(c.fs),
 		resource.SetupCmd(c.fs),
 	)
 

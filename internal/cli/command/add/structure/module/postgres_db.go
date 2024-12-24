@@ -2,6 +2,7 @@ package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/structure"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -16,15 +17,19 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:     "postgres-db",
-		Aliases: []string{"pgdb"},
+		Aliases: []string{"pg-db"},
 		Short:   "Generates a module with PostgreSQL database (aliases: pg-db)",
 		Long:    "This command generates a module with a PostgreSQL database implementation.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parsePostgresDBInput(module, modelName, tableName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			structure.PerformModuleWithPostgresDatabase(m, module, modelName, tableName)
+			if err := structure.PerformModuleWithPostgresDatabase(m, module, modelName, tableName); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("postgres-db module")
 		},
 	}
 

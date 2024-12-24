@@ -1,11 +1,12 @@
 package setup
 
 import (
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/setup/configure/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformConfigure() {
+func PerformConfigure() error {
 	manager := filesystem.Manager{
 		ProjectName:      "bob-project",
 		Data:             "github.com/your-user",
@@ -17,6 +18,10 @@ func PerformConfigure() {
 	component := component.MakeBobConfig(manager)
 
 	if err := manager.GenerateFile(component); err != nil {
-		panic(err)
+		return err
 	}
+
+	output.ComponentCreated(component.Identifier)
+
+	return nil
 }

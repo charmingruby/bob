@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/resource"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -22,10 +23,14 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			parsedNeedDependencies, err := parseRepoInput(module, modelName, tableName, needDependencies)
 			if err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			resource.PerformPostgresRepository(m, module, modelName, tableName, parsedNeedDependencies)
+			if err := resource.PerformPostgresRepository(m, module, modelName, tableName, parsedNeedDependencies); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("postgres repository")
 		},
 	}
 

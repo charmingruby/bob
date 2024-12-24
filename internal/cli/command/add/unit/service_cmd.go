@@ -2,6 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -20,14 +21,17 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		Long:    "This command generates a new service to build business logic.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseServiceInput(module, serviceName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
 			service := unit.MakeService(m, module, serviceName)
 
 			if err := m.GenerateFile(service); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
+
+			output.ComponentCreated(service.Identifier)
+			output.CommandSuccess("service unit")
 		},
 	}
 

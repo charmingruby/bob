@@ -1,7 +1,7 @@
 package data
 
 import (
-	"github.com/charmingruby/bob/internal/component/base"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 )
 
 type UnimplementedRepositoryData struct {

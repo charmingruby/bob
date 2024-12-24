@@ -2,6 +2,7 @@ package module
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/structure"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -19,10 +20,14 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 		Long:  "This command generates a base module, which includes the basic structure and components needed for a new module.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseBaseInput(module, baseModelName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			structure.PerformBaseModule(m, module, baseModelName)
+			if err := structure.PerformBaseModule(m, module, baseModelName); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("base module")
 		},
 	}
 

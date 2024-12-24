@@ -2,6 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -20,14 +21,17 @@ func RunModel(m filesystem.Manager) *cobra.Command {
 		Long:    "This command generates a new model to me managed and persisted.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseModelInput(module, modelName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
 			model := unit.MakeModel(m, module, modelName)
 
 			if err := m.GenerateFile(model); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
+
+			output.ComponentCreated(model.Identifier)
+			output.CommandSuccess("model unit")
 		},
 	}
 

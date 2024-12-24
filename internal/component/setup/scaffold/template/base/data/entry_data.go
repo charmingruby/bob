@@ -1,6 +1,6 @@
 package data
 
-import "github.com/charmingruby/bob/internal/component/base"
+import "github.com/charmingruby/bob/internal/shared/definition/component/base"
 
 type EntryData struct {
 	RootPath                string

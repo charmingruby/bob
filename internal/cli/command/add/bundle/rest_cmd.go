@@ -2,6 +2,7 @@ package bundle
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -19,10 +20,14 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 		Long:    "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseRestInput(module); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
-			bundle.PerformRest(m, module)
+			if err := bundle.PerformRest(m, module); err != nil {
+				output.ShutdownWithError(err.Error())
+			}
+
+			output.CommandSuccess("REST bundle")
 		},
 	}
 

@@ -1,8 +1,8 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/component/setup/scaffold/template/postgres/data"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
@@ -13,8 +13,15 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 
 	template := "setup/scaffold/template/postgres/entry"
 
+	directory := m.EntryDirectory(app)
+
+	resource := "exec"
+
+	content := "application entry point"
+
 	return base.New(base.ComponentInput{
-		DestinationDirectory: m.EntryDirectory(app),
+		Identifier:           base.BuildNonModuleIdentifier(resource, content, directory),
+		DestinationDirectory: directory,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,

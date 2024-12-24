@@ -2,6 +2,7 @@ package unit
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -19,14 +20,17 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 		Long:  "This command generates a new repository contract for the specified module and model.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseRepoInput(module, modelName); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
 
 			repository := unit.MakeRepository(m, module, modelName)
 
 			if err := m.GenerateFile(repository); err != nil {
-				panic(err)
+				output.ShutdownWithError(err.Error())
 			}
+
+			output.ComponentCreated(repository.Identifier)
+			output.CommandSuccess("repo unit")
 		},
 	}
 

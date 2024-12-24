@@ -7,6 +7,7 @@ import (
 )
 
 type Component struct {
+	Identifier           string
 	Package              string
 	Name                 string
 	Suffix               string
@@ -15,6 +16,7 @@ type Component struct {
 }
 
 type ComponentInput struct {
+	Identifier           string
 	Package              string
 	Name                 string
 	Suffix               string
@@ -24,6 +26,7 @@ type ComponentInput struct {
 
 func New(in ComponentInput) *Component {
 	component := &Component{
+		Identifier:           in.Identifier,
 		Package:              in.Package,
 		Name:                 in.Name,
 		DestinationDirectory: in.DestinationDirectory,
@@ -46,6 +49,7 @@ func (c *Component) Componetize(in ComponetizeInput) filesystem.File {
 	var extension string = util.Ternary[string](in.Extension == "", definition.GO_EXTENSION, in.Extension)
 
 	return filesystem.File{
+		Identifier:           c.Identifier,
 		TemplateName:         in.TemplateName,
 		TemplateData:         in.TemplateData,
 		FileName:             in.FileName,

@@ -1,12 +1,13 @@
 package bundle
 
 import (
+	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/component"
 	"github.com/charmingruby/bob/internal/component/library"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformRest(m filesystem.Manager, module string) {
+func PerformRest(m filesystem.Manager, module string) error {
 	actioName := "ping"
 
 	components := []filesystem.File{
@@ -39,7 +40,11 @@ func PerformRest(m filesystem.Manager, module string) {
 
 	for _, f := range components {
 		if err := m.GenerateFile(f); err != nil {
-			panic(err)
+			return err
 		}
+
+		output.ComponentCreated(f.Identifier)
 	}
+
+	return nil
 }

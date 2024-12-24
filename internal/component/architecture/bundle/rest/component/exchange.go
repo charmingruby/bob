@@ -1,30 +1,38 @@
 package component
 
 import (
+	"fmt"
+
 	"github.com/charmingruby/bob/internal/component/architecture/bundle/rest/data"
-	"github.com/charmingruby/bob/internal/component/base"
 	"github.com/charmingruby/bob/internal/shared/definition"
+	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
 	template := "architecture/bundle/rest/exchange"
 
+	destination := definition.TransportPath(
+		m.ModuleDirectory(module),
+		definition.REST_PACKAGE,
+		[]string{definition.DTO_PACKAGE, exchange},
+	)
+
+	content := fmt.Sprintf("%s %s", name, exchange)
+
 	return base.New(base.ComponentInput{
-		Package: module,
-		Name:    name,
-		Suffix:  exchange,
-		DestinationDirectory: definition.TransportPath(
-			m.ModuleDirectory(module),
-			definition.REST_PACKAGE,
-			[]string{definition.DTO_PACKAGE, exchange},
-		),
+		Identifier:           base.BuildIdentifier(module, content, destination),
+		Package:              module,
+		Name:                 name,
+		Suffix:               exchange,
+		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
 			TemplateData: data.NewExchangeData(exchange, name),
 			FileName:     name,
 			FileSuffix:   exchange,
+			Extension:    definition.GO_EXTENSION,
 		})
 }
 
