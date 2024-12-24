@@ -22,6 +22,5 @@ func baseSuccessPrinter(title, message string) {
 	greenBoldUnderlinePrinter(title)
 	greenBoldPrinter(separator)
 
-	greenPrinter(message + ".")
-	println()
+	println(message + ".")
 }

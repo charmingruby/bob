@@ -3,12 +3,16 @@ package output
 import "os"
 
 func ShutdownWithError(message string) {
-	title := "✖️ Error:"
+	symbol := "✖️"
+	title := "Error"
 
-	redBoldPrinter(title)
-	print(" ")
-	redPrinter(message + ".")
-	println()
+	redBoldPrinter(symbol)
+	print(blankSpace)
+
+	redBoldUnderlinePrinter(title)
+	redBoldPrinter(separator)
+
+	println(message + ".")
 
 	os.Exit(1)
 }
