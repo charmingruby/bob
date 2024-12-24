@@ -25,7 +25,7 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&goVersion, "golang version", "v", "1.23.3", "golang version for setup, by default, it will be 1.23.3")
+	cmd.Flags().StringVarP(&goVersion, "golang version", "v", "1.23.3", "golang version for setup")
 	cmd.Flags().StringVarP(&database, "database", "d", "", "base database to be implemented")
 
 	return cmd

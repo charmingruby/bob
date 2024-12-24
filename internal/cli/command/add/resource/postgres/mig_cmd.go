@@ -25,7 +25,7 @@ func RunMig(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&tableName, "table name", "t", "examples", "table name to be created, by default, it will be named examples")
+	cmd.Flags().StringVarP(&tableName, "table name", "t", "examples", "table name to be created")
 
 	return cmd
 }
