@@ -18,6 +18,7 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "repo",
 		Short: "Generates a new repository",
+		Long:  "This command generates a new repository for PostgreSQL, allowing you to interact with the database using the specified module, model, and table.",
 		Run: func(cmd *cobra.Command, args []string) {
 			parsedNeedDependencies, err := parseRepoInput(module, modelName, tableName, needDependencies)
 			if err != nil {

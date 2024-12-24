@@ -26,7 +26,7 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 func (c *Command) Setup() {
 	cmd := &cobra.Command{
 		Use:   "add",
-		Short: "Generates components",
+		Short: "Generates new components",
 	}
 
 	cmd.AddCommand(

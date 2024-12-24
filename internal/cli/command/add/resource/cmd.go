@@ -8,8 +8,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "resource",
-		Short: "Generates resources",
+		Use:     "resource",
+		Aliases: []string{"rsc"},
+		Short:   "Generates resources (aliases: rsc)",
+		Long:    "This command provides various infrastructure resource generation capabilities.",
 	}
 
 	cmd.AddCommand(

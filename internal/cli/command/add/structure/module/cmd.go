@@ -8,7 +8,8 @@ import (
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "module",
-		Short: "Module generator",
+		Short: "Generates modules",
+		Long:  "This command generates modules, which are sets of actions separated by bounded contexts.",
 	}
 
 	cmd.AddCommand(

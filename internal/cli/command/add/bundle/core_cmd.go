@@ -14,8 +14,10 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "core",
-		Short: "Generates a new core bundle",
+		Use:     "core",
+		Aliases: []string{"cr"},
+		Short:   "Generates a new core bundle (aliases: cr)",
+		Long:    "This command generates a new core bundle, which includes domain rules, models, contracts, and other core components.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCoreInput(module, modelName); err != nil {
 				panic(err)

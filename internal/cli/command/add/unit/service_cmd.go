@@ -14,8 +14,10 @@ func RunService(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "service",
-		Short: "Generates a new service",
+		Use:     "service",
+		Aliases: []string{"svc"},
+		Short:   "Generates a new service (aliases: svc)",
+		Long:    "This command generates a new service to build business logic.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseServiceInput(module, serviceName); err != nil {
 				panic(err)

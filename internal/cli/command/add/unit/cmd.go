@@ -7,8 +7,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "unit",
-		Short: "Generates pure components (or units)",
+		Use:     "unit",
+		Aliases: []string{"ut"},
+		Short:   "Generates unit (aliases: ut)",
+		Long:    "This command generates the smallest and core components fo architecture.",
 	}
 
 	cmd.AddCommand(

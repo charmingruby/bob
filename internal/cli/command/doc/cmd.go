@@ -17,7 +17,8 @@ func New(cmd *cobra.Command) *Command {
 func (c *Command) Setup() {
 	cmd := &cobra.Command{
 		Use:   "doc",
-		Short: "Generates components",
+		Short: "Presents architectural concepts",
+		Long:  "This command presents the various architectural decisions for the project.",
 	}
 
 	cmd.AddCommand(

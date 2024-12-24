@@ -8,7 +8,8 @@ import (
 func New(cmd *cobra.Command) {
 	initCmd := &cobra.Command{
 		Use:   "init",
-		Short: "Creates a new project",
+		Short: "Generates configuration files",
+		Long:  "This command generates the necessary configuration files for the project.",
 		Run: func(cmd *cobra.Command, args []string) {
 			setup.PerformConfigure()
 		},

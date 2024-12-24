@@ -10,12 +10,14 @@ import (
 
 func RunBase(m filesystem.Manager) *cobra.Command {
 	var goVersion string
+	var database string
 
 	cmd := &cobra.Command{
 		Use:   "base",
-		Short: "Creates a new project",
+		Short: "Creates a new project from a base template",
+		Long:  "This command creates a new project using a customizable base persistence layer.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseBaseInput(goVersion); err != nil {
+			if err := parseBaseInput(goVersion, database); err != nil {
 				panic(err)
 			}
 
@@ -24,15 +26,23 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&goVersion, "golang version", "v", "1.23.3", "golang version for setup, by default, it will be 1.23.3")
+	cmd.Flags().StringVarP(&database, "database", "d", "", "base database to be implemented")
 
 	return cmd
 }
 
-func parseBaseInput(goVersion string) error {
+func parseBaseInput(goVersion, database string) error {
 	args := []input.Arg{
 		{
 			FieldName: "go version",
 			Value:     goVersion,
+			Type:      input.StringType,
+		},
+		{
+			FieldName:  "database",
+			Value:      database,
+			IsRequired: true,
+			Type:       input.StringType,
 		},
 	}
 

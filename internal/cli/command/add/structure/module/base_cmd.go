@@ -16,6 +16,7 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "base",
 		Short: "Generates a base module",
+		Long:  "This command generates a base module, which includes the basic structure and components needed for a new module.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseBaseInput(module, baseModelName); err != nil {
 				panic(err)

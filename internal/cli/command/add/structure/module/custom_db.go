@@ -15,8 +15,10 @@ func RunCustomDB(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "custom-db",
-		Short: "Generates a module with custom database",
+		Use:     "custom-db",
+		Aliases: []string{"c-db"},
+		Short:   "Generates a module with custom database (aliases: c-db)",
+		Long:    "This command generates a module with a custom database, allowing you to specify the implementation.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCustomDBInput(module, modelName, database); err != nil {
 				panic(err)

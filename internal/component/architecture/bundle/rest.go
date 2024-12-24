@@ -11,7 +11,6 @@ func PerformRest(m filesystem.Manager, module string) {
 
 	components := []filesystem.File{
 		library.MakeValidator(m),
-		component.MakeRequestHelper(m),
 		component.MakeBaseServerMiddleware(m),
 		component.MakeServer(m),
 		component.MakeHandler(

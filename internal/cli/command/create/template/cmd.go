@@ -7,8 +7,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "template",
-		Short: "Postgres resources",
+		Use:     "template",
+		Aliases: []string{"tpl"},
+		Short:   "Generates project from templates (aliases: tmpl)",
+		Long:    "This command provides various template resources.",
 	}
 
 	cmd.AddCommand(

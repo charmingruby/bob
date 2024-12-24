@@ -24,6 +24,7 @@ func New(cmd *cobra.Command, config *config.Configuration) *command {
 
 func (c *command) Setup(cfgFileExists bool) {
 	initialize.New(c.cmd)
+
 	doc.New(c.cmd).Setup()
 
 	if !cfgFileExists {

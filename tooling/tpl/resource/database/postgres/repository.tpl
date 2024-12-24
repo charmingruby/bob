@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"database/sql"
-	"time"
 
 	"{{ .SourcePath }}/shared/custom_err/database_err"
 	"{{ .SourcePath }}/shared/custom_err/database_err/sql_err"
@@ -71,11 +70,9 @@ func (r *{{ .UpperCaseModel }}Repository) Store(model model.{{ .UpperCaseModel }
 		return err
 	}
 
-	mappedEntity := Domain{{ .UpperCaseModel }}ToPostgres(model)
-
 	if _, err := stmt.Exec(
-		mappedEntity.ID,
-		mappedEntity.Name,
+		model.ID,
+		model.Name,
 	); err != nil {
 		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} store", "postgres")
 	}
@@ -89,7 +86,7 @@ func (r *{{ .UpperCaseModel }}Repository) FindByID(id string) (*model.{{ .UpperC
 		return nil, err
 	}
 
-	var {{ .LowerCaseModel }} Postgres{{ .UpperCaseModel }}
+	var {{ .LowerCaseModel }} model.{{ .UpperCaseModel }}
 	if err := stmt.Get(&{{ .LowerCaseModel }}, id); err != nil {
 		if err == sql.ErrNoRows {
 			return nil, nil
@@ -98,9 +95,7 @@ func (r *{{ .UpperCaseModel }}Repository) FindByID(id string) (*model.{{ .UpperC
 		return nil, database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} find_by_id", "postgres")
 	}
 
-	mapped{{ .UpperCaseModel }} := Postgres{{ .UpperCaseModel }}ToDomain({{ .LowerCaseModel }})
-
-	return &mapped{{ .UpperCaseModel }}, nil
+	return &{{ .LowerCaseModel }}, nil
 }
 
 func (r *{{ .UpperCaseModel }}Repository) Delete(model model.{{ .UpperCaseModel }}) error {
@@ -114,29 +109,4 @@ func (r *{{ .UpperCaseModel }}Repository) Delete(model model.{{ .UpperCaseModel 
 	}
 
 	return nil
-}
-
-type Postgres{{ .UpperCaseModel }} struct {
-	ID        string    `json:"id" db:"id"`
-	Name      string    `json:"name" db:"name"`
-	CreatedAt time.Time `json:"created_at" db:"created_at"`
-    DeletedAt *time.Time `json:"deleted_at" db:"deleted_at"`
-}
-
-func Domain{{ .UpperCaseModel }}ToPostgres(model model.{{ .UpperCaseModel }}) Postgres{{ .UpperCaseModel }} {
-	return Postgres{{ .UpperCaseModel }}{
-		ID:        model.ID,
-		Name:      model.Name,
-		CreatedAt: model.CreatedAt,
-        DeletedAt: model.DeletedAt,
-	}
-}
-
-func Postgres{{ .UpperCaseModel }}ToDomain(persistenceModel Postgres{{ .UpperCaseModel }}) model.{{ .UpperCaseModel }} {
-	return model.{{ .UpperCaseModel }}{
-        ID: persistenceModel.ID,
-        Name: persistenceModel.Name,
-        CreatedAt: persistenceModel.CreatedAt,
-        DeletedAt: persistenceModel.DeletedAt,
-    }
 }

@@ -15,8 +15,10 @@ func RunUnimplRepo(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "unimpl-repo",
-		Short: "Generates a new unimplemented repository",
+		Use:     "unimpl-repo",
+		Aliases: []string{"u-repo"},
+		Short:   "Generates a new unimplemented repository (aliases: u-repo)",
+		Long:    "This command generates a new unimplemented repository for the specified module, model, and database.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseUnimplRepoInput(module, modelName, databaseName); err != nil {
 				panic(err)

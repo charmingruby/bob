@@ -13,8 +13,10 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "rest",
-		Short: "Generates a new rest bundle",
+		Use:     "rest",
+		Aliases: []string{"rs"},
+		Short:   "Generates a new REST bundle (aliases: rs)",
+		Long:    "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseRestInput(module); err != nil {
 				panic(err)

@@ -15,8 +15,10 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "postgres-db",
-		Short: "Generates a module with postgres database",
+		Use:     "postgres-db",
+		Aliases: []string{"pgdb"},
+		Short:   "Generates a module with PostgreSQL database (aliases: pg-db)",
+		Long:    "This command generates a module with a PostgreSQL database implementation.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parsePostgresDBInput(module, modelName, tableName); err != nil {
 				panic(err)

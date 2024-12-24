@@ -15,7 +15,8 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "repo",
-		Short: "Generates a new repository",
+		Short: "Generates a new repository contract",
+		Long:  "This command generates a new repository contract for the specified module and model.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseRepoInput(module, modelName); err != nil {
 				panic(err)

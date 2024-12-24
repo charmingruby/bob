@@ -7,8 +7,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "bundle",
-		Short: "Generates conventional bundles, grouping units",
+		Use:     "bundle",
+		Aliases: []string{"bd"},
+		Short:   "Generates bundles (aliases: bd)",
+		Long:    "This command generates various conventional bundles, including REST and core bundles.",
 	}
 
 	cmd.AddCommand(RunRest(fs))

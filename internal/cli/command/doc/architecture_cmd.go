@@ -10,7 +10,8 @@ import (
 func RunArchicture() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "arch",
-		Short: "Creates a new project",
+		Short: "Presents the overall architecture",
+		Long:  "This command presents the overall architecture of the project.",
 		Run: func(cmd *cobra.Command, args []string) {
 			fmt.Println(definition.ARCHITECTURE_PROPOSAL)
 		},

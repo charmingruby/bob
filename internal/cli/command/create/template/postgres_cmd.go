@@ -13,7 +13,8 @@ func RunPostgres(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "pg",
-		Short: "Creates a new project",
+		Short: "Creates a new project with PostgreSQL",
+		Long:  "This command creates a new project using a PostgreSQL template.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseCreateInput(goVersion); err != nil {
 				panic(err)

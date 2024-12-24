@@ -9,7 +9,7 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "pg",
 		Short: "Postgres resources",
-	}
+		Long:  "This command provides various PostgreSQL resources."}
 
 	cmd.AddCommand(
 		RunRepo(fs),

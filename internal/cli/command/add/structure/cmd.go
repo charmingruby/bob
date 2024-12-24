@@ -8,8 +8,10 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "structure",
-		Short: "Generates organisms",
+		Use:     "structure",
+		Aliases: []string{"str"},
+		Short:   "Generates structure sets (aliases: str)",
+		Long:    "This command generates various structural sets.",
 	}
 
 	cmd.AddCommand(

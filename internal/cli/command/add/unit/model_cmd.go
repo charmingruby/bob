@@ -14,8 +14,10 @@ func RunModel(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "model",
-		Short: "Generates a new model",
+		Use:     "model",
+		Aliases: []string{"mdl"},
+		Short:   "Generates a new model (aliases: mdl)",
+		Long:    "This command generates a new model to me managed and persisted.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseModelInput(module, modelName); err != nil {
 				panic(err)

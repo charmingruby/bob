@@ -22,7 +22,8 @@ func New(cmd *cobra.Command, config *config.Configuration) *Command {
 func (c *Command) Setup() {
 	cmd := &cobra.Command{
 		Use:   "create",
-		Short: "Generates components",
+		Short: "Creates a new project",
+		Long:  "This command creates a new project by setting up the project structure from templates.",
 	}
 
 	cmd.AddCommand(

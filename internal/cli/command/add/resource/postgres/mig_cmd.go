@@ -14,7 +14,8 @@ func RunMig(m filesystem.Manager) *cobra.Command {
 
 	cmd := &cobra.Command{
 		Use:   "mig",
-		Short: "Generates a new migration",
+		Short: "Generates a new PostgreSQL migration",
+		Long:  "This command generates a new migration file for PostgreSQL, allowing you to define changes to your database schema.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseMigInput(tableName); err != nil {
 				panic(err)
