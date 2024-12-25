@@ -7,7 +7,7 @@ func BuildIdentifier(module, content, destinationDirectory string) string {
 }
 
 func BuildNonModuleIdentifier(resource string, content, destinationDirectory string) string {
-	return fmt.Sprintf("[bob | %s] %s, at: %s", resource, content, directoryRootSafety(destinationDirectory))
+	return fmt.Sprintf("[bob|%s] %s, at: %s", resource, content, directoryRootSafety(destinationDirectory))
 }
 
 func BuildBobIdentifier(content, destinationDirectory string) string {

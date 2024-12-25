@@ -1,7 +1,8 @@
 package definition
 
 const (
-	GO_EXTENSION  = "go"
-	NO_EXTENSION  = "none"
-	YML_EXTENSION = "yml"
+	GO_EXTENSION   = "go"
+	NO_EXTENSION   = "none"
+	YML_EXTENSION  = "yml"
+	TOML_EXTENSION = "toml"
 )

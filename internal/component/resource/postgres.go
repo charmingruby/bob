@@ -17,7 +17,9 @@ func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableNam
 	output.ComponentCreated(repo.Identifier)
 
 	if tableName != "" {
-		return PerformPostgresMigration(m, tableName)
+		if err := PerformPostgresMigration(m, tableName); err != nil {
+			return err
+		}
 	}
 
 	if needDeps {

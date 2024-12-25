@@ -2,6 +2,7 @@ package setup
 
 import (
 	"github.com/charmingruby/bob/internal/component/architecture/structure"
+	"github.com/charmingruby/bob/internal/component/library"
 	"github.com/charmingruby/bob/internal/component/resource"
 	pgTemplateComponent "github.com/charmingruby/bob/internal/component/setup/scaffold/template/postgres/component"
 
@@ -27,6 +28,7 @@ func PerformPostgresTemplate(m filesystem.Manager, goVersion string) error {
 		pgTemplateComponent.MakeConfig(m),
 		pgTemplateComponent.MakeEnvironmentExample(m),
 		pgTemplateComponent.MakeMakefile(m),
+		library.MakeAir(m),
 	}
 
 	for _, c := range components {
@@ -47,7 +49,11 @@ func PerformPostgresTemplate(m filesystem.Manager, goVersion string) error {
 		return err
 	}
 
-	return structure.PerformModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName)
+	if err := structure.PerformModuleWithPostgresDatabase(m, baseModule, baseModelName, baseTableName); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func PerfomBaseTemplate(m filesystem.Manager, goVersion, database string) error {
@@ -59,6 +65,7 @@ func PerfomBaseTemplate(m filesystem.Manager, goVersion, database string) error 
 		baseTemplateComponent.MakeConfig(m),
 		baseTemplateComponent.MakeEnvironmentExample(m),
 		baseTemplateComponent.MakeMakefile(m),
+		library.MakeAir(m),
 	}
 
 	for _, c := range components {
