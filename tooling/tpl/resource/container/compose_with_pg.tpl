@@ -1,13 +1,12 @@
 services:
   postgres:
-    container_name: bob-pg
     image: bitnami/postgresql:latest
     ports:
-      - "5432:5432"
+      - "${DATABASE_PORT}:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=bob-db
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
     volumes:
       - ./.docker/postgres:/var/lib/postgresql/data
     healthcheck:
@@ -17,16 +16,14 @@ services:
       timeout: 5s
 
   app:
-    container_name: bob-api
-    image: bob
+    image: bob-app
     depends_on:
       postgres:
         condition: service_healthy
     build:
       context: .
       dockerfile: Dockerfile
-    # depends on the api port
     ports:
-      - "3000:3000"
+      - "${SERVER_PORT}:3000"
     env_file:
       - .env
