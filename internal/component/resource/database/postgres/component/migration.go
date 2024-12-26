@@ -12,7 +12,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
-	"github.com/charmingruby/bob/tooling/makefile"
+	"github.com/charmingruby/bob/tooling/script/migrator"
 )
 
 const (
@@ -34,7 +34,7 @@ func RunMigration(m filesystem.Manager, tableName string) error {
 	}
 	defer os.Remove(tmpFile.Name())
 
-	_, err = tmpFile.Write([]byte(makefile.Makefile))
+	_, err = tmpFile.Write([]byte(migrator.Makefile))
 	if err != nil {
 		return err
 	}

@@ -1,4 +1,4 @@
-package makefile
+package migrator
 
 import (
 	_ "embed"
