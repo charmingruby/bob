@@ -1,8 +1,8 @@
-package configure
+package schema
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/setup/configure/component"
+	"github.com/charmingruby/bob/internal/component/config/schema/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
