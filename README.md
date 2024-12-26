@@ -1,53 +1,61 @@
-#  Base modular structure panoramic view
-```
-.
-├─── cmd // all executables
-│   └── api
-|       └── main.go
-├─── config
-│   └── config.go // environment configurations
-├─── db // database files in case of using a SQL database
-│   └── migration // migration files
-│       ├── 00001_create_x_table.up.sql
-│       └── 00001_create_x_table.down.sql
-├─── internal // application logic
-│   └── module_a
-│       └── core
-│           ├── model // domain entities
-│           ├── repository // repository contracts
-│           └── service // implementation of use cases
-│       └── database // persistence stuff
-│           └── database_choosen // database choosen module
-│               └── module_a_repository.go // implementation of a repository contract
-│       ├── transport // communication module
-│           └── rest // communication protocol
-│               └── dto
-│                   └── response // response structs
-│                   └── request // request structs with validation
-│               └── endpoint // routes registrations and handlers
-│           └── grpc
-│       └── module_a.go // exposures all module actions to be used
-│   ├── module_b
-│       ├── ...
-│       └── integration
-│           └── provider
-│               └── public_provider.go // implementation of integration contract
-│   └── shared
-│       ├── core // common core logic across modules
-│       ├── database // common database logic across modules
-│       ├── transport // common transport logic across modules
-│       ├── helper // common helper logic across modules
-│       └── integration // contracts for modules communication
-│           └── module_a_b_integration.go // contract with minimum business logic
-├─── pkg // external libraries without business logic
-│   └── mysql // library logic and setup to be used
-└── test // test helpers and more complex tests
-│   └── module_a
-│       ├── integration_test
-│       └── factory
-│   ├── module_b
-│   └── shared
-│       ├── helper
-│       ├── integration // actions in case of test modules needs integrated actions
-        └── container
-```
+# Bob
+
+Bob is a Go tool designed to streamline the creation of modular and scalable applications using predefined templates.
+
+## Description
+bob is a tool that provides a set of predefined templates to facilitate the creation of projects in various contexts. It aims to accelerate the initial setup of projects, whether for enterprise applications or proof of concepts (PoC), ensuring a solid foundation for further development.
+
+## Philosophy
+The philosophy of bob is to be able to grow into different contexts in an opinionated manner, ensuring an evolutionary architecture and allowing the easy composition of new components in the architecture. And from just the beginning, we have the following design principles:
+
+* Keep it simple
+* Easy to extend
+* Try best to be friendly to the business logic development, encapsulate the complexity
+* Ability to create various templates for different use cases, such as REST, gRPC, and serverless
+* Modular design for easy integration and maintenance
+
+
+## Installation
+
+### Get Started
+
+1. Run the installation script:
+   ```shell
+   curl -sSL https://raw.githubusercontent.com/charmingruby/bob/main/install.sh | bash
+   ```
+
+2. Create a configuration file in the directory where you want to create a project:
+   ```shell
+   bob init
+   ```
+
+3. Create a project:
+   ```shell
+   bob create template rest base -database dynamo
+   ```
+
+4. Run go mod tidy to ensure all dependencies are installed:
+   ```shell
+   go mod tidy
+   ```
+
+5. Set the environment variables, based on .env.example
+
+6. Run docker compose:
+   ```shell
+   docker compose up -d
+   ```
+
+7. Run application:
+   ```shell
+   go run ./cmd/api/main.go
+   ```
+
+8. Call the api:
+   ```shell
+   curl -X POST http://localhost:3000/example/ping -H "Content-Type: application/json" -d '{"name": "bob"}'
+   ```
+
+## Give a Star! ⭐
+
+If you like this project or are using it to learn or using for your own solution or purpose, give it a star. Your support matters!
