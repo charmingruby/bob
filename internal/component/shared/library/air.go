@@ -7,7 +7,7 @@ import (
 )
 
 func MakeAir(m filesystem.Manager) filesystem.File {
-	template := "library/air"
+	template := TemplatePath("air")
 
 	destination := m.MainDirectory()
 

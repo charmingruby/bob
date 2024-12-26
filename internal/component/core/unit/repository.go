@@ -25,7 +25,7 @@ func newRepositoryData(sourcePath, module, name string) repositoryData {
 func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForRepository(m, module)
 
-	template := "architecture/unit/repository/contract"
+	template := TemplatePath("repository/contract")
 
 	destination := definition.CorePath(m.ModuleDirectory(module), []string{definition.REPOSITORY_PACKAGE})
 

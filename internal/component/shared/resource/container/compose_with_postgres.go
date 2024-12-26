@@ -1,4 +1,4 @@
-package component
+package container
 
 import (
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -6,18 +6,18 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeCompose(m filesystem.Manager) filesystem.File {
-	template := "resource/container/raw_compose"
+func MakeComposeWithPostgres(m filesystem.Manager) filesystem.File {
+	template := TemplatePath("compose_with_pg")
 
 	destination := m.MainDirectory()
 
 	resource := "docker"
 
-	content := "docker-compose with api"
+	content := "docker-compose with postgres"
 
 	return base.New(base.ComponentInput{
 		Identifier:           base.BuildNonModuleIdentifier(resource, content, destination),
-		DestinationDirectory: m.RootDirectory,
+		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,

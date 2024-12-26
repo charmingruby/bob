@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
@@ -22,7 +23,7 @@ func newBaseModuleData(sourcePath, module string) baseModuleData {
 func MakeRegistry(m filesystem.Manager, module string) filesystem.File {
 	prepareDirectoriesForRegistry(m, module)
 
-	template := "architecture/structure/module/base_module"
+	template := rest.TemplatePath("module/base")
 
 	destination := m.SourceDirectory + "/" + module
 

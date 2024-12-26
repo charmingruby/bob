@@ -20,7 +20,7 @@ func newGoModData(
 }
 
 func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
-	template := "setup/scaffold/go_mod"
+	template := "shared/template/go_mod"
 
 	destination := m.MainDirectory()
 

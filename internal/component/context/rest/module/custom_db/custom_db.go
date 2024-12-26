@@ -12,7 +12,7 @@ import (
 func Perform(m filesystem.Manager, module, modelName, database string) error {
 	newModule := component.MakeRegistry(m, module, modelName, database)
 	if err := m.GenerateFile(newModule); err != nil {
-		panic(err)
+		return err
 	}
 
 	output.ComponentCreated(newModule.Identifier)

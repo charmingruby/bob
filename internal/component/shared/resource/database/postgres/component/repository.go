@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/component/shared/resource/database"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -27,7 +28,7 @@ func newPostgresRepositoryData(sourcePath, module, model string) postgresReposit
 func MakePostgresRepository(m filesystem.Manager, module, model string) filesystem.File {
 	prepareDirectoriesForRepository(m, module, definition.POSTGRES_PACKAGE)
 
-	template := "resource/database/postgres/repository"
+	template := database.TemplatePath("postgres/repository")
 
 	destination := definition.PersistencePath(m.ModuleDirectory(module), []string{definition.POSTGRES_PACKAGE})
 

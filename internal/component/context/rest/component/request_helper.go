@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -19,7 +20,7 @@ func newRequestHelperData(sourcePath string) requestHelperData {
 func MakeRequestHelper(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForRequestHelper(m, definition.SHARED_MODULE)
 
-	template := "architecture/bundle/rest/request_helper"
+	template := rest.TemplatePath("component/request_helper")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

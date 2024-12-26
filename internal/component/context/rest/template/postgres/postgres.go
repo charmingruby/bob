@@ -26,6 +26,9 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 		component.MakeConfig(m),
 		component.MakeEnvironmentExample(m),
 		component.MakeMakefile(m),
+		container.MakeContainer(m, goVersion),
+		container.MakeComposeWithPostgres(m),
+		git.MakeGitIgnore(m),
 		library.MakeAir(m),
 	}
 
@@ -33,18 +36,6 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 		if err := m.GenerateFile(c); err != nil {
 			return err
 		}
-	}
-
-	if err := container.PerformDockerfile(m, goVersion); err != nil {
-		return err
-	}
-
-	if err := container.PerformDockerComposeWithPostgres(m); err != nil {
-		return err
-	}
-
-	if err := git.PerformGitignore(m); err != nil {
-		return err
 	}
 
 	if err := postgres.Perform(m, baseModule, baseModelName, baseTableName); err != nil {

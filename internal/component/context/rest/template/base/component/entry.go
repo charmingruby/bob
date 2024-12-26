@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
@@ -28,7 +29,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 
 	prepareDirectoriesForEntry(m, app)
 
-	template := "setup/scaffold/template/base/entry"
+	template := rest.TemplatePath("template/base/entry")
 
 	directory := m.ExecutableDirectory(app)
 

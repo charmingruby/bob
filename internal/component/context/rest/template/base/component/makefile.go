@@ -1,13 +1,14 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakeMakefile(m filesystem.Manager) filesystem.File {
-	template := "setup/scaffold/template/base/makefile"
+	template := rest.TemplatePath("template/base/makefile")
 
 	destination := m.MainDirectory()
 

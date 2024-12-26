@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/shared/resource/database"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,7 +10,7 @@ import (
 func MakePostgresConnection(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForConnection(m)
 
-	template := "resource/database/postgres/connection"
+	template := database.TemplatePath("postgres/connection")
 
 	destination := m.ExternalLibraryDirectory(definition.POSTGRES_PACKAGE)
 

@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/shared/err"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -19,7 +20,7 @@ func newSQLXStatementErrData(sourcePath, database string) sQLXStatementErrData {
 }
 
 func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
-	template := "error/database/sql/statement"
+	template := err.TemplatePath("database_err/sql/statement")
 
 	destination := definition.CustomErrPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

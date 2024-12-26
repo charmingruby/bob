@@ -24,6 +24,9 @@ func Perfom(m filesystem.Manager, goVersion, database string) error {
 		component.MakeConfig(m),
 		component.MakeEnvironmentExample(m),
 		component.MakeMakefile(m),
+		container.MakeContainer(m, goVersion),
+		container.MakeCompose(m),
+		git.MakeGitIgnore(m),
 		library.MakeAir(m),
 	}
 
@@ -31,18 +34,6 @@ func Perfom(m filesystem.Manager, goVersion, database string) error {
 		if err := m.GenerateFile(c); err != nil {
 			return err
 		}
-	}
-
-	if err := container.PerformDockerfile(m, goVersion); err != nil {
-		return err
-	}
-
-	if err := container.PerformDockerCompose(m); err != nil {
-		return err
-	}
-
-	if err := git.PerformGitignore(m); err != nil {
-		return err
 	}
 
 	return custom_db.Perform(m, baseModule, baseModelName, database)

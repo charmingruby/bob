@@ -1,4 +1,4 @@
-package component
+package container
 
 import (
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -6,22 +6,35 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeGitIgnore(m filesystem.Manager) filesystem.File {
-	template := "resource/git/gitignore"
+type containerData struct {
+	GoVersion string
+}
+
+func newContainerData(
+	goVersion string,
+) containerData {
+	return containerData{
+		GoVersion: goVersion,
+	}
+}
+
+func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
+	template := TemplatePath("container")
 
 	destination := m.MainDirectory()
 
-	resource := "git"
+	resource := "docker"
 
-	content := "gitignore"
+	content := "dockerfile"
 
 	return base.New(base.ComponentInput{
 		Identifier:           base.BuildNonModuleIdentifier(resource, content, destination),
-		DestinationDirectory: destination,
+		DestinationDirectory: m.RootDirectory,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			FileName:     ".gitignore",
+			TemplateData: newContainerData(goVersion),
+			FileName:     "Dockerfile",
 			Extension:    definition.NO_EXTENSION,
 		})
 }

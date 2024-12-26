@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,7 +10,7 @@ import (
 func MakeResponseHelper(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForResponseHelper(m, definition.SHARED_MODULE)
 
-	template := "architecture/bundle/rest/response_helper"
+	template := rest.TemplatePath("component/response_helper")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

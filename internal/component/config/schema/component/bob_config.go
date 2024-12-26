@@ -7,7 +7,7 @@ import (
 )
 
 func MakeBobConfig(m filesystem.Manager) filesystem.File {
-	template := "setup/configure/bob_config"
+	template := "config/schema/bob_config"
 
 	destination := m.MainDirectory()
 

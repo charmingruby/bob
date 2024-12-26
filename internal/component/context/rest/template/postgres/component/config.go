@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,7 +10,7 @@ import (
 func MakeConfig(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForConfig(m)
 
-	template := "setup/scaffold/template/postgres/config"
+	template := rest.TemplatePath("template/postgres/config")
 
 	destination := definition.RootPath([]string{"config"})
 

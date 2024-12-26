@@ -23,7 +23,7 @@ func newServiceRegistryWithRepositoryData(sourcePath, module, name string) servi
 }
 
 func MakeServiceRegistry(m filesystem.Manager, module, name string) filesystem.File {
-	template := "architecture/bundle/service/registry_with_repository"
+	template := "core/bundle/service/registry_with_repository"
 
 	destination := m.AppendToModuleDirectory(module, "core/service")
 

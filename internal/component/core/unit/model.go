@@ -21,7 +21,7 @@ func newModelData(name string) modelData {
 func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForModel(m, module)
 
-	template := "architecture/unit/model"
+	template := TemplatePath("model")
 
 	destination := definition.CorePath(m.ModuleDirectory(module), []string{definition.MODEL_PACKAGE})
 

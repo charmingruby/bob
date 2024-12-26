@@ -1,13 +1,14 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/shared/err"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 func MakePersistenceError(m filesystem.Manager) filesystem.File {
-	template := "error/database/persistence"
+	template := err.TemplatePath("database_err/persistence")
 
 	destination := definition.CustomErrPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -9,7 +10,7 @@ import (
 func MakeServer(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForServer(m, definition.SHARED_MODULE)
 
-	template := "architecture/bundle/rest/server"
+	template := rest.TemplatePath("component/server")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),
@@ -31,7 +32,7 @@ func MakeServer(m filesystem.Manager) filesystem.File {
 }
 
 func MakeBaseServerMiddleware(m filesystem.Manager) filesystem.File {
-	template := "architecture/bundle/rest/base_server_middleware"
+	template := rest.TemplatePath("component/base_server_middleware")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

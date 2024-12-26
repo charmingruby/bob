@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -23,7 +24,7 @@ func newExchangeData(exchange, name string) exchangeData {
 }
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
-	template := "architecture/bundle/rest/exchange"
+	template := rest.TemplatePath("component/exchange")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(module),

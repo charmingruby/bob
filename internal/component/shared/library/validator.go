@@ -9,7 +9,7 @@ import (
 func MakeValidator(m filesystem.Manager) filesystem.File {
 	prepareDirectoriesForValidator(m, definition.SHARED_MODULE)
 
-	template := "library/validator"
+	template := TemplatePath("validator")
 
 	destination := m.AppendToModuleDirectory(definition.SHARED_MODULE, "validation")
 

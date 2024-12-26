@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/component/context/rest/module/shared/data"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -11,7 +12,7 @@ import (
 func MakeRegistry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
 	prepareDirectoriesForRegistry(m, module)
 
-	template := "architecture/structure/module/module_with_postgres_database"
+	template := rest.TemplatePath("module/postgres")
 
 	destination := m.SourceDirectory + "/" + module
 

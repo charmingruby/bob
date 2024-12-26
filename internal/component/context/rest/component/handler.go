@@ -3,6 +3,7 @@ package component
 import (
 	"fmt"
 
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -26,7 +27,7 @@ func newHandlerData(sourcePath, module, name string) handlerData {
 func MakeHandler(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForHandler(m, module)
 
-	template := "architecture/bundle/rest/handler"
+	template := rest.TemplatePath("component/handler")
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(module),

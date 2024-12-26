@@ -1,6 +1,7 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest"
 	"github.com/charmingruby/bob/internal/component/core/unit"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
@@ -20,7 +21,7 @@ func newRestRegistryData(module, sourcePath string) restRegistryData {
 }
 
 func MakeHandlerRegistry(destinationDirectory, sourcePath, module string) filesystem.File {
-	template := "architecture/bundle/rest/handler_registry"
+	template := rest.TemplatePath("component/handler_registry")
 
 	content := "endpoint entrypoint"
 

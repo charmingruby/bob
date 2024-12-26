@@ -21,7 +21,7 @@ func newServiceData(name string) serviceData {
 func MakeService(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForService(m, module)
 
-	template := "architecture/unit/service"
+	template := TemplatePath("service")
 
 	destination := definition.CorePath(m.ModuleDirectory(module), []string{definition.SERVICE_PACKAGE})
 

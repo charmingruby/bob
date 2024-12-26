@@ -27,7 +27,7 @@ func newUnimplementedRepositoryData(sourcePath, module, name, db string) unimple
 func MakeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	prepareDirectoriesForUnimplementedRepository(m, module, database)
 
-	template := "architecture/unit/repository/unimplemented"
+	template := TemplatePath("repository/unimplemented")
 
 	destination := definition.PersistencePath(m.ModuleDirectory(module), []string{database})
 
