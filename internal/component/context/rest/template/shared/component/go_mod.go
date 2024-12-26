@@ -1,10 +1,23 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/context/rest/template/shared/data"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type goModData struct {
+	RepoURL   string
+	GoVersion string
+}
+
+func newGoModData(
+	repoURL, goVersion string,
+) goModData {
+	return goModData{
+		RepoURL:   repoURL,
+		GoVersion: goVersion,
+	}
+}
 
 func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
 	template := "setup/scaffold/go_mod"
@@ -21,7 +34,7 @@ func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewGoModData(m.Data, goVersion),
+			TemplateData: newGoModData(m.Data, goVersion),
 			FileName:     "go",
 			Extension:    "mod",
 		})
