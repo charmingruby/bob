@@ -22,7 +22,7 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := base.PerfomBase(m, goVersion, database); err != nil {
+			if err := base.Perfom(m, goVersion, database); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

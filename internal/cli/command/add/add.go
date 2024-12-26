@@ -2,10 +2,8 @@ package add
 
 import (
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/cli/command/add/bundle"
-	"github.com/charmingruby/bob/internal/cli/command/add/module"
-	"github.com/charmingruby/bob/internal/cli/command/add/resource"
-	"github.com/charmingruby/bob/internal/cli/command/add/unit"
+	"github.com/charmingruby/bob/internal/cli/command/add/core"
+	"github.com/charmingruby/bob/internal/cli/command/add/rest"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 
 	"github.com/spf13/cobra"
@@ -30,10 +28,8 @@ func (c *Command) Setup() {
 	}
 
 	cmd.AddCommand(
-		unit.SetupCmd(c.fs),
-		bundle.SetupCmd(c.fs),
-		module.SetupCmd(c.fs),
-		resource.SetupCmd(c.fs),
+		core.SetupCmd(c.fs),
+		rest.SetupCmd(c.fs),
 	)
 
 	c.cmd.AddCommand(cmd)

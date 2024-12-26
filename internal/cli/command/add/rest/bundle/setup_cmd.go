@@ -8,18 +8,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func RunRest(m filesystem.Manager) *cobra.Command {
+func RunSetup(m filesystem.Manager) *cobra.Command {
 	var (
 		module string
 	)
 
 	cmd := &cobra.Command{
-		Use:     "rest",
-		Aliases: []string{"rs"},
-		Short:   "Generates a new REST bundle (aliases: rs)",
-		Long:    "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
+		Use:   "setup",
+		Short: "Generates a new REST bundle",
+		Long:  "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseRestInput(module); err != nil {
+			if err := parseSetupInput(module); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 
@@ -31,12 +30,12 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
 
 	return cmd
 }
 
-func parseRestInput(module string) error {
+func parseSetupInput(module string) error {
 	inputs := []input.Arg{
 		{
 			FieldName:  "module",

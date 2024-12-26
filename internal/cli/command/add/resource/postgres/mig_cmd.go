@@ -22,7 +22,7 @@ func RunMig(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.PerformPostgresMigration(m, tableName); err != nil {
+			if err := postgres.PerformMigration(m, tableName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

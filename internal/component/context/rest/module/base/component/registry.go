@@ -19,8 +19,8 @@ func newBaseModuleData(sourcePath, module string) baseModuleData {
 	}
 }
 
-func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
-	prepareDirectoriesForBaseRegistry(m, module)
+func MakeRegistry(m filesystem.Manager, module string) filesystem.File {
+	prepareDirectoriesForRegistry(m, module)
 
 	template := "architecture/structure/module/base_module"
 
@@ -43,7 +43,7 @@ func MakeBaseRegistry(m filesystem.Manager, module string) filesystem.File {
 		})
 }
 
-func prepareDirectoriesForBaseRegistry(m filesystem.Manager, module string) {
+func prepareDirectoriesForRegistry(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
 		[]string{module},

@@ -8,8 +8,8 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryModel string) filesystem.File {
-	prepareDirectoriesForRegistryWithPostgresDatabase(m, module)
+func MakeRegistry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
+	prepareDirectoriesForRegistry(m, module)
 
 	template := "architecture/structure/module/module_with_postgres_database"
 
@@ -34,7 +34,7 @@ func MakeRegistryWithPostgresDatabase(m filesystem.Manager, module, repositoryMo
 		})
 }
 
-func prepareDirectoriesForRegistryWithPostgresDatabase(m filesystem.Manager, module string) {
+func prepareDirectoriesForRegistry(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
 		[]string{module},

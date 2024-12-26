@@ -1,4 +1,4 @@
-package rest_base_module
+package base
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
@@ -9,7 +9,7 @@ import (
 )
 
 func Perform(m filesystem.Manager, module, modelName string) error {
-	newModule := component.MakeBaseRegistry(m, module)
+	newModule := component.MakeRegistry(m, module)
 	if err := m.GenerateFile(newModule); err != nil {
 		return err
 	}

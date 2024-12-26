@@ -9,15 +9,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformWithPostgresDatabase(m filesystem.Manager, module, modelName, tableName string) error {
-	newModule := component.MakeRegistryWithPostgresDatabase(m, module, modelName)
+func Perform(m filesystem.Manager, module, modelName, tableName string) error {
+	newModule := component.MakeRegistry(m, module, modelName)
 	if err := m.GenerateFile(newModule); err != nil {
 		return err
 	}
 
 	output.ComponentCreated(newModule.Identifier)
 
-	if err := postgres.PerformPostgresRepository(m, module, modelName, tableName, true); err != nil {
+	if err := postgres.PerformRepository(m, module, modelName, tableName, true); err != nil {
 		return err
 	}
 

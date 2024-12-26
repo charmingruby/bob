@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformConfigure() error {
+func Perform() error {
 	manager := filesystem.Manager{
 		ProjectName:      "bob-project",
 		Data:             "github.com/your-user",

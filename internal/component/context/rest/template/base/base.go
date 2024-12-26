@@ -15,7 +15,7 @@ var (
 	baseModelName = "example"
 )
 
-func PerfomBase(m filesystem.Manager, goVersion, database string) error {
+func Perfom(m filesystem.Manager, goVersion, database string) error {
 	prepareDirectoriesForScaffold(m)
 
 	components := []filesystem.File{
@@ -33,7 +33,7 @@ func PerfomBase(m filesystem.Manager, goVersion, database string) error {
 		}
 	}
 
-	if err := container.PerformDockerContainer(m, goVersion); err != nil {
+	if err := container.PerformDockerfile(m, goVersion); err != nil {
 		return err
 	}
 
@@ -45,7 +45,7 @@ func PerfomBase(m filesystem.Manager, goVersion, database string) error {
 		return err
 	}
 
-	return custom_db.PerformWithCustomDatabase(m, baseModule, baseModelName, database)
+	return custom_db.Perform(m, baseModule, baseModelName, database)
 }
 
 func prepareDirectoriesForScaffold(m filesystem.Manager) {

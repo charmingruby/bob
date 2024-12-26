@@ -6,7 +6,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformDockerContainer(m filesystem.Manager, goVersion string) error {
+func PerformDockerfile(m filesystem.Manager, goVersion string) error {
 	component := component.MakeContainer(m, goVersion)
 
 	if err := m.GenerateFile(component); err != nil {

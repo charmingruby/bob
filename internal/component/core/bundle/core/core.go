@@ -9,7 +9,7 @@ import (
 )
 
 func Perform(m filesystem.Manager, module, baseModelName string) error {
-	prepareDirectoriesForCore(m, module)
+	prepareDirectories(m, module)
 
 	components := []filesystem.File{
 		unit.MakeModel(m, module, baseModelName),
@@ -31,7 +31,7 @@ func Perform(m filesystem.Manager, module, baseModelName string) error {
 	return nil
 }
 
-func prepareDirectoriesForCore(m filesystem.Manager, module string) {
+func prepareDirectories(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
 		[]string{definition.CORE_PACKAGE},

@@ -35,7 +35,7 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 		}
 	}
 
-	if err := container.PerformDockerContainer(m, goVersion); err != nil {
+	if err := container.PerformDockerfile(m, goVersion); err != nil {
 		return err
 	}
 
@@ -47,7 +47,7 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 		return err
 	}
 
-	if err := postgres.PerformWithPostgresDatabase(m, baseModule, baseModelName, baseTableName); err != nil {
+	if err := postgres.Perform(m, baseModule, baseModelName, baseTableName); err != nil {
 		return err
 	}
 

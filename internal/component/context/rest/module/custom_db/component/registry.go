@@ -8,8 +8,8 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeRegistryWithCustomDatabase(m filesystem.Manager, module, repositoryModel, database string) filesystem.File {
-	prepareDirectoriesForRegistryWithCustomDatabase(m, module)
+func MakeRegistry(m filesystem.Manager, module, repositoryModel, database string) filesystem.File {
+	prepareDirectoriesForRegistry(m, module)
 
 	template := "architecture/structure/module/module_with_custom_database"
 
@@ -34,7 +34,7 @@ func MakeRegistryWithCustomDatabase(m filesystem.Manager, module, repositoryMode
 		})
 }
 
-func prepareDirectoriesForRegistryWithCustomDatabase(m filesystem.Manager, module string) {
+func prepareDirectoriesForRegistry(m filesystem.Manager, module string) {
 	m.GenerateNestedDirectories(
 		m.SourceDirectory,
 		[]string{module},

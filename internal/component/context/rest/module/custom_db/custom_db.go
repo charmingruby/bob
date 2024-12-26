@@ -9,8 +9,8 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformWithCustomDatabase(m filesystem.Manager, module, modelName, database string) error {
-	newModule := component.MakeRegistryWithCustomDatabase(m, module, modelName, database)
+func Perform(m filesystem.Manager, module, modelName, database string) error {
+	newModule := component.MakeRegistry(m, module, modelName, database)
 	if err := m.GenerateFile(newModule); err != nil {
 		panic(err)
 	}

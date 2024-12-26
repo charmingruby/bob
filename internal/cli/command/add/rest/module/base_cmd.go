@@ -3,7 +3,7 @@ package module
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/context/rest/template/base"
+	"github.com/charmingruby/bob/internal/component/context/rest/module/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +23,7 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := base.PerfomBase(m, module, baseModelName); err != nil {
+			if err := base.Perform(m, module, baseModelName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

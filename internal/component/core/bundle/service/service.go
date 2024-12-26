@@ -9,7 +9,7 @@ import (
 )
 
 func Perfom(m filesystem.Manager, repo string, module string) error {
-	prepareDirectoriesForService(m, module)
+	prepareDirectories(m, module)
 
 	sampleActor := module
 
@@ -35,7 +35,7 @@ func Perfom(m filesystem.Manager, repo string, module string) error {
 	return nil
 }
 
-func prepareDirectoriesForService(m filesystem.Manager, module string) {
+func prepareDirectories(m filesystem.Manager, module string) {
 	if err := m.GenerateNestedDirectories(
 		m.ModuleDirectory(module),
 		[]string{"core", "service"},

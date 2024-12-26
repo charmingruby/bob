@@ -8,7 +8,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) error {
+func PerformRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) error {
 	repo := component.MakePostgresRepository(m, module, modelName)
 	if err := m.GenerateFile(repo); err != nil {
 		return err
@@ -17,20 +17,20 @@ func PerformPostgresRepository(m filesystem.Manager, module, modelName, tableNam
 	output.ComponentCreated(repo.Identifier)
 
 	if tableName != "" {
-		if err := PerformPostgresMigration(m, tableName); err != nil {
+		if err := PerformMigration(m, tableName); err != nil {
 			return err
 		}
 	}
 
 	if needDeps {
-		return PerformPostgresDependencies(m)
+		return PerformDependencies(m)
 	}
 
 	return nil
 }
 
-func PerformPostgresDependencies(m filesystem.Manager) error {
-	prepareDirectoriesForPostgresDependencies(m)
+func PerformDependencies(m filesystem.Manager) error {
+	prepareDirectoriesForDependencies(m)
 
 	components := []filesystem.File{
 		component.MakePostgresConnection(m),
@@ -49,11 +49,11 @@ func PerformPostgresDependencies(m filesystem.Manager) error {
 	return nil
 }
 
-func PerformPostgresMigration(m filesystem.Manager, tableName string) error {
+func PerformMigration(m filesystem.Manager, tableName string) error {
 	return component.RunMigration(m, tableName)
 }
 
-func prepareDirectoriesForPostgresDependencies(m filesystem.Manager) {
+func prepareDirectoriesForDependencies(m filesystem.Manager) {
 	m.GenerateNestedDirectories(
 		m.MainDirectory(),
 		[]string{definition.LIBRARY_PACKAGE, definition.POSTGRES_PACKAGE},

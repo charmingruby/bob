@@ -25,7 +25,7 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.PerformWithPostgresDatabase(m, module, modelName, tableName); err != nil {
+			if err := postgres.Perform(m, module, modelName, tableName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 
