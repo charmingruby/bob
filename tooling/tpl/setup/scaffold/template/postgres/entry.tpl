@@ -51,7 +51,7 @@ func main() {
 
 	restServer := rest.NewServer(config.ServerConfig.Port, router)
 
-	initDependencies(router, db)
+	initModules(router, db)
 
 	shutdown := make(chan error)
 	go func() {
@@ -87,13 +87,12 @@ func main() {
 	slog.Info("REST SERVER: has gracefully shutdown")
 }
 
-func initDependencies(r *chi.Mux, db *sqlx.DB) {
-	{{ .LowerCaseRepositoryName }}Repository, err := {{ .Module }}.New{{ .UpperCaseRepositoryName }}Repository(db)
+func initModules(r *chi.Mux, db *sqlx.DB) {
+	{{ .Module }}Svc, err := {{ .Module }}.NewService(db)
 	if err != nil {
-		slog.Error(fmt.Sprintf("POSTGRES REPOSITORY: %v", err))
+		slog.Error(fmt.Sprintf("MODULE[{{ .Module }}]: %v", err))
 		os.Exit(1)
 	}
-
-	{{ .Module }}Svc := {{ .Module }}.NewService({{ .LowerCaseRepositoryName }}Repository)
+	
 	{{ .Module }}.NewHTTPHandler(r, {{ .Module }}Svc)
 }

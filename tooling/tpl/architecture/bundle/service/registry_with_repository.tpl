@@ -3,11 +3,15 @@ package service
 import "{{ .SourcePath }}/{{ .Module }}/core/repository"
 
 type Service struct {
-    {{ .PrivateRepositoryName }}Repo repository.{{ .RepositoryName }}Repository
+    {{ .PrivateRepositoryName }}Repository repository.{{ .RepositoryName }}Repository
 }
 
-func New({{ .PrivateRepositoryName }}Repo repository.{{ .RepositoryName }}Repository) *Service {
+type Input struct {
+    {{ .RepositoryName }}Repository repository.{{ .RepositoryName }}Repository
+}
+
+func New(in Input) *Service {
 	return &Service{
-        {{ .PrivateRepositoryName }}Repo: {{ .PrivateRepositoryName }}Repo,
+        {{ .PrivateRepositoryName }}Repository: in.{{ .RepositoryName }}Repository,
     }
 }

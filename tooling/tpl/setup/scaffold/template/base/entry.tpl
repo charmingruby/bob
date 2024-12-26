@@ -36,7 +36,7 @@ func main() {
 
 	restServer := rest.NewServer(config.ServerConfig.Port, router)
 
-	initDependencies(router)
+	initModules(router)
 
 	shutdown := make(chan error)
 	go func() {
@@ -72,8 +72,7 @@ func main() {
 	slog.Info("REST SERVER: has gracefully shutdown")
 }
 
-func initDependencies(r *chi.Mux) {
-	{{ .LowerCaseRepositoryName }}Repository := {{ .Module }}.New{{ .UpperCaseRepositoryName }}Repository()
-	{{ .Module }}Svc := {{ .Module }}.NewService({{ .LowerCaseRepositoryName }}Repository)
+func initModules(r *chi.Mux) {
+	{{ .Module }}Svc := {{ .Module }}.NewService()
 	{{ .Module }}.NewHTTPHandler(r, {{ .Module }}Svc)
 }

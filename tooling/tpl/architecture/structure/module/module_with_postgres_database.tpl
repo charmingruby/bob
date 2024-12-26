@@ -1,7 +1,6 @@
 package {{ .Module }}
 
 import (
-	"{{ .SourcePath }}/{{ .Module }}/core/repository"
 	"{{ .SourcePath }}/{{ .Module }}/core/service"
 	"{{ .SourcePath }}/{{ .Module }}/database/postgres"
 	"{{ .SourcePath }}/{{ .Module }}/transport/rest/endpoint"
@@ -9,16 +8,15 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
-func NewService(
-	{{ .LowerCaseRepository }}Repository repository.{{ .UpperCaseRepository }}Repository,
-) *service.Service {
-	return service.New(
-		{{ .LowerCaseRepository }}Repository,
-	)
-}
-
-func New{{ .UpperCaseRepository }}Repository(db *sqlx.DB) (repository.{{ .UpperCaseRepository }}Repository, error) {
-	return postgres.New{{ .UpperCaseRepository }}Repository(db)
+func NewService(db *sqlx.DB) (*service.Service, error) {
+	{{ .LowerCaseRepository }}Repo, err := postgres.New{{ .UpperCaseRepository }}Repository(db)
+	if err != nil {
+		return nil, err
+	}
+	
+	return service.New(service.Input{
+		{{ .UpperCaseRepository }}Repository: {{ .LowerCaseRepository }}Repo,
+	}), nil	
 }
 
 func NewHTTPHandler(r *chi.Mux, service *service.Service) {
