@@ -3,7 +3,7 @@ package bundle
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/architecture/bundle"
+	"github.com/charmingruby/bob/internal/component/core/bundle/core"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -24,7 +24,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := bundle.PerformCore(m, module, modelName); err != nil {
+			if err := core.PerformCore(m, module, modelName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

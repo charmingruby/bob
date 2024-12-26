@@ -3,7 +3,7 @@ package template
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/setup"
+	"github.com/charmingruby/bob/internal/component/context/rest/template/postgres"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 
 	"github.com/spf13/cobra"
@@ -21,7 +21,7 @@ func RunPostgres(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := setup.PerformPostgresTemplate(m, goVersion); err != nil {
+			if err := postgres.PerformWithPostgres(m, goVersion); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

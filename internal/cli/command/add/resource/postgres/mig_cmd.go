@@ -3,7 +3,7 @@ package postgres
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/resource"
+	"github.com/charmingruby/bob/internal/component/shared/resource/database/postgres"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -22,7 +22,7 @@ func RunMig(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := resource.PerformPostgresMigration(m, tableName); err != nil {
+			if err := postgres.PerformPostgresMigration(m, tableName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

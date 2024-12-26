@@ -3,7 +3,7 @@ package bundle
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/architecture/bundle"
+	"github.com/charmingruby/bob/internal/component/context/rest/bundle"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
