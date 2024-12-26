@@ -3,7 +3,7 @@ package module
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres_db"
+	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +25,7 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres_db.PerformWithPostgresDatabase(m, module, modelName, tableName); err != nil {
+			if err := postgres.PerformWithPostgresDatabase(m, module, modelName, tableName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

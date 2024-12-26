@@ -1,7 +1,7 @@
-package definition
+package architecture
 
 const (
-	ARCHITECTURE_PROPOSAL = `
+	PROPOSAL = `
 .
 ├─── cmd -> e.g.: all executables
 │    └── api

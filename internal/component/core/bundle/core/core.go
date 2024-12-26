@@ -8,7 +8,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformCore(m filesystem.Manager, module, baseModelName string) error {
+func Perform(m filesystem.Manager, module, baseModelName string) error {
 	prepareDirectoriesForCore(m, module)
 
 	components := []filesystem.File{
@@ -24,7 +24,7 @@ func PerformCore(m filesystem.Manager, module, baseModelName string) error {
 		output.ComponentCreated(component.Identifier)
 	}
 
-	if err := service.PerformService(m, baseModelName, module); err != nil {
+	if err := service.Perfom(m, baseModelName, module); err != nil {
 		return err
 	}
 

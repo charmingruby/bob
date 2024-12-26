@@ -8,7 +8,7 @@ import (
 	"github.com/charmingruby/bob/pkg/util"
 )
 
-func PerformService(m filesystem.Manager, repo string, module string) error {
+func Perfom(m filesystem.Manager, repo string, module string) error {
 	prepareDirectoriesForService(m, module)
 
 	sampleActor := module

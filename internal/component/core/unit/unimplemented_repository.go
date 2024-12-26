@@ -3,11 +3,26 @@ package unit
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/component/core/unit/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type unimplementedRepositoryData struct {
+	SourcePath string
+	Module     string
+	Name       string
+	Database   string
+}
+
+func newUnimplementedRepositoryData(sourcePath, module, name, db string) unimplementedRepositoryData {
+	return unimplementedRepositoryData{
+		SourcePath: sourcePath,
+		Module:     base.ModuleFormat(module),
+		Name:       base.PublicNameFormat(name),
+		Database:   base.ModuleFormat(db),
+	}
+}
 
 func MakeUnimplementedRepository(m filesystem.Manager, module, name, database string) filesystem.File {
 	prepareDirectoriesForUnimplementedRepository(m, module, database)
@@ -27,7 +42,7 @@ func MakeUnimplementedRepository(m filesystem.Manager, module, name, database st
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
+			TemplateData: newUnimplementedRepositoryData(m.DependencyPath(), module, name, database),
 			FileName:     name,
 			FileSuffix:   "repository",
 		})

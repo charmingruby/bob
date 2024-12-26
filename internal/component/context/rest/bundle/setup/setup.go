@@ -1,4 +1,4 @@
-package bundle
+package setup
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
@@ -7,7 +7,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformRest(m filesystem.Manager, module string) error {
+func Perform(m filesystem.Manager, module string) error {
 	actioName := "ping"
 
 	components := []filesystem.File{

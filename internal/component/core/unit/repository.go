@@ -3,11 +3,24 @@ package unit
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/component/core/unit/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type repositoryData struct {
+	SourcePath string
+	Module     string
+	Name       string
+}
+
+func newRepositoryData(sourcePath, module, name string) repositoryData {
+	return repositoryData{
+		SourcePath: sourcePath,
+		Module:     base.ModuleFormat(module),
+		Name:       base.PublicNameFormat(name),
+	}
+}
 
 func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForRepository(m, module)
@@ -27,7 +40,7 @@ func MakeRepository(m filesystem.Manager, module, name string) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewDependentPackageData(m.DependencyPath(), module, name),
+			TemplateData: newRepositoryData(m.DependencyPath(), module, name),
 			FileName:     name,
 			FileSuffix:   "repository",
 		})

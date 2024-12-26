@@ -1,9 +1,9 @@
-package postgres_db
+package postgres
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/context/rest/bundle"
-	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres_db/component"
+	"github.com/charmingruby/bob/internal/component/context/rest/bundle/setup"
+	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres/component"
 	"github.com/charmingruby/bob/internal/component/core/bundle/core"
 	"github.com/charmingruby/bob/internal/component/shared/resource/database/postgres"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -21,11 +21,11 @@ func PerformWithPostgresDatabase(m filesystem.Manager, module, modelName, tableN
 		return err
 	}
 
-	if err := core.PerformCore(m, module, modelName); err != nil {
+	if err := core.Perform(m, module, modelName); err != nil {
 		return err
 	}
 
-	if err := bundle.PerformRest(m, module); err != nil {
+	if err := setup.Perform(m, module); err != nil {
 		return err
 	}
 

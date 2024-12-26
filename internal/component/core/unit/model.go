@@ -3,11 +3,20 @@ package unit
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/component/core/unit/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type modelData struct {
+	Name string
+}
+
+func newModelData(name string) modelData {
+	return modelData{
+		Name: base.PublicNameFormat(name),
+	}
+}
 
 func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 	prepareDirectoriesForModel(m, module)
@@ -27,7 +36,7 @@ func MakeModel(m filesystem.Manager, module, name string) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewDefaultData(name),
+			TemplateData: newModelData(name),
 			FileName:     name,
 		})
 }

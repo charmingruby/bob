@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres_db"
+	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres"
 	"github.com/charmingruby/bob/internal/component/context/rest/template/postgres/component"
 	sharedComponent "github.com/charmingruby/bob/internal/component/context/rest/template/shared/component"
 	"github.com/charmingruby/bob/internal/component/shared/library"
@@ -47,7 +47,7 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 		return err
 	}
 
-	if err := postgres_db.PerformWithPostgresDatabase(m, baseModule, baseModelName, baseTableName); err != nil {
+	if err := postgres.PerformWithPostgresDatabase(m, baseModule, baseModelName, baseTableName); err != nil {
 		return err
 	}
 

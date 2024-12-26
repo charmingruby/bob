@@ -1,6 +1,7 @@
 package template
 
 import (
+	"github.com/charmingruby/bob/internal/cli/command/create/template/rest"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -14,8 +15,7 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.AddCommand(
-		RunBase(fs),
-		RunPostgres(fs),
+		rest.SetupCmd(fs),
 	)
 
 	return cmd

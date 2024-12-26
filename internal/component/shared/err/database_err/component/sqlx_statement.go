@@ -1,11 +1,22 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/shared/resource/database/database_err/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type sQLXStatementErrData struct {
+	SourcePath  string
+	SQLDatabase string
+}
+
+func newSQLXStatementErrData(sourcePath, database string) sQLXStatementErrData {
+	return sQLXStatementErrData{
+		SourcePath:  sourcePath,
+		SQLDatabase: base.PrivateNameFormat(database),
+	}
+}
 
 func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
 	template := "error/database/sql/statement"
@@ -24,7 +35,7 @@ func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewSQLXStatementErrData(m.DependencyPath(), "postgres"),
+			TemplateData: newSQLXStatementErrData(m.DependencyPath(), "postgres"),
 			FileName:     "sqlx_statement",
 			FileSuffix:   "err",
 		})

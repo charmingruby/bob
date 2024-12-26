@@ -3,11 +3,26 @@ package component
 import (
 	"fmt"
 
-	"github.com/charmingruby/bob/internal/component/shared/resource/database/postgres/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type postgresRepositoryData struct {
+	Module         string
+	SourcePath     string
+	LowerCaseModel string
+	UpperCaseModel string
+}
+
+func newPostgresRepositoryData(sourcePath, module, model string) postgresRepositoryData {
+	return postgresRepositoryData{
+		Module:         base.ModuleFormat(module),
+		SourcePath:     sourcePath,
+		LowerCaseModel: base.PrivateNameFormat(model),
+		UpperCaseModel: base.PublicNameFormat(model),
+	}
+}
 
 func MakePostgresRepository(m filesystem.Manager, module, model string) filesystem.File {
 	prepareDirectoriesForRepository(m, module, definition.POSTGRES_PACKAGE)
@@ -25,7 +40,7 @@ func MakePostgresRepository(m filesystem.Manager, module, model string) filesyst
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewPostgresRepositoryData(m.DependencyPath(), module, model),
+			TemplateData: newPostgresRepositoryData(m.DependencyPath(), module, model),
 			FileName:     model,
 			FileSuffix:   "repository",
 		})

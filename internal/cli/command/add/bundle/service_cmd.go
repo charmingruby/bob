@@ -24,7 +24,7 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := service.PerformService(m, repoName, module); err != nil {
+			if err := service.Perfom(m, repoName, module); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

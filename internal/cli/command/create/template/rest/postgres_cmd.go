@@ -1,4 +1,4 @@
-package template
+package rest
 
 import (
 	"github.com/charmingruby/bob/internal/cli/input"

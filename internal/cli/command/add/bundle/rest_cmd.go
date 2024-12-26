@@ -3,7 +3,7 @@ package bundle
 import (
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/context/rest/bundle"
+	"github.com/charmingruby/bob/internal/component/context/rest/bundle/setup"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -23,7 +23,7 @@ func RunRest(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := bundle.PerformRest(m, module); err != nil {
+			if err := setup.Perform(m, module); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

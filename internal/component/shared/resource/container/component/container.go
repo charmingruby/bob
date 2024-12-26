@@ -1,11 +1,22 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/shared/resource/container/data"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type containerData struct {
+	GoVersion string
+}
+
+func newContainerData(
+	goVersion string,
+) containerData {
+	return containerData{
+		GoVersion: goVersion,
+	}
+}
 
 func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
 	template := "resource/container/container"
@@ -22,7 +33,7 @@ func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewContainerData(goVersion),
+			TemplateData: newContainerData(goVersion),
 			FileName:     "Dockerfile",
 			Extension:    definition.NO_EXTENSION,
 		})

@@ -24,7 +24,7 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := core.PerformCore(m, module, modelName); err != nil {
+			if err := core.Perform(m, module, modelName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 

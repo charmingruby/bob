@@ -1,10 +1,27 @@
 package component
 
 import (
-	"github.com/charmingruby/bob/internal/component/context/rest/template/postgres/data"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
+
+type entryData struct {
+	RootPath                string
+	Module                  string
+	UpperCaseRepositoryName string
+	LowerCaseRepositoryName string
+}
+
+func newEntryData(
+	rootPath, module, repositoryName string,
+) entryData {
+	return entryData{
+		RootPath:                rootPath,
+		Module:                  module,
+		UpperCaseRepositoryName: base.PublicNameFormat(repositoryName),
+		LowerCaseRepositoryName: base.PrivateNameFormat(repositoryName),
+	}
+}
 
 func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.File {
 	app := "api"
@@ -25,7 +42,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: data.NewEntryData(m.RootPath(), module, repositoryModel),
+			TemplateData: newEntryData(m.RootPath(), module, repositoryModel),
 			FileName:     "main",
 		})
 }
