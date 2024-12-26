@@ -30,14 +30,14 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 
 	template := "setup/scaffold/template/base/entry"
 
-	directory := m.EntryDirectory(app)
+	directory := m.ExecutableDirectory(app)
 
 	resource := "exec"
 
 	content := "application entry point"
 
 	return base.New(base.ComponentInput{
-		Identifier:           base.BuildNonModuleIdentifier(resource, content, m.EntryDirectory(app)),
+		Identifier:           base.BuildNonModuleIdentifier(resource, content, m.ExecutableDirectory(app)),
 		DestinationDirectory: directory,
 	}).Componetize(
 		base.ComponetizeInput{

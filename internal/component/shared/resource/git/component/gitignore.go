@@ -9,7 +9,7 @@ import (
 func MakeGitIgnore(m filesystem.Manager) filesystem.File {
 	template := "resource/git/gitignore"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "git"
 

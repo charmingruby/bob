@@ -9,7 +9,7 @@ import (
 func MakeAir(m filesystem.Manager) filesystem.File {
 	template := "library/air"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "air"
 

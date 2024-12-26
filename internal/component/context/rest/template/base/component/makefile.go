@@ -9,7 +9,7 @@ import (
 func MakeMakefile(m filesystem.Manager) filesystem.File {
 	template := "setup/scaffold/template/base/makefile"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "script"
 

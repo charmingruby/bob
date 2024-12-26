@@ -9,7 +9,7 @@ import (
 func MakeEnvironmentExample(m filesystem.Manager) filesystem.File {
 	template := "setup/scaffold/template/base/environment_example"
 
-	directory := m.RootDirectory
+	directory := m.MainDirectory()
 
 	resource := "env"
 

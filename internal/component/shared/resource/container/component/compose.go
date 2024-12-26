@@ -9,7 +9,7 @@ import (
 func MakeCompose(m filesystem.Manager) filesystem.File {
 	template := "resource/container/raw_compose"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "docker"
 

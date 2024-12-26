@@ -30,7 +30,7 @@ func MakeEntry(m filesystem.Manager, module, repositoryModel string) filesystem.
 
 	template := "setup/scaffold/template/postgres/entry"
 
-	directory := m.EntryDirectory(app)
+	directory := m.ExecutableDirectory(app)
 
 	resource := "exec"
 

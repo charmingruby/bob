@@ -22,7 +22,7 @@ func newGoModData(
 func MakeGoMod(m filesystem.Manager, goVersion string) filesystem.File {
 	template := "setup/scaffold/go_mod"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "go"
 

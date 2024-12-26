@@ -9,7 +9,7 @@ import (
 func MakeComposeWithPostgres(m filesystem.Manager) filesystem.File {
 	template := "resource/container/compose_with_pg"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "docker"
 

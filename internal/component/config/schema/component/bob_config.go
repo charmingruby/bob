@@ -9,7 +9,7 @@ import (
 func MakeBobConfig(m filesystem.Manager) filesystem.File {
 	template := "setup/configure/bob_config"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	content := "bob config file"
 

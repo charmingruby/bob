@@ -21,7 +21,7 @@ func newContainerData(
 func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
 	template := "resource/container/container"
 
-	destination := m.RootDirectory
+	destination := m.MainDirectory()
 
 	resource := "docker"
 

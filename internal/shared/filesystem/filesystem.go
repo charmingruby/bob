@@ -1,8 +1,6 @@
 package filesystem
 
 import (
-	"fmt"
-
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/shared/definition"
 )
@@ -16,7 +14,6 @@ type Manager struct {
 }
 
 func New(config *config.Configuration) Manager {
-
 	var sourceDirectory = config.BaseConfiguration.RootDir + "/" + definition.SOURCE_DIR
 	var libraryDirectory = config.BaseConfiguration.RootDir + "/" + definition.LIB_DIR
 
@@ -38,7 +35,7 @@ func (m *Manager) MainDirectory() string {
 	return m.RootDirectory
 }
 
-func (m *Manager) EntryDirectory(project string) string {
+func (m *Manager) ExecutableDirectory(project string) string {
 	return m.MainDirectory() + "/cmd/" + project
 }
 
@@ -46,18 +43,10 @@ func (m *Manager) ModuleDirectory(module string) string {
 	return m.SourceDirectory + "/" + module
 }
 
-func (m *Manager) AppendToModuleDirectory(module, path string) string {
-	return m.ModuleDirectory(module) + "/" + path
-}
-
 func (m *Manager) ExternalLibraryDirectory(lib string) string {
 	return m.LibraryDirectory + "/" + lib
 }
 
-func (m *Manager) DependencyPath() string {
-	return fmt.Sprintf("%s/%s", m.Data, m.SourceDirectory)
-}
-
-func (m *Manager) RootPath() string {
-	return m.Data
+func (m *Manager) AppendToModuleDirectory(module, path string) string {
+	return m.ModuleDirectory(module) + "/" + path
 }
