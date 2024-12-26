@@ -3,6 +3,8 @@ package model
 import (
 	"encoding/json"
 	"time"
+
+	"github.com/oklog/ulid/v2"
 )
 
 type {{ .Name }} struct {
@@ -19,7 +21,7 @@ type New{{ .Name }}Input struct {
 
 func New{{ .Name }}(in New{{ .Name }}Input) *{{ .Name }} {
 	return &{{ .Name }}{
-		ID:        "id",
+		ID:        ulid.Make().String(),
 		Name:      in.Name,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
