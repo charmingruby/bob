@@ -1,12 +1,11 @@
 package schema
 
 import (
-	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/config/schema/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func Perform() error {
+func Perform() (filesystem.File, error) {
 	manager := filesystem.Manager{
 		ProjectName:      "bob-project",
 		Data:             "github.com/your-user",
@@ -18,10 +17,8 @@ func Perform() error {
 	component := component.MakeBobConfig(manager)
 
 	if err := manager.GenerateFile(component); err != nil {
-		return err
+		return filesystem.File{}, err
 	}
 
-	output.ComponentCreated(component.Identifier)
-
-	return nil
+	return component, nil
 }

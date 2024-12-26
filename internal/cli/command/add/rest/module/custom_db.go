@@ -25,8 +25,13 @@ func RunCustomDB(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := custom_db.Perform(m, module, modelName, database); err != nil {
+			components, err := custom_db.Perform(m, module, modelName, database)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("custom-db module")

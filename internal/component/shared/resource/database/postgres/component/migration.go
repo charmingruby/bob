@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
@@ -27,20 +26,20 @@ const (
 	baseDownSQL = `DROP TABLE IF EXISTS %s;`
 )
 
-func RunMigration(m filesystem.Manager, tableName string) error {
+func RunMigration(m filesystem.Manager, tableName string) ([]filesystem.File, error) {
 	tmpFile, err := os.CreateTemp("", "Makefile")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	defer os.Remove(tmpFile.Name())
 
 	_, err = tmpFile.Write([]byte(migrator.Makefile))
 	if err != nil {
-		return err
+		return nil, err
 	}
 	err = tmpFile.Close()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	migrationNameParam := fmt.Sprintf("NAME=%s", tableName)
@@ -52,13 +51,13 @@ func RunMigration(m filesystem.Manager, tableName string) error {
 
 	err = e.Run()
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	migrationsDir := m.MainDirectory() + definition.SQL_MIGRATION
 	files, err := os.ReadDir(migrationsDir)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	var upFile, downFile string
@@ -74,33 +73,34 @@ func RunMigration(m filesystem.Manager, tableName string) error {
 		upSQL := fmt.Sprintf(baseUpSQL, tableName)
 		err = os.WriteFile(upFile, []byte(upSQL), 0644)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
-
-	output.ComponentCreated(
-		base.BuildNonModuleIdentifier(
-			"migration",
-			fmt.Sprintf("%s up migration", tableName),
-			migrationsDir,
-		),
-	)
 
 	if downFile != "" {
 		downSQL := fmt.Sprintf(baseDownSQL, tableName)
 		err = os.WriteFile(downFile, []byte(downSQL), 0644)
 		if err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	output.ComponentCreated(
-		base.BuildNonModuleIdentifier(
-			"migration",
-			fmt.Sprintf("%s down migration", tableName),
-			migrationsDir,
-		),
-	)
+	components := []filesystem.File{
+		{
+			Identifier: base.BuildNonModuleIdentifier(
+				"migration",
+				fmt.Sprintf("%s down migration", tableName),
+				migrationsDir,
+			),
+		},
+		{
+			Identifier: base.BuildNonModuleIdentifier(
+				"migration",
+				fmt.Sprintf("%s up migration", tableName),
+				migrationsDir,
+			),
+		},
+	}
 
-	return nil
+	return components, nil
 }

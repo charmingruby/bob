@@ -26,8 +26,13 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.PerformRepository(m, module, modelName, tableName, parsedNeedDependencies); err != nil {
+			components, err := postgres.PerformRepository(m, module, modelName, tableName, parsedNeedDependencies)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("postgres repository")

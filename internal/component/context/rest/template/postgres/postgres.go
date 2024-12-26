@@ -15,7 +15,7 @@ var (
 	baseModelName = "example"
 )
 
-func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
+func PerformWithPostgres(m filesystem.Manager, goVersion string) ([]filesystem.File, error) {
 	prepareDirectoriesForScaffold(m)
 
 	baseTableName := "examples"
@@ -34,15 +34,18 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) error {
 
 	for _, c := range components {
 		if err := m.GenerateFile(c); err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	if err := postgres.Perform(m, baseModule, baseModelName, baseTableName); err != nil {
-		return err
+	postgresComponents, err := postgres.Perform(m, baseModule, baseModelName, baseTableName)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	allComponents := append(components, postgresComponents...)
+
+	return allComponents, nil
 }
 
 func prepareDirectoriesForScaffold(m filesystem.Manager) {

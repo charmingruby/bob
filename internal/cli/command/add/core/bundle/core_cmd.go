@@ -24,8 +24,13 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := core.Perform(m, module, modelName); err != nil {
+			components, err := core.Perform(m, module, modelName)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("core bundle")

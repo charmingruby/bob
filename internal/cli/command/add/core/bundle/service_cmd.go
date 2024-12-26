@@ -24,8 +24,13 @@ func RunService(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := service.Perfom(m, repoName, module); err != nil {
+			components, err := service.Perfom(m, repoName, module)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("service bundle")

@@ -25,8 +25,13 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.Perform(m, module, modelName, tableName); err != nil {
+			components, err := postgres.Perform(m, module, modelName, tableName)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("postgres-db module")

@@ -1,14 +1,13 @@
 package service
 
 import (
-	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/core/bundle/service/component"
 	"github.com/charmingruby/bob/internal/component/core/unit"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/charmingruby/bob/pkg/util"
 )
 
-func Perfom(m filesystem.Manager, repo string, module string) error {
+func Perfom(m filesystem.Manager, repo string, module string) ([]filesystem.File, error) {
 	prepareDirectories(m, module)
 
 	sampleActor := module
@@ -26,13 +25,11 @@ func Perfom(m filesystem.Manager, repo string, module string) error {
 
 	for _, component := range components {
 		if err := m.GenerateFile(component); err != nil {
-			return err
+			return nil, err
 		}
-
-		output.ComponentCreated(component.Identifier)
 	}
 
-	return nil
+	return components, nil
 }
 
 func prepareDirectories(m filesystem.Manager, module string) {

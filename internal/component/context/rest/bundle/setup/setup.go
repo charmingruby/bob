@@ -1,13 +1,12 @@
 package setup
 
 import (
-	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/context/rest/component"
 	"github.com/charmingruby/bob/internal/component/shared/library"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func Perform(m filesystem.Manager, module string) error {
+func Perform(m filesystem.Manager, module string) ([]filesystem.File, error) {
 	actionName := "ping"
 
 	components := []filesystem.File{
@@ -40,11 +39,9 @@ func Perform(m filesystem.Manager, module string) error {
 
 	for _, f := range components {
 		if err := m.GenerateFile(f); err != nil {
-			return err
+			return nil, err
 		}
-
-		output.ComponentCreated(f.Identifier)
 	}
 
-	return nil
+	return components, nil
 }

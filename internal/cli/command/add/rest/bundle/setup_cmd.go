@@ -23,8 +23,13 @@ func RunSetup(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := setup.Perform(m, module); err != nil {
+			components, err := setup.Perform(m, module)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("REST bundle")

@@ -13,8 +13,13 @@ func RunDeps(m filesystem.Manager) *cobra.Command {
 		Short: "Generates PostgreSQL dependencies",
 		Long:  "This command generates all necessary dependencies for PostgreSQL",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := postgres.PerformDependencies(m); err != nil {
+			components, err := postgres.PerformDependencies(m)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("postgres dependencies")

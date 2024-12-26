@@ -1,14 +1,13 @@
 package core
 
 import (
-	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/core/bundle/service"
 	"github.com/charmingruby/bob/internal/component/core/unit"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func Perform(m filesystem.Manager, module, baseModelName string) error {
+func Perform(m filesystem.Manager, module, baseModelName string) ([]filesystem.File, error) {
 	prepareDirectories(m, module)
 
 	components := []filesystem.File{
@@ -18,17 +17,18 @@ func Perform(m filesystem.Manager, module, baseModelName string) error {
 
 	for _, component := range components {
 		if err := m.GenerateFile(component); err != nil {
-			return err
+			return nil, err
 		}
-
-		output.ComponentCreated(component.Identifier)
 	}
 
-	if err := service.Perfom(m, baseModelName, module); err != nil {
-		return err
+	serviceComponents, err := service.Perfom(m, baseModelName, module)
+	if err != nil {
+		return nil, err
 	}
 
-	return nil
+	allComponents := append(components, serviceComponents...)
+
+	return allComponents, nil
 }
 
 func prepareDirectories(m filesystem.Manager, module string) {

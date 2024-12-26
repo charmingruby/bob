@@ -21,8 +21,13 @@ func RunPostgres(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.PerformWithPostgres(m, goVersion); err != nil {
+			components, err := postgres.PerformWithPostgres(m, goVersion)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("postgres template")

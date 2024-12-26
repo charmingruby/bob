@@ -1,35 +1,42 @@
 package postgres
 
 import (
-	"github.com/charmingruby/bob/internal/cli/output"
 	errComponent "github.com/charmingruby/bob/internal/component/shared/err/database_err/component"
 	"github.com/charmingruby/bob/internal/component/shared/resource/database/postgres/component"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func PerformRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) error {
+func PerformRepository(m filesystem.Manager, module, modelName, tableName string, needDeps bool) ([]filesystem.File, error) {
 	repo := component.MakePostgresRepository(m, module, modelName)
 	if err := m.GenerateFile(repo); err != nil {
-		return err
+		return nil, err
 	}
 
-	output.ComponentCreated(repo.Identifier)
+	components := []filesystem.File{repo}
 
 	if tableName != "" {
-		if err := PerformMigration(m, tableName); err != nil {
-			return err
+		migrationComponents, err := PerformMigration(m, tableName)
+		if err != nil {
+			return nil, err
 		}
+
+		components = append(components, migrationComponents...)
 	}
 
 	if needDeps {
-		return PerformDependencies(m)
+		depsComponents, err := PerformDependencies(m)
+		if err != nil {
+			return nil, err
+		}
+
+		components = append(components, depsComponents...)
 	}
 
-	return nil
+	return components, nil
 }
 
-func PerformDependencies(m filesystem.Manager) error {
+func PerformDependencies(m filesystem.Manager) ([]filesystem.File, error) {
 	prepareDirectoriesForDependencies(m)
 
 	components := []filesystem.File{
@@ -40,16 +47,14 @@ func PerformDependencies(m filesystem.Manager) error {
 
 	for _, f := range components {
 		if err := m.GenerateFile(f); err != nil {
-			return err
+			return nil, err
 		}
-
-		output.ComponentCreated(f.Identifier)
 	}
 
-	return nil
+	return components, nil
 }
 
-func PerformMigration(m filesystem.Manager, tableName string) error {
+func PerformMigration(m filesystem.Manager, tableName string) ([]filesystem.File, error) {
 	return component.RunMigration(m, tableName)
 }
 

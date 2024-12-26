@@ -15,7 +15,7 @@ var (
 	baseModelName = "example"
 )
 
-func Perfom(m filesystem.Manager, goVersion, database string) error {
+func Perfom(m filesystem.Manager, goVersion, database string) ([]filesystem.File, error) {
 	prepareDirectoriesForScaffold(m)
 
 	components := []filesystem.File{
@@ -32,11 +32,18 @@ func Perfom(m filesystem.Manager, goVersion, database string) error {
 
 	for _, c := range components {
 		if err := m.GenerateFile(c); err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	return custom_db.Perform(m, baseModule, baseModelName, database)
+	dbComponents, err := custom_db.Perform(m, baseModule, baseModelName, database)
+	if err != nil {
+		return nil, err
+	}
+
+	allComponents := append(components, dbComponents...)
+
+	return allComponents, nil
 }
 
 func prepareDirectoriesForScaffold(m filesystem.Manager) {

@@ -24,8 +24,13 @@ func RunHandler(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := handler.Perform(m, module, actionName); err != nil {
+			components, err := handler.Perform(m, module, actionName)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("REST bundle")

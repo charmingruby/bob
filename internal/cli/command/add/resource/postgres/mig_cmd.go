@@ -22,8 +22,13 @@ func RunMig(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := postgres.PerformMigration(m, tableName); err != nil {
+			components, err := postgres.PerformMigration(m, tableName)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("postgres migration")

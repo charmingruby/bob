@@ -23,8 +23,13 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 				output.ShutdownWithError(err.Error())
 			}
 
-			if err := base.Perform(m, module, baseModelName); err != nil {
+			components, err := base.Perform(m, module, baseModelName)
+			if err != nil {
 				output.ShutdownWithError(err.Error())
+			}
+
+			for _, c := range components {
+				output.ComponentCreated(c.Identifier)
 			}
 
 			output.CommandSuccess("base module")
