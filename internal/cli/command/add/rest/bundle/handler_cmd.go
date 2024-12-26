@@ -15,9 +15,10 @@ func RunHandler(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "handler",
-		Short: "Generates a new REST handler",
-		Long:  "This command generates a new REST handler for setting up a route.",
+		Use:     "handler",
+		Aliases: []string{"hd"},
+		Short:   "Generates a new REST handler (aliases: hd)",
+		Long:    "This command generates a new REST handler for setting up a route.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseHandlerInput(module, actionName); err != nil {
 				output.ShutdownWithError(err.Error())

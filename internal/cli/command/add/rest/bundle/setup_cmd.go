@@ -14,9 +14,10 @@ func RunSetup(m filesystem.Manager) *cobra.Command {
 	)
 
 	cmd := &cobra.Command{
-		Use:   "setup",
-		Short: "Generates a new REST bundle",
-		Long:  "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
+		Use:     "setup",
+		Aliases: []string{"sup"},
+		Short:   "Generates a new REST bundle (aliases: sup)",
+		Long:    "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
 		Run: func(cmd *cobra.Command, args []string) {
 			if err := parseSetupInput(module); err != nil {
 				output.ShutdownWithError(err.Error())
