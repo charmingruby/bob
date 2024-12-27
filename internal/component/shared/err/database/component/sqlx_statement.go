@@ -20,7 +20,7 @@ func newSQLXStatementErrData(sourcePath, database string) sQLXStatementErrData {
 }
 
 func MakeSQLXStatementError(m filesystem.Manager) filesystem.File {
-	template := err.TemplatePath("database_err/sql/statement")
+	template := err.TemplatePath("database/sql/statement")
 
 	destination := definition.CustomErrPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),

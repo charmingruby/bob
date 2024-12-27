@@ -7,15 +7,15 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakePersistenceError(m filesystem.Manager) filesystem.File {
-	template := err.TemplatePath("database_err/persistence")
+func MakeServiceError(m filesystem.Manager) filesystem.File {
+	template := err.TemplatePath("core/service")
 
 	destination := definition.CustomErrPath(
 		m.ModuleDirectory(definition.SHARED_MODULE),
-		[]string{definition.DATABASE_ERR_PACKAGE},
+		[]string{definition.CORE_ERR_PACKAGE},
 	)
 
-	content := "persistence error"
+	content := "service error"
 
 	return base.New(base.ComponentInput{
 		Identifier:           base.BuildIdentifier(definition.SHARED_MODULE, content, destination),
@@ -24,7 +24,7 @@ func MakePersistenceError(m filesystem.Manager) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			FileName:     "persistence",
+			FileName:     "service",
 			FileSuffix:   "err",
 		})
 }

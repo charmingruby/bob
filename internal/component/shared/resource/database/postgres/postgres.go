@@ -1,7 +1,7 @@
 package postgres
 
 import (
-	errComponent "github.com/charmingruby/bob/internal/component/shared/err/database_err/component"
+	errComponent "github.com/charmingruby/bob/internal/component/shared/err/database/component"
 	"github.com/charmingruby/bob/internal/component/shared/resource/database/postgres/component"
 	"github.com/charmingruby/bob/internal/shared/definition"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
