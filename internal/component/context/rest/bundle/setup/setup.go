@@ -7,7 +7,7 @@ import (
 )
 
 func Perform(m filesystem.Manager, module string) ([]filesystem.File, error) {
-	actionName := "ping"
+	actionName := "greeting"
 
 	components := []filesystem.File{
 		library.MakeValidator(m),

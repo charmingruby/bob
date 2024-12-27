@@ -10,8 +10,9 @@ import (
 
 func RunService(m filesystem.Manager) *cobra.Command {
 	var (
-		module      string
-		serviceName string
+		module               string
+		serviceName          string
+		modelToBeManagedName string
 	)
 
 	cmd := &cobra.Command{
@@ -20,11 +21,11 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		Short:   "Generates a new service (aliases: svc)",
 		Long:    "This command generates a new service to build business logic.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseServiceInput(module, serviceName); err != nil {
+			if err := parseServiceInput(module, serviceName, modelToBeManagedName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 
-			service := unit.MakeService(m, module, serviceName)
+			service := unit.MakeService(m, module, serviceName, modelToBeManagedName)
 
 			if err := m.GenerateFile(service); err != nil {
 				output.ShutdownWithError(err.Error())
@@ -36,12 +37,13 @@ func RunService(m filesystem.Manager) *cobra.Command {
 	}
 
 	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-	cmd.Flags().StringVarP(&serviceName, "name", "n", "", "service name")
+	cmd.Flags().StringVarP(&serviceName, "service name", "n", "", "service name")
+	cmd.Flags().StringVarP(&modelToBeManagedName, "model name", "e", "", "model to be managed name")
 
 	return cmd
 }
 
-func parseServiceInput(module, serviceName string) error {
+func parseServiceInput(module, serviceName, modelToBeManagedName string) error {
 	inputs := []input.Arg{
 		{
 			FieldName:  "module",
@@ -53,6 +55,12 @@ func parseServiceInput(module, serviceName string) error {
 			FieldName:  "service name",
 			IsRequired: true,
 			Value:      serviceName,
+			Type:       input.StringType,
+		},
+		{
+			FieldName:  "model name",
+			IsRequired: true,
+			Value:      modelToBeManagedName,
 			Type:       input.StringType,
 		},
 	}

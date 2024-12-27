@@ -25,6 +25,7 @@ const (
 
 	// Errors
 	CUSTOM_ERR_PACKAGE   = "custom_err"
+	CORE_ERR_PACKAGE     = "core_err"
 	DATABASE_ERR_PACKAGE = "database_err"
 	SQL_ERROR_PACKAGE    = "sql_err"
 )

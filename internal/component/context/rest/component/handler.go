@@ -11,16 +11,18 @@ import (
 )
 
 type handlerData struct {
-	SourcePath string
-	Module     string
-	Name       string
+	SourcePath  string
+	Module      string
+	Name        string
+	ServiceName string
 }
 
 func newHandlerData(sourcePath, module, name string) handlerData {
 	return handlerData{
-		SourcePath: sourcePath,
-		Module:     module,
-		Name:       formatter.ToCamelCase(name),
+		SourcePath:  sourcePath,
+		Module:      module,
+		Name:        formatter.ToCamelCase(name),
+		ServiceName: base.PublicNameFormat(name),
 	}
 }
 

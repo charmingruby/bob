@@ -3,6 +3,7 @@ package add
 import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/add/core"
+	"github.com/charmingruby/bob/internal/cli/command/add/resource"
 	"github.com/charmingruby/bob/internal/cli/command/add/rest"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 
@@ -29,6 +30,7 @@ func (c *Command) Setup() {
 
 	cmd.AddCommand(
 		core.SetupCmd(c.fs),
+		resource.SetupCmd(c.fs),
 		rest.SetupCmd(c.fs),
 	)
 

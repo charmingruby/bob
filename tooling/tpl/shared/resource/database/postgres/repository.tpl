@@ -3,8 +3,8 @@ package postgres
 import (
 	"database/sql"
 
-	"{{ .SourcePath }}/shared/custom_err/database"
-	"{{ .SourcePath }}/shared/custom_err/database/sql_err"
+	"{{ .SourcePath }}/shared/custom_err/database_err"
+	"{{ .SourcePath }}/shared/custom_err/database_err/sql_err"
 	"{{ .SourcePath }}/{{ .Module }}/core/model"
 	"github.com/jmoiron/sqlx"
 )
@@ -74,7 +74,7 @@ func (r *{{ .UpperCaseModel }}Repository) Store(model *model.{{ .UpperCaseModel 
 		model.ID,
 		model.Name,
 	); err != nil {
-		return database.NewPersistenceErr(err, "{{ .LowerCaseModel }} store", "postgres")
+		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} store", "postgres")
 	}
 
 	return nil
@@ -92,7 +92,7 @@ func (r *{{ .UpperCaseModel }}Repository) FindByID(id string) (*model.{{ .UpperC
 			return nil, nil
 		}
 
-		return nil, database.NewPersistenceErr(err, "{{ .LowerCaseModel }} find_by_id", "postgres")
+		return nil, database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} find_by_id", "postgres")
 	}
 
 	return &{{ .LowerCaseModel }}, nil
@@ -105,7 +105,7 @@ func (r *{{ .UpperCaseModel }}Repository) Delete(model *model.{{ .UpperCaseModel
 	}
 
 	if _, err := stmt.Exec(model.DeletedAt, model.ID); err != nil {
-		return database.NewPersistenceErr(err, "{{ .LowerCaseModel }} delete", "postgres")
+		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} delete", "postgres")
 	}
 
 	return nil

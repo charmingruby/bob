@@ -18,5 +18,5 @@ func New(r *chi.Mux, service *service.Service) *Endpoint {
 }
 
 func (e *Endpoint) Register() {
-	e.router.Post("/{{ .Module }}/ping", e.makePingHandler())
+	e.router.Post("/{{ .Module }}/greeting", e.makeGreetingHandler())
 }

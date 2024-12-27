@@ -10,21 +10,21 @@ import (
 )
 
 type exchangeData struct {
-	ExchangePackage string
-	Exchange        string
-	Name            string
+	Exchange string
+	Name     string
 }
 
 func newExchangeData(exchange, name string) exchangeData {
 	return exchangeData{
-		ExchangePackage: base.ModuleFormat(exchange),
-		Exchange:        base.PublicNameFormat(exchange),
-		Name:            base.PublicNameFormat(name),
+		Exchange: base.PublicNameFormat(exchange),
+		Name:     base.PublicNameFormat(name),
 	}
 }
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
-	template := rest.TemplatePath("component/exchange")
+	exchangeFile := fmt.Sprintf("%s_exchange", exchange)
+
+	template := rest.TemplatePath("component/" + exchangeFile)
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(module),

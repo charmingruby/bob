@@ -9,35 +9,43 @@ import (
 )
 
 type serviceData struct {
-	Name string
+	ServiceName      string
+	LowerCaseModel   string
+	CapitalizedModel string
+	SourcePath       string
+	Module           string
 }
 
-func newServiceData(name string) serviceData {
+func newServiceData(name, model, sourcePath, module string) serviceData {
 	return serviceData{
-		Name: base.PublicNameFormat(name),
+		ServiceName:      base.PublicNameFormat(name),
+		LowerCaseModel:   base.PrivateNameFormat(model),
+		CapitalizedModel: base.PublicNameFormat(model),
+		SourcePath:       sourcePath,
+		Module:           base.ModuleFormat(module),
 	}
 }
 
-func MakeService(m filesystem.Manager, module, name string) filesystem.File {
+func MakeService(m filesystem.Manager, module, serviceName, modelToBeManaged string) filesystem.File {
 	prepareDirectoriesForService(m, module)
 
 	template := TemplatePath("service")
 
 	destination := definition.CorePath(m.ModuleDirectory(module), []string{definition.SERVICE_PACKAGE})
 
-	content := fmt.Sprintf("%s service", name)
+	content := fmt.Sprintf("%s service", serviceName)
 
 	return base.New(base.ComponentInput{
 		Identifier:           base.BuildIdentifier(module, content, destination),
 		Package:              module,
-		Name:                 name,
+		Name:                 serviceName,
 		Suffix:               "service",
 		DestinationDirectory: destination,
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: newServiceData(name),
-			FileName:     name,
+			TemplateData: newServiceData(serviceName, modelToBeManaged, m.DependencyPath(), module),
+			FileName:     serviceName,
 			FileSuffix:   "service",
 		})
 }

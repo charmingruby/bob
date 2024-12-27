@@ -7,10 +7,8 @@ import (
 	"github.com/charmingruby/bob/pkg/util"
 )
 
-func Perfom(m filesystem.Manager, repo string, module string) ([]filesystem.File, error) {
+func Perfom(m filesystem.Manager, repo string, module, serviceName, modelToBeManagedName string) ([]filesystem.File, error) {
 	prepareDirectories(m, module)
-
-	sampleActor := module
 
 	registry := util.Ternary[filesystem.File](
 		repo == "",
@@ -20,7 +18,7 @@ func Perfom(m filesystem.Manager, repo string, module string) ([]filesystem.File
 
 	components := []filesystem.File{
 		registry,
-		unit.MakeService(m, module, sampleActor),
+		unit.MakeService(m, module, serviceName, modelToBeManagedName),
 	}
 
 	for _, component := range components {

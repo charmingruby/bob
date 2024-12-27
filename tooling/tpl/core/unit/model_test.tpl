@@ -13,8 +13,8 @@ func Test_New{{ .Name }}(t *testing.T) {
 		}
 		m := New{{ .Name }}(in)
 
-		assert.Equal(t, m.ID, "id")
-		assert.Equal(t, m.Name, in.Name)
+		assert.NotEmpy(t, m.ID)
+		assert.Equal(t, in.Name, m.Name)
 	})
 }
 

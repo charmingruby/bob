@@ -10,8 +10,10 @@ import (
 
 func RunService(m filesystem.Manager) *cobra.Command {
 	var (
-		module   string
-		repoName string
+		module               string
+		serviceName          string
+		repoName             string
+		modelToBeManagedName string
 	)
 
 	cmd := &cobra.Command{
@@ -20,11 +22,11 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		Short:   "Generates a new service bundle (aliases: svc)",
 		Long:    "This command generates a new service bundle, which includes business logic and the necessary constructors.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseServiceInput(module, repoName); err != nil {
+			if err := parseServiceInput(module, repoName, modelToBeManagedName, serviceName); err != nil {
 				output.ShutdownWithError(err.Error())
 			}
 
-			components, err := service.Perfom(m, repoName, module)
+			components, err := service.Perfom(m, repoName, module, serviceName, modelToBeManagedName)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -37,13 +39,15 @@ func RunService(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
+	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
 	cmd.Flags().StringVarP(&repoName, "repo", "r", "", "repository name dependency")
+	cmd.Flags().StringVarP(&repoName, "model name", "e", "", "model to be managed by service")
+	cmd.Flags().StringVarP(&repoName, "service name", "n", "", "service name")
 
 	return cmd
 }
 
-func parseServiceInput(module, repo string) error {
+func parseServiceInput(module, repo, modelToBeManagedName, serviceName string) error {
 	inputs := []input.Arg{
 		{
 			FieldName:  "module",
@@ -55,6 +59,18 @@ func parseServiceInput(module, repo string) error {
 			FieldName: "repo",
 			Value:     repo,
 			Type:      input.StringType,
+		},
+		{
+			FieldName:  "service name",
+			Value:      serviceName,
+			IsRequired: true,
+			Type:       input.StringType,
+		},
+		{
+			FieldName:  "model name",
+			Value:      modelToBeManagedName,
+			IsRequired: true,
+			Type:       input.StringType,
 		},
 	}
 
