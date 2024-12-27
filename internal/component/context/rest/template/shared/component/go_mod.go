@@ -6,16 +6,16 @@ import (
 )
 
 type goModData struct {
-	RepoURL   string
-	GoVersion string
+	FullProjectName string
+	GoVersion       string
 }
 
 func newGoModData(
-	repoURL, goVersion string,
+	fullProjectName, goVersion string,
 ) goModData {
 	return goModData{
-		RepoURL:   repoURL,
-		GoVersion: goVersion,
+		FullProjectName: fullProjectName,
+		GoVersion:       goVersion,
 	}
 }
 

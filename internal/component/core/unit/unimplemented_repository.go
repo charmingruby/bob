@@ -9,18 +9,20 @@ import (
 )
 
 type unimplementedRepositoryData struct {
-	SourcePath string
-	Module     string
-	Name       string
-	Database   string
+	SourcePath     string
+	Module         string
+	RepositoryName string
+	ModelName      string
+	Database       string
 }
 
 func newUnimplementedRepositoryData(sourcePath, module, name, db string) unimplementedRepositoryData {
 	return unimplementedRepositoryData{
-		SourcePath: sourcePath,
-		Module:     base.ModuleFormat(module),
-		Name:       base.PublicNameFormat(name),
-		Database:   base.ModuleFormat(db),
+		SourcePath:     sourcePath,
+		Module:         base.SnakeCaseFormat(module),
+		RepositoryName: base.CapitalizedFormat(name),
+		ModelName:      base.CapitalizedFormat(name),
+		Database:       base.SnakeCaseFormat(db),
 	}
 }
 

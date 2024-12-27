@@ -6,24 +6,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_New{{ .Name }}(t *testing.T) {
-	t.Run("it should be able to create a new {{ .Name }}", func(t *testing.T) {
-		in := New{{ .Name }}Input{
-			Name: "{{ .Name }}",
+func Test_New{{ .ModelName }}(t *testing.T) {
+	t.Run("it should be able to create a new {{ .ModelName }}", func(t *testing.T) {
+		in := New{{ .ModelName }}Input{
+			Name: "{{ .ModelName }}",
 		}
-		m := New{{ .Name }}(in)
+		m := New{{ .ModelName }}(in)
 
 		assert.NotEmpty(t, m.ID)
 		assert.Equal(t, in.Name, m.Name)
 	})
 }
 
-func Test_{{ .Name }}Marshal(t *testing.T) {
-	t.Run("it should be able to marshal {{ .Name }}", func(t *testing.T) {
-		in := New{{ .Name }}Input{
-			Name: "{{ .Name }}",
+func Test_{{ .ModelName }}Marshal(t *testing.T) {
+	t.Run("it should be able to marshal {{ .ModelName }}", func(t *testing.T) {
+		in := New{{ .ModelName }}Input{
+			Name: "{{ .ModelName }}",
 		}
-		m := New{{ .Name }}(in)
+		m := New{{ .ModelName }}(in)
 
 		data, err := m.MarshalJSON()
 

@@ -18,10 +18,10 @@ type postgresRepositoryData struct {
 
 func newPostgresRepositoryData(sourcePath, module, model string) postgresRepositoryData {
 	return postgresRepositoryData{
-		Module:         base.ModuleFormat(module),
+		Module:         base.SnakeCaseFormat(module),
 		SourcePath:     sourcePath,
-		LowerCaseModel: base.PrivateNameFormat(model),
-		UpperCaseModel: base.PublicNameFormat(model),
+		LowerCaseModel: base.LowerCaseFormat(model),
+		UpperCaseModel: base.CapitalizedFormat(model),
 	}
 }
 

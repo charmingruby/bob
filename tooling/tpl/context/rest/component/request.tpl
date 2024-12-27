@@ -1,5 +1,5 @@
 package request
 
-type {{ .Name }}{{ .Exchange }} struct {
+type {{ .ActionName }}Request struct {
 	Name string `json:"name" validate:"required"`
 }

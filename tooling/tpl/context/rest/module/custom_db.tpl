@@ -9,7 +9,7 @@ import (
 
 func NewService() *service.Service {
 	return service.New(service.Input{
-		{{ .UpperCaseRepository }}Repository: {{ .Database }}.New{{ .UpperCaseRepository }}Repository(),
+		{{ .CapitalizedRepositoryName }}Repository: {{ .Database }}.New{{ .CapitalizedRepositoryName }}Repository(),
 	})
 }
 

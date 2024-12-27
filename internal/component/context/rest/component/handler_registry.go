@@ -15,7 +15,7 @@ type restRegistryData struct {
 
 func newRestRegistryData(module, sourcePath string) restRegistryData {
 	return restRegistryData{
-		Module:     base.ModuleFormat(module),
+		Module:     base.SnakeCaseFormat(module),
 		SourcePath: sourcePath,
 	}
 }

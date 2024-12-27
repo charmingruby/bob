@@ -9,13 +9,13 @@ import (
 )
 
 func NewService(db *sqlx.DB) (*service.Service, error) {
-	{{ .LowerCaseRepository }}Repo, err := postgres.New{{ .UpperCaseRepository }}Repository(db)
+	{{ .LowerCaseRepositoryName }}Repo, err := postgres.New{{ .CapitalizedRepositoryName }}Repository(db)
 	if err != nil {
 		return nil, err
 	}
 	
 	return service.New(service.Input{
-		{{ .UpperCaseRepository }}Repository: {{ .LowerCaseRepository }}Repo,
+		{{ .CapitalizedRepositoryName }}Repository: {{ .LowerCaseRepositoryName }}Repo,
 	}), nil	
 }
 

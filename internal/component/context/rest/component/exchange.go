@@ -10,21 +10,17 @@ import (
 )
 
 type exchangeData struct {
-	Exchange string
-	Name     string
+	ActionName string
 }
 
-func newExchangeData(exchange, name string) exchangeData {
+func newExchangeData(name string) exchangeData {
 	return exchangeData{
-		Exchange: base.PublicNameFormat(exchange),
-		Name:     base.PublicNameFormat(name),
+		ActionName: base.CapitalizedFormat(name),
 	}
 }
 
 func makeExchange(m filesystem.Manager, module, name, exchange string) filesystem.File {
-	exchangeFile := fmt.Sprintf("%s_exchange", exchange)
-
-	template := rest.TemplatePath("component/" + exchangeFile)
+	template := rest.TemplatePath("component/" + exchange)
 
 	destination := definition.TransportPath(
 		m.ModuleDirectory(module),
@@ -43,7 +39,7 @@ func makeExchange(m filesystem.Manager, module, name, exchange string) filesyste
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: newExchangeData(exchange, name),
+			TemplateData: newExchangeData(name),
 			FileName:     name,
 			FileSuffix:   exchange,
 			Extension:    definition.GO_EXTENSION,

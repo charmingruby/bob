@@ -2,8 +2,8 @@ package repository
 
 import "{{ .SourcePath }}/{{ .Module }}/core/model"
 
-type {{ .Name }}Repository interface {
-	Store(model *model.{{ .Name }}) error
-	FindByID(id string) (*model.{{ .Name }}, error)
-	Delete(model *model.{{ .Name }}) error
+type {{ .RepositoryName }}Repository interface {
+	Store(model *model.{{ .ModelName }}) error
+	FindByID(id string) (*model.{{ .ModelName }}, error)
+	Delete(model *model.{{ .ModelName }}) error
 }

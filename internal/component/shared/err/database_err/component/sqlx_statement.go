@@ -15,7 +15,7 @@ type sQLXStatementErrData struct {
 func newSQLXStatementErrData(sourcePath, database string) sQLXStatementErrData {
 	return sQLXStatementErrData{
 		SourcePath:  sourcePath,
-		SQLDatabase: base.PrivateNameFormat(database),
+		SQLDatabase: base.LowerCaseFormat(database),
 	}
 }
 

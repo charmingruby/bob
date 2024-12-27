@@ -9,12 +9,12 @@ import (
 )
 
 type modelData struct {
-	Name string
+	ModelName string
 }
 
 func newModelData(name string) modelData {
 	return modelData{
-		Name: base.PublicNameFormat(name),
+		ModelName: base.CapitalizedFormat(name),
 	}
 }
 

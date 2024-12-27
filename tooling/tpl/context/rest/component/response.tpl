@@ -1,5 +1,5 @@
 package response
 
-type {{ .Name }}{{ .Exchange }} struct {
+type {{ .ActionName }}Response struct {
 	Greeting string `json:"greeting"`
 }

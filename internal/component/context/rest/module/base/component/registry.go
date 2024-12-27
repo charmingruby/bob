@@ -16,7 +16,7 @@ type baseModuleData struct {
 func newBaseModuleData(sourcePath, module string) baseModuleData {
 	return baseModuleData{
 		SourcePath: sourcePath,
-		Module:     base.ModuleFormat(module),
+		Module:     base.SnakeCaseFormat(module),
 	}
 }
 

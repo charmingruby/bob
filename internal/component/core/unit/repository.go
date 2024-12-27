@@ -9,16 +9,18 @@ import (
 )
 
 type repositoryData struct {
-	SourcePath string
-	Module     string
-	Name       string
+	SourcePath     string
+	Module         string
+	RepositoryName string
+	ModelName      string
 }
 
 func newRepositoryData(sourcePath, module, name string) repositoryData {
 	return repositoryData{
-		SourcePath: sourcePath,
-		Module:     base.ModuleFormat(module),
-		Name:       base.PublicNameFormat(name),
+		SourcePath:     sourcePath,
+		Module:         base.SnakeCaseFormat(module),
+		RepositoryName: base.CapitalizedFormat(name),
+		ModelName:      base.CapitalizedFormat(name),
 	}
 }
 

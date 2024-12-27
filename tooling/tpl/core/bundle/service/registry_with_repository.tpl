@@ -3,15 +3,15 @@ package service
 import "{{ .SourcePath }}/{{ .Module }}/core/repository"
 
 type Service struct {
-    {{ .PrivateRepositoryName }}Repository repository.{{ .RepositoryName }}Repository
+    {{ .LowerCaseRepositoryName }}Repository repository.{{ .CapitalizedRepositoryName }}Repository
 }
 
 type Input struct {
-    {{ .RepositoryName }}Repository repository.{{ .RepositoryName }}Repository
+    {{ .CapitalizedRepositoryName }}Repository repository.{{ .CapitalizedRepositoryName }}Repository
 }
 
 func New(in Input) *Service {
 	return &Service{
-        {{ .PrivateRepositoryName }}Repository: in.{{ .RepositoryName }}Repository,
+        {{ .LowerCaseRepositoryName }}Repository: in.{{ .CapitalizedRepositoryName }}Repository,
     }
 }

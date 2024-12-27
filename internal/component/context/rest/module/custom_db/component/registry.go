@@ -9,7 +9,7 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-func MakeRegistry(m filesystem.Manager, module, repositoryModel, database string) filesystem.File {
+func MakeRegistry(m filesystem.Manager, module, repositoryName, database string) filesystem.File {
 	prepareDirectoriesForRegistry(m, module)
 
 	template := rest.TemplatePath("module/custom_db")
@@ -29,7 +29,7 @@ func MakeRegistry(m filesystem.Manager, module, repositoryModel, database string
 				m.DependencyPath(),
 				module,
 				database,
-				repositoryModel,
+				repositoryName,
 			),
 			FileName: module,
 		})

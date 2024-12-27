@@ -8,6 +8,8 @@ import (
 )
 
 func MakeServiceError(m filesystem.Manager) filesystem.File {
+	prepareDirectoriesForService(m)
+
 	template := err.TemplatePath("core_err/service")
 
 	destination := definition.CustomErrPath(
@@ -27,4 +29,11 @@ func MakeServiceError(m filesystem.Manager) filesystem.File {
 			FileName:     "service",
 			FileSuffix:   "err",
 		})
+}
+
+func prepareDirectoriesForService(m filesystem.Manager) {
+	m.GenerateNestedDirectories(
+		m.SourceDirectory,
+		[]string{definition.SHARED_MODULE, definition.CUSTOM_ERR_PACKAGE, definition.CORE_ERR_PACKAGE},
+	)
 }

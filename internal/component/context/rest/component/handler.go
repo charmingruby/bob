@@ -22,7 +22,7 @@ func newHandlerData(sourcePath, module, name string) handlerData {
 		SourcePath:  sourcePath,
 		Module:      module,
 		Name:        formatter.ToCamelCase(name),
-		ServiceName: base.PublicNameFormat(name),
+		ServiceName: base.CapitalizedFormat(name),
 	}
 }
 

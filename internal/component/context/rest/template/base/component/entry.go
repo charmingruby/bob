@@ -19,8 +19,8 @@ func newEntryData(
 	return entryData{
 		RootPath:                rootPath,
 		Module:                  module,
-		UpperCaseRepositoryName: base.PublicNameFormat(repositoryName),
-		LowerCaseRepositoryName: base.PrivateNameFormat(repositoryName),
+		UpperCaseRepositoryName: base.CapitalizedFormat(repositoryName),
+		LowerCaseRepositoryName: base.LowerCaseFormat(repositoryName),
 	}
 }
 

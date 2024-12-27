@@ -1,29 +1,30 @@
 package component
 
 import (
+	"github.com/charmingruby/bob/internal/component/core"
 	"github.com/charmingruby/bob/internal/component/core/unit"
 	"github.com/charmingruby/bob/internal/shared/definition/component/base"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
 type serviceRegistryWithRepositoryData struct {
-	SourcePath            string
-	Module                string
-	RepositoryName        string
-	PrivateRepositoryName string
+	SourcePath                string
+	Module                    string
+	CapitalizedRepositoryName string
+	LowerCaseRepositoryName   string
 }
 
 func newServiceRegistryWithRepositoryData(sourcePath, module, name string) serviceRegistryWithRepositoryData {
 	return serviceRegistryWithRepositoryData{
-		SourcePath:            sourcePath,
-		Module:                base.ModuleFormat(module),
-		RepositoryName:        base.PublicNameFormat(name),
-		PrivateRepositoryName: base.PrivateNameFormat(name),
+		SourcePath:                sourcePath,
+		Module:                    base.SnakeCaseFormat(module),
+		CapitalizedRepositoryName: base.CapitalizedFormat(name),
+		LowerCaseRepositoryName:   base.LowerCaseFormat(name),
 	}
 }
 
 func MakeServiceRegistry(m filesystem.Manager, module, name string) filesystem.File {
-	template := "core/bundle/service/registry_with_repository"
+	template := core.TemplatePath("bundle/service/registry_with_repository")
 
 	destination := m.AppendToModuleDirectory(module, "core/service")
 
@@ -40,7 +41,7 @@ func MakeServiceRegistry(m filesystem.Manager, module, name string) filesystem.F
 }
 
 func MakeIndependentServiceRegistry(m filesystem.Manager, module string) filesystem.File {
-	template := "architecture/bundle/service/registry"
+	template := core.TemplatePath("/bundle/service/registry")
 
 	destination := m.AppendToModuleDirectory(module, "core/service")
 

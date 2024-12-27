@@ -18,11 +18,11 @@ type serviceData struct {
 
 func newServiceData(name, model, sourcePath, module string) serviceData {
 	return serviceData{
-		ServiceName:      base.PublicNameFormat(name),
-		LowerCaseModel:   base.PrivateNameFormat(model),
-		CapitalizedModel: base.PublicNameFormat(model),
+		ServiceName:      base.CapitalizedFormat(name),
+		LowerCaseModel:   base.LowerCaseFormat(model),
+		CapitalizedModel: base.CapitalizedFormat(model),
 		SourcePath:       sourcePath,
-		Module:           base.ModuleFormat(module),
+		Module:           base.SnakeCaseFormat(module),
 	}
 }
 

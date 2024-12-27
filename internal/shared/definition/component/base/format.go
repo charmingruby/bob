@@ -2,18 +2,18 @@ package base
 
 import "github.com/charmingruby/bob/pkg/formatter"
 
-func PublicNameFormat(name string) string {
+func CapitalizedFormat(name string) string {
 	return formatter.ToCamelCase(name)
 }
 
-func ModuleFormat(module string) string {
+func SnakeCaseFormat(module string) string {
 	return formatter.ToSnakeCase(module)
 }
 
-func PrivateNameFormat(name string) string {
+func LowerCaseFormat(name string) string {
 	return formatter.ToCamelLowerCase(name)
 }
 
-func PackagePathFormat(path string) string {
+func CamelCaseFormat(path string) string {
 	return formatter.ToCamelLowerCase(path)
 }
