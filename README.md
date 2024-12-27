@@ -24,34 +24,36 @@ The philosophy of bob is to be able to grow into different contexts in an opinio
    curl -sSL https://raw.githubusercontent.com/charmingruby/bob/main/install.sh | bash
    ```
 
-2. Create a configuration file in the directory where you want to create a project:
+2. Create a configuration file:
    ```shell
    bob init
    ```
 
-3. Create a project:
+3. Optionally, you can change the configs for your project;
+
+4. Create a project:
    ```shell
    bob create template rest base -database dynamo
    ```
 
-4. Run go mod tidy to ensure all dependencies are installed:
+5. Run go mod tidy to ensure all dependencies are installed:
    ```shell
    go mod tidy
    ```
 
-5. Set the environment variables, based on .env.example
+6. Set the environment variables, based on .env.example
 
-6. Run docker compose:
+7. Run docker compose:
    ```shell
    docker compose up -d
    ```
 
-7. Run application:
+8. Run application:
    ```shell
    go run ./cmd/api/main.go
    ```
 
-8. Call the api:
+9. Call the api:
    ```shell
    curl -X POST http://localhost:3000/example/ping -H "Content-Type: application/json" -d '{"name": "bob"}'
    ```
