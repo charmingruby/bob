@@ -49,5 +49,5 @@
     └── shared
         ├── helper
         ├── integration -> e.g.: actions in case of test modules needs integrated actions
-        └── container
+        └── docker
 ```

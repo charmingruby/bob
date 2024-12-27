@@ -13,7 +13,7 @@ func Test_New{{ .Name }}(t *testing.T) {
 		}
 		m := New{{ .Name }}(in)
 
-		assert.NotEmpy(t, m.ID)
+		assert.NotEmpty(t, m.ID)
 		assert.Equal(t, in.Name, m.Name)
 	})
 }

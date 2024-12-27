@@ -5,7 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/component/context/rest/template/postgres/component"
 	sharedComponent "github.com/charmingruby/bob/internal/component/context/rest/template/shared/component"
 	"github.com/charmingruby/bob/internal/component/shared/library"
-	"github.com/charmingruby/bob/internal/component/shared/resource/container"
+	"github.com/charmingruby/bob/internal/component/shared/resource/docker"
 	"github.com/charmingruby/bob/internal/component/shared/resource/git"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
@@ -26,8 +26,8 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) ([]filesystem.F
 		component.MakeConfig(m),
 		component.MakeEnvironmentExample(m),
 		component.MakeMakefile(m),
-		container.MakeContainer(m, goVersion),
-		container.MakeComposeWithPostgres(m),
+		docker.MakeContainer(m, goVersion),
+		docker.MakeComposeWithPostgres(m),
 		git.MakeGitIgnore(m),
 		library.MakeAir(m),
 	}

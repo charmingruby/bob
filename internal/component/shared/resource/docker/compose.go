@@ -1,4 +1,4 @@
-package container
+package docker
 
 import (
 	"github.com/charmingruby/bob/internal/shared/definition"
@@ -6,26 +6,14 @@ import (
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 
-type containerData struct {
-	GoVersion string
-}
-
-func newContainerData(
-	goVersion string,
-) containerData {
-	return containerData{
-		GoVersion: goVersion,
-	}
-}
-
-func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
-	template := TemplatePath("container")
+func MakeCompose(m filesystem.Manager) filesystem.File {
+	template := TemplatePath("raw_compose")
 
 	destination := m.MainDirectory()
 
 	resource := "docker"
 
-	content := "dockerfile"
+	content := "docker-compose with api"
 
 	return base.New(base.ComponentInput{
 		Identifier:           base.BuildNonModuleIdentifier(resource, content, destination),
@@ -33,8 +21,7 @@ func MakeContainer(m filesystem.Manager, goVersion string) filesystem.File {
 	}).Componetize(
 		base.ComponetizeInput{
 			TemplateName: template,
-			TemplateData: newContainerData(goVersion),
-			FileName:     "Dockerfile",
-			Extension:    definition.NO_EXTENSION,
+			FileName:     "docker-compose",
+			Extension:    definition.YML_EXTENSION,
 		})
 }
