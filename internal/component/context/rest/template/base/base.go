@@ -1,6 +1,7 @@
 package base
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest/bundle/health_check"
 	"github.com/charmingruby/bob/internal/component/context/rest/module/custom_db"
 	"github.com/charmingruby/bob/internal/component/context/rest/template/base/component"
 	sharedComponent "github.com/charmingruby/bob/internal/component/context/rest/template/shared/component"
@@ -41,7 +42,13 @@ func Perfom(m filesystem.Manager, goVersion, database string) ([]filesystem.File
 		return nil, err
 	}
 
+	healthCheckComponents, err := health_check.Perform(m)
+	if err != nil {
+		return nil, err
+	}
+
 	allComponents := append(components, dbComponents...)
+	allComponents = append(allComponents, healthCheckComponents...)
 
 	return allComponents, nil
 }

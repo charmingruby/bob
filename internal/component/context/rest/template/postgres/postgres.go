@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"github.com/charmingruby/bob/internal/component/context/rest/bundle/health_check"
 	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres"
 	"github.com/charmingruby/bob/internal/component/context/rest/template/postgres/component"
 	sharedComponent "github.com/charmingruby/bob/internal/component/context/rest/template/shared/component"
@@ -43,7 +44,13 @@ func PerformWithPostgres(m filesystem.Manager, goVersion string) ([]filesystem.F
 		return nil, err
 	}
 
+	healthCheckComponents, err := health_check.Perform(m)
+	if err != nil {
+		return nil, err
+	}
+
 	allComponents := append(components, postgresComponents...)
+	allComponents = append(allComponents, healthCheckComponents...)
 
 	return allComponents, nil
 }

@@ -15,6 +15,7 @@ import (
 	"{{ .RootPath }}/internal/{{ .Module }}"
 	"{{ .RootPath }}/internal/shared/transport/rest"
 	"{{ .RootPath }}/pkg/postgres"
+	"{{ .RootPath }}/internal/shared/transport/rest/endpoint"
 	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
@@ -95,4 +96,6 @@ func initModules(r *chi.Mux, db *sqlx.DB) {
 	}
 	
 	{{ .Module }}.NewHTTPHandler(r, {{ .Module }}Svc)
+
+	endpoint.New(r).Register()
 }

@@ -14,6 +14,7 @@ import (
 	"{{ .RootPath }}/config"
 	"{{ .RootPath }}/internal/{{ .Module }}"
 	"{{ .RootPath }}/internal/shared/transport/rest"
+	"{{ .RootPath }}/internal/shared/transport/rest/endpoint"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 )
@@ -73,6 +74,8 @@ func main() {
 }
 
 func initModules(r *chi.Mux) {
+	endpoint.New(r).Register()
+
 	{{ .Module }}Svc := {{ .Module }}.NewService()
 	{{ .Module }}.NewHTTPHandler(r, {{ .Module }}Svc)
 }
