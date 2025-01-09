@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/core/bundle/core"
@@ -9,22 +10,33 @@ import (
 )
 
 func RunCore(m filesystem.Manager) *cobra.Command {
-	var (
-		module    string
-		modelName string
-	)
-
 	cmd := &cobra.Command{
 		Use:     "core",
 		Aliases: []string{"cr"},
 		Short:   "Generates a new core bundle (aliases: cr)",
 		Long:    "This command generates a new core bundle, which includes domain rules, models, contracts, and other core components.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseCoreInput(module, modelName); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "ModelName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Base model name")},
+					Validate: survey.Required,
+				},
 			}
 
-			components, err := core.Perform(m, module, modelName)
+			answers := struct {
+				Module    string
+				ModelName string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			components, err := core.Perform(m, answers.Module, answers.ModelName)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -37,27 +49,5 @@ func RunCore(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "base model name")
-
 	return cmd
-}
-
-func parseCoreInput(module, modelName string) error {
-	inputs := []input.Arg{
-		{
-			FieldName:  "module",
-			IsRequired: true,
-			Value:      module,
-			Type:       input.StringType,
-		},
-		{
-			FieldName:  "model name",
-			IsRequired: true,
-			Value:      modelName,
-			Type:       input.StringType,
-		},
-	}
-
-	return input.Validate(inputs)
 }

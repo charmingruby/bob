@@ -1,6 +1,7 @@
 package unit
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/core/unit"
@@ -9,21 +10,32 @@ import (
 )
 
 func RunRepo(m filesystem.Manager) *cobra.Command {
-	var (
-		module    string
-		modelName string
-	)
-
 	cmd := &cobra.Command{
 		Use:   "repo",
 		Short: "Generates a new repository contract",
 		Long:  "This command generates a new repository contract for the specified module and model.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseRepoInput(module, modelName); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "ModelName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Model name")},
+					Validate: survey.Required,
+				},
 			}
 
-			repository := unit.MakeRepository(m, module, modelName)
+			answers := struct {
+				Module    string
+				ModelName string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			repository := unit.MakeRepository(m, answers.Module, answers.ModelName)
 
 			if err := m.GenerateFile(repository); err != nil {
 				output.ShutdownWithError(err.Error())
@@ -34,27 +46,5 @@ func RunRepo(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module name")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model to be managed by the repository")
-
 	return cmd
-}
-
-func parseRepoInput(module, modelName string) error {
-	inputs := []input.Arg{
-		{
-			FieldName:  "module",
-			IsRequired: true,
-			Value:      module,
-			Type:       input.StringType,
-		},
-		{
-			FieldName:  "model name",
-			IsRequired: true,
-			Value:      modelName,
-			Type:       input.StringType,
-		},
-	}
-
-	return input.Validate(inputs)
 }

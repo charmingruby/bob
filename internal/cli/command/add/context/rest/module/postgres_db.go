@@ -1,6 +1,7 @@
 package module
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/context/rest/module/postgres"
@@ -9,23 +10,39 @@ import (
 )
 
 func RunPostgresDB(m filesystem.Manager) *cobra.Command {
-	var (
-		module    string
-		modelName string
-		tableName string
-	)
-
 	cmd := &cobra.Command{
 		Use:     "postgres-db",
 		Aliases: []string{"pg-db"},
 		Short:   "Generates a module with PostgreSQL database (aliases: pg-db)",
 		Long:    "This command generates a module with a PostgreSQL database implementation.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parsePostgresDBInput(module, modelName, tableName); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "ModelName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Base model name")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "TableName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Table name")},
+					Validate: survey.Required,
+				},
 			}
 
-			components, err := postgres.Perform(m, module, modelName, tableName)
+			answers := struct {
+				Module    string
+				ModelName string
+				TableName string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			components, err := postgres.Perform(m, answers.Module, answers.ModelName, answers.TableName)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -38,31 +55,5 @@ func RunPostgresDB(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-	cmd.Flags().StringVarP(&modelName, "modelName", "n", "", "base model name")
-	cmd.Flags().StringVarP(&tableName, "tableName", "t", "", "base table name")
-
 	return cmd
-}
-
-func parsePostgresDBInput(module, model, tableName string) error {
-	args := []input.Arg{
-		{
-			FieldName:  "module",
-			Value:      module,
-			IsRequired: true,
-		},
-		{
-			FieldName:  "model name",
-			Value:      model,
-			IsRequired: true,
-		},
-		{
-			FieldName:  "table name",
-			Value:      tableName,
-			IsRequired: true,
-		},
-	}
-
-	return input.Validate(args)
 }

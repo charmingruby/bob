@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/context/rest/template/base"
@@ -10,19 +11,32 @@ import (
 )
 
 func RunBase(m filesystem.Manager) *cobra.Command {
-	var goVersion string
-	var database string
-
 	cmd := &cobra.Command{
 		Use:   "base",
 		Short: "Creates a new project from a base template",
 		Long:  "This command creates a new project using a customizable base persistence layer.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseBaseInput(goVersion, database); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "GoVersion",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Golang version"), Default: "1.23.3"},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "Database",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("database name"), Help: "e.g. postgres, mysql, sqlite"},
+					Validate: survey.Required,
+				},
 			}
 
-			components, err := base.Perfom(m, goVersion, database)
+			answers := struct {
+				GoVersion string
+				Database  string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			components, err := base.Perfom(m, answers.GoVersion, answers.Database)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -35,26 +49,5 @@ func RunBase(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&goVersion, "golang version", "v", "1.23.3", "golang version for setup")
-	cmd.Flags().StringVarP(&database, "database", "d", "", "base database to be implemented")
-
 	return cmd
-}
-
-func parseBaseInput(goVersion, database string) error {
-	args := []input.Arg{
-		{
-			FieldName: "go version",
-			Value:     goVersion,
-			Type:      input.StringType,
-		},
-		{
-			FieldName:  "database",
-			Value:      database,
-			IsRequired: true,
-			Type:       input.StringType,
-		},
-	}
-
-	return input.Validate(args)
 }

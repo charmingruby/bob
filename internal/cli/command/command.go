@@ -3,9 +3,9 @@ package command
 import (
 	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/add"
-	"github.com/charmingruby/bob/internal/cli/command/create"
 	"github.com/charmingruby/bob/internal/cli/command/doc"
 	"github.com/charmingruby/bob/internal/cli/command/initialize"
+	"github.com/charmingruby/bob/internal/cli/command/template"
 
 	"github.com/spf13/cobra"
 )
@@ -31,6 +31,6 @@ func (c *command) Setup(cfgFileExists bool) {
 		return
 	}
 
-	create.New(c.cmd, c.config).Setup()
+	template.New(c.cmd, c.config).Setup()
 	add.New(c.cmd, c.config).Setup()
 }

@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/context/rest/bundle/handler"
@@ -9,22 +10,33 @@ import (
 )
 
 func RunHandler(m filesystem.Manager) *cobra.Command {
-	var (
-		module     string
-		actionName string
-	)
-
 	cmd := &cobra.Command{
 		Use:     "handler",
 		Aliases: []string{"hd"},
 		Short:   "Generates a new REST handler (aliases: hd)",
 		Long:    "This command generates a new REST handler for setting up a route.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseHandlerInput(module, actionName); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "HandlerName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Handler name")},
+					Validate: survey.Required,
+				},
 			}
 
-			components, err := handler.Perform(m, module, actionName)
+			answers := struct {
+				Module      string
+				HandlerName string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			components, err := handler.Perform(m, answers.Module, answers.HandlerName)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -37,27 +49,5 @@ func RunHandler(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-	cmd.Flags().StringVarP(&actionName, "action", "a", "", "action name")
-
 	return cmd
-}
-
-func parseHandlerInput(module, actionName string) error {
-	inputs := []input.Arg{
-		{
-			FieldName:  "module",
-			IsRequired: true,
-			Value:      module,
-			Type:       input.StringType,
-		},
-		{
-			FieldName:  "action",
-			IsRequired: true,
-			Value:      actionName,
-			Type:       input.StringType,
-		},
-	}
-
-	return input.Validate(inputs)
 }

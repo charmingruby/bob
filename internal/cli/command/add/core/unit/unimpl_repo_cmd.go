@@ -1,6 +1,7 @@
 package unit
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/core/unit"
@@ -9,23 +10,39 @@ import (
 )
 
 func RunUnimplRepo(m filesystem.Manager) *cobra.Command {
-	var (
-		module       string
-		modelName    string
-		databaseName string
-	)
-
 	cmd := &cobra.Command{
 		Use:     "unimpl-repo",
 		Aliases: []string{"u-repo"},
 		Short:   "Generates a new unimplemented repository (aliases: u-repo)",
 		Long:    "This command generates a new unimplemented repository for the specified module, model, and database.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseUnimplRepoInput(module, modelName, databaseName); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "ModelName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Model to be managed name")},
+					Validate: survey.Required,
+				},
+				{
+					Name:     "DatabaseName",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Database name")},
+					Validate: survey.Required,
+				},
 			}
 
-			repository := unit.MakeUnimplementedRepository(m, module, modelName, databaseName)
+			answers := struct {
+				Module       string
+				ModelName    string
+				DatabaseName string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			repository := unit.MakeUnimplementedRepository(m, answers.Module, answers.ModelName, answers.DatabaseName)
 
 			if err := m.GenerateFile(repository); err != nil {
 				output.ShutdownWithError(err.Error())
@@ -36,31 +53,5 @@ func RunUnimplRepo(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-	cmd.Flags().StringVarP(&modelName, "model", "n", "", "model to be managed by the repository")
-	cmd.Flags().StringVarP(&databaseName, "database", "d", "", "database that will implement the repository")
-
 	return cmd
-}
-
-func parseUnimplRepoInput(module, modelName, databaseName string) error {
-	args := []input.Arg{
-		{
-			FieldName:  "module",
-			Value:      module,
-			IsRequired: true,
-		},
-		{
-			FieldName:  "model name",
-			Value:      modelName,
-			IsRequired: true,
-		},
-		{
-			FieldName:  "database",
-			Value:      databaseName,
-			IsRequired: true,
-		},
-	}
-
-	return input.Validate(args)
 }

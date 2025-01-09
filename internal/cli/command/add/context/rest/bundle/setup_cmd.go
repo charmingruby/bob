@@ -1,6 +1,7 @@
 package bundle
 
 import (
+	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/component/context/rest/bundle/setup"
@@ -9,21 +10,27 @@ import (
 )
 
 func RunSetup(m filesystem.Manager) *cobra.Command {
-	var (
-		module string
-	)
-
 	cmd := &cobra.Command{
 		Use:     "setup",
 		Aliases: []string{"sup"},
 		Short:   "Generates a new REST bundle (aliases: sup)",
 		Long:    "This command generates a new REST bundle, which includes the necessary components for a RESTful API.",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := parseSetupInput(module); err != nil {
-				output.ShutdownWithError(err.Error())
+			questions := []*survey.Question{
+				{
+					Name:     "Module",
+					Prompt:   &survey.Input{Message: input.EnterValueMessage("Module")},
+					Validate: survey.Required,
+				},
 			}
 
-			components, err := setup.Perform(m, module)
+			answers := struct {
+				Module string
+			}{}
+
+			survey.Ask(questions, &answers)
+
+			components, err := setup.Perform(m, answers.Module)
 			if err != nil {
 				output.ShutdownWithError(err.Error())
 			}
@@ -36,20 +43,5 @@ func RunSetup(m filesystem.Manager) *cobra.Command {
 		},
 	}
 
-	cmd.Flags().StringVarP(&module, "module", "m", "", "module")
-
 	return cmd
-}
-
-func parseSetupInput(module string) error {
-	inputs := []input.Arg{
-		{
-			FieldName:  "module",
-			IsRequired: true,
-			Value:      module,
-			Type:       input.StringType,
-		},
-	}
-
-	return input.Validate(inputs)
 }

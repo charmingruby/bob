@@ -11,27 +11,27 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "bundle",
 		Aliases: []string{"bd"},
-		Short:   "Generates bundles (aliases: bd)",
-		Long:    "This command generates various units, which are individual business rules and components.",
+		Short:   "Generates module sets (aliases: bd)",
+		Long:    "This command generates various bundles, which are simpler sets of components.",
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "structure"
 
-			coreName := "Model"
-			serviceName := "Service with entrypoint"
+			handlerName := "New handler"
+			setupName := "Setup context components"
 
 			var templateChoice string
 			prompt := &survey.Select{
 				Message: input.ChooseSectionMessage(section),
-				Options: []string{coreName, serviceName},
+				Options: []string{handlerName, setupName},
 			}
 
 			survey.AskOne(prompt, &templateChoice)
 
 			switch templateChoice {
-			case coreName:
-				RunCore(fs).Execute()
-			case serviceName:
-				RunService(fs).Execute()
+			case handlerName:
+				RunHandler(fs).Execute()
+			case setupName:
+				RunSetup(fs).Execute()
 			}
 		},
 	}

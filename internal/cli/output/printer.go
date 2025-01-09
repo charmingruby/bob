@@ -14,6 +14,6 @@ var (
 	greenBoldPrinter          = color.New(color.Bold, color.FgGreen).PrintFunc()
 	greenBoldUnderlinePrinter = color.New(color.Bold, color.Underline, color.FgGreen).PrintFunc()
 
-	orangeBoldPrinter = color.New(color.Bold, color.FgYellow).PrintFunc()
-	orangePrinter     = color.New(color.FgYellow).PrintFunc()
+	orangeBoldPrinter          = color.New(color.Bold, color.FgYellow).PrintFunc()
+	orangeBoldUnderlinePrinter = color.New(color.Bold, color.Underline, color.FgYellow).PrintFunc()
 )

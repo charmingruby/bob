@@ -1,4 +1,4 @@
-package bundle
+package rest
 
 import (
 	"github.com/AlecAivazis/survey/v2"
@@ -9,29 +9,28 @@ import (
 
 func SetupCmd(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "bundle",
-		Aliases: []string{"bd"},
-		Short:   "Generates bundles (aliases: bd)",
-		Long:    "This command generates various units, which are individual business rules and components.",
+		Use:     "rest",
+		Aliases: []string{"rs"},
+		Short:   "Generates REST API project from templates (aliases: rs)",
+		Long:    "This command provides various template resources to generate a REST API project.",
 		Run: func(cmd *cobra.Command, args []string) {
-			section := "structure"
+			section := "template options"
 
-			coreName := "Model"
-			serviceName := "Service with entrypoint"
+			baseTemplateName := "Base"
+			postgresTemplateName := "Postgres"
 
 			var templateChoice string
 			prompt := &survey.Select{
 				Message: input.ChooseSectionMessage(section),
-				Options: []string{coreName, serviceName},
+				Options: []string{baseTemplateName, postgresTemplateName},
 			}
-
 			survey.AskOne(prompt, &templateChoice)
 
 			switch templateChoice {
-			case coreName:
-				RunCore(fs).Execute()
-			case serviceName:
-				RunService(fs).Execute()
+			case baseTemplateName:
+				RunBase(fs).Execute()
+			case postgresTemplateName:
+				RunPostgres(fs).Execute()
 			}
 		},
 	}
