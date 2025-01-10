@@ -1,7 +1,6 @@
 package model
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/oklog/ulid/v2"
@@ -29,8 +28,13 @@ func New{{ .ModelName }}(in New{{ .ModelName }}Input) *{{ .ModelName }} {
 	}
 }
 
-func (m *{{ .ModelName }}) MarshalJSON() ([]byte, error) {
-	copy := *m
-
-	return json.Marshal(copy)
+func From{{ .ModelName }}(in {{ .ModelName }}) *{{ .ModelName }} {
+    return &{{ .ModelName }}{
+        ID:        in.ID,
+        Name:      in.Name,
+        CreatedAt: in.CreatedAt,
+        UpdatedAt: in.UpdatedAt,
+        DeletedAt: in.DeletedAt,
+    }
 }
+
