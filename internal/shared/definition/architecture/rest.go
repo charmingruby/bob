@@ -1,7 +1,7 @@
 package architecture
 
 const (
-	PROPOSAL = `
+	REST_ARCHITECTURE_PROPOSAL = `
 .
 ├─── cmd -> e.g.: all executables
 │    └── api

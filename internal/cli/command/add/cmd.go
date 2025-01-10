@@ -2,7 +2,6 @@ package add
 
 import (
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/add/context"
 	"github.com/charmingruby/bob/internal/cli/command/add/core"
 	"github.com/charmingruby/bob/internal/cli/command/add/resource"
@@ -11,19 +10,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Command struct {
-	cmd *cobra.Command
-	fs  filesystem.Manager
-}
-
-func New(cmd *cobra.Command, config *config.Configuration) *Command {
-	return &Command{
-		cmd: cmd,
-		fs:  filesystem.New(config),
-	}
-}
-
-func (c *Command) Setup() {
+func Setup(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add",
 		Short: "Generates new components",
@@ -43,14 +30,14 @@ func (c *Command) Setup() {
 
 			switch templateChoice {
 			case coreOptionName:
-				core.SetupCmd(c.fs).Execute()
+				core.SetupCmd(fs).Execute()
 			case contextOptionsName:
-				context.SetupCmd(c.fs).Execute()
+				context.SetupCmd(fs).Execute()
 			case resourceOptionsName:
-				resource.SetupCmd(c.fs).Execute()
+				resource.SetupCmd(fs).Execute()
 			}
 		},
 	}
 
-	c.cmd.AddCommand(cmd)
+	return cmd
 }

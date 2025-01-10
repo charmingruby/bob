@@ -2,7 +2,6 @@ package template
 
 import (
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/charmingruby/bob/config"
 	"github.com/charmingruby/bob/internal/cli/command/template/rest"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
@@ -10,19 +9,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type Command struct {
-	cmd *cobra.Command
-	fs  filesystem.Manager
-}
-
-func New(cmd *cobra.Command, config *config.Configuration) *Command {
-	return &Command{
-		cmd: cmd,
-		fs:  filesystem.New(config),
-	}
-}
-
-func (c *Command) Setup() {
+func Setup(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "template",
 		Aliases: []string{"tpl"},
@@ -43,12 +30,12 @@ func (c *Command) Setup() {
 
 			switch templateChoice {
 			case restOptionName:
-				rest.SetupCmd(c.fs).Execute()
+				rest.SetupCmd(fs).Execute()
 			default:
 				output.ComingSoon(templateChoice, section)
 			}
 		},
 	}
 
-	c.cmd.AddCommand(cmd)
+	return cmd
 }
