@@ -42,10 +42,10 @@ func (c *command) runInteractive() {
 
 	section := "command type"
 
-	templateName := "Templates"
-	componentsName := "Components"
-	documentationName := "Documentations"
-	configurationName := "Configuration"
+	templateName := "📁 Templates - Manage your templates"
+	componentsName := "📦 Components - Manage your components"
+	documentationName := "📄 Documentations - Access documentation"
+	configurationName := "🧰 Configuration - Configure your settings"
 
 	var commandChoice string
 	prompt := &survey.Select{
