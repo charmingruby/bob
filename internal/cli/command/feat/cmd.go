@@ -1,10 +1,10 @@
-package add
+package feat
 
 import (
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/charmingruby/bob/internal/cli/command/add/context"
-	"github.com/charmingruby/bob/internal/cli/command/add/core"
-	"github.com/charmingruby/bob/internal/cli/command/add/resource"
+	"github.com/charmingruby/bob/internal/cli/command/feat/context"
+	"github.com/charmingruby/bob/internal/cli/command/feat/core"
+	"github.com/charmingruby/bob/internal/cli/command/feat/resource"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
@@ -12,7 +12,7 @@ import (
 
 func Setup(fs filesystem.Manager) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "add",
+		Use:   "feat",
 		Short: "Generates new components",
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "component type"

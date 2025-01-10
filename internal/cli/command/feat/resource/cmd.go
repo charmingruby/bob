@@ -1,7 +1,7 @@
 package resource
 
 import (
-	"github.com/charmingruby/bob/internal/cli/command/add/resource/postgres"
+	"github.com/charmingruby/bob/internal/cli/command/feat/resource/postgres"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )

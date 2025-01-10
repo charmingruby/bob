@@ -2,7 +2,7 @@ package context
 
 import (
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/charmingruby/bob/internal/cli/command/add/context/rest"
+	"github.com/charmingruby/bob/internal/cli/command/feat/context/rest"
 	"github.com/charmingruby/bob/internal/cli/input"
 	"github.com/charmingruby/bob/internal/cli/output"
 	"github.com/charmingruby/bob/internal/shared/filesystem"

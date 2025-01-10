@@ -5,8 +5,8 @@ import (
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/charmingruby/bob/config"
-	"github.com/charmingruby/bob/internal/cli/command/add"
 	"github.com/charmingruby/bob/internal/cli/command/doc"
+	"github.com/charmingruby/bob/internal/cli/command/feat"
 	"github.com/charmingruby/bob/internal/cli/command/setup"
 	"github.com/charmingruby/bob/internal/cli/command/template"
 	"github.com/charmingruby/bob/internal/cli/input"
@@ -58,7 +58,7 @@ func (c *command) runInteractive() {
 	case templateName:
 		template.Setup(fs).Execute()
 	case componentsName:
-		add.Setup(fs).Execute()
+		feat.Setup(fs).Execute()
 	case documentationName:
 		doc.Setup().Execute()
 	case configurationName:
