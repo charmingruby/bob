@@ -14,8 +14,8 @@ func Setup() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "command"
 
-			initName := "Create project configuration file"
-			updateName := "Update Bob version"
+			initName := "📝 Create project configuration file - Initialize a new configuration file for your project"
+			updateName := "🔄 Update Bob version - Update the Bob tool to the latest version"
 
 			var templateChoice string
 			prompt := &survey.Select{
