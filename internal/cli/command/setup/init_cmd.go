@@ -1,4 +1,4 @@
-package initialize
+package setup
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func New(cmd *cobra.Command) {
-	initCmd := &cobra.Command{
+func RunInit() *cobra.Command {
+	cmd := &cobra.Command{
 		Use:   "init",
 		Short: "Generates configuration files",
 		Long:  "This command generates the necessary configuration files for the project.",
@@ -23,5 +23,5 @@ func New(cmd *cobra.Command) {
 		},
 	}
 
-	cmd.AddCommand(initCmd)
+	return cmd
 }
