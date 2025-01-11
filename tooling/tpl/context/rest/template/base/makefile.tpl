@@ -1,4 +1,4 @@
-DOCKER_IMAGE_NAME := bob
+DOCKER_IMAGE_NAME := bob-app
 
 ###################
 # Docker          #

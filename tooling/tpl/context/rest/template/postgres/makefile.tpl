@@ -7,7 +7,7 @@ DATABASE_DATABASE = bob-db
 DATABASE_DSN := "postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}?sslmode=${DATABASE_SSL}"
 MIGRATIONS_PATH="db/migration"
 
-DOCKER_IMAGE_NAME := bob
+DOCKER_IMAGE_NAME := bob-app
 
 ###################
 # Database        #

@@ -16,11 +16,11 @@ services:
       timeout: 5s
 
   app:
-    image: bob-app
+    image: bob-app # or bob-app:latest to run from docker registry
     depends_on:
       postgres:
         condition: service_healthy
-    build:
+    build: # remove to run from docker registry
       context: .
       dockerfile: Dockerfile
     ports:
