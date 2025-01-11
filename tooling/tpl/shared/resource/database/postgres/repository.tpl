@@ -24,8 +24,8 @@ func {{ .LowerCaseModel }}Queries() map[string]string {
 		find{{ .UpperCaseModel }}ByID: `SELECT * FROM {{ .LowerCaseModel }}s 
 		WHERE id = $1`,
 		delete{{ .UpperCaseModel }}: `UPDATE {{ .LowerCaseModel }}s
-		SET deleted_at = $1
-		WHERE id = $2 AND deleted_at IS NULL`,
+		SET deleted_at = $1, updated_at = $2
+		WHERE id = $3 AND deleted_at IS NULL`,
 	}
 }
 
@@ -104,7 +104,7 @@ func (r *{{ .UpperCaseModel }}Repository) Delete(model *model.{{ .UpperCaseModel
 		return err
 	}
 
-	if _, err := stmt.Exec(model.DeletedAt, model.ID); err != nil {
+	if _, err := stmt.Exec(model.DeletedAt, model.UpdatedAt, model.ID); err != nil {
 		return database_err.NewPersistenceErr(err, "{{ .LowerCaseModel }} delete", "postgres")
 	}
 

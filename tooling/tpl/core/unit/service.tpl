@@ -22,6 +22,7 @@ func (s *Service) {{ .ServiceName }}(params {{ .ServiceName }}Params) ({{ .Servi
 		return {{ .ServiceName }}Result{}, err
 	}
 
+	{{ .LowerCaseModel }}.SoftDelete()
 	if err := s.{{ .LowerCaseModel }}Repository.Delete({{ .LowerCaseModel }}); err != nil {
 		return {{ .ServiceName }}Result{}, err
 	}

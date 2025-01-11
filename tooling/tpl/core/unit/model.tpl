@@ -10,7 +10,7 @@ type {{ .ModelName }} struct {
 	ID        string     `json:"id" db:"id"`
 	Name      string     `json:"name" db:"name"`
 	CreatedAt time.Time  `json:"created_at" db:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at" db:"updated_at"`
+	UpdatedAt *time.Time  `json:"updated_at" db:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at" db:"deleted_at"`
 }
 
@@ -23,7 +23,7 @@ func New{{ .ModelName }}(in New{{ .ModelName }}Input) *{{ .ModelName }} {
 		ID:        ulid.Make().String(),
 		Name:      in.Name,
 		CreatedAt: time.Now(),
-		UpdatedAt: time.Now(),
+		UpdatedAt: nil,
 		DeletedAt: nil,
 	}
 }
@@ -38,3 +38,9 @@ func From{{ .ModelName }}(in {{ .ModelName }}) *{{ .ModelName }} {
     }
 }
 
+func (m *{{ .ModelName }}) SoftDelete() {
+	now := time.Now()
+
+	m.UpdatedAt = &now
+	m.DeletedAt = &now
+}

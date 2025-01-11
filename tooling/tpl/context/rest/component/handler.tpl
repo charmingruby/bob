@@ -3,6 +3,7 @@ package endpoint
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 
 	"{{ .SourcePath }}/{{ .Module }}/core/service"
@@ -30,6 +31,8 @@ func (e *Endpoint) make{{ .Name }}Handler() http.HandlerFunc {
 				rest.NotFoundErrorResponse(w, err.Error())
 				return
 			}
+
+			slog.Error(err.Error())
 
 			rest.InternalServerErrorResponse(w)
 			return
