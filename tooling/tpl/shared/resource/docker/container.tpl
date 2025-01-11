@@ -14,6 +14,4 @@ FROM --platform=linux/amd64 alpine:latest
 WORKDIR /app
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk*
 COPY --from=builder /build/bin/api ./api
-COPY .env /app
-EXPOSE 3000
 CMD [ "/app/api" ]
