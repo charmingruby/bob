@@ -32,9 +32,10 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 			case baseModuleName:
 				RunBase(fs).Execute()
 			case postgresDBModuleName:
-				RunCustomDB(fs).Execute()
-			case customDBModuleName:
 				RunPostgresDB(fs).Execute()
+			case customDBModuleName:
+				RunCustomDB(fs).Execute()
+
 			}
 		},
 	}
