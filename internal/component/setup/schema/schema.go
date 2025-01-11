@@ -1,7 +1,7 @@
 package schema
 
 import (
-	"github.com/charmingruby/bob/internal/component/config/schema/component"
+	"github.com/charmingruby/bob/internal/component/setup/schema/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 )
 

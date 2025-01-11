@@ -2,7 +2,7 @@ package setup
 
 import (
 	"github.com/charmingruby/bob/internal/cli/output"
-	"github.com/charmingruby/bob/internal/component/config/update"
+	"github.com/charmingruby/bob/internal/component/setup/update"
 	"github.com/spf13/cobra"
 )
 

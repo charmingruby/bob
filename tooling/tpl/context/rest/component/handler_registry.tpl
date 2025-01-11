@@ -1,18 +1,18 @@
 package endpoint
 
 import (
-	"{{ .SourcePath }}/{{ .Module }}/core/service"
 	"github.com/go-chi/chi/v5"
+	"{{ .SourcePath }}/{{ .Module }}/core/service"
 )
 
 type Endpoint struct {
-	router *chi.Mux
+	router  *chi.Mux
 	service *service.Service
 }
 
 func New(r *chi.Mux, service *service.Service) *Endpoint {
 	return &Endpoint{
-		router: r,
+		router:  r,
 		service: service,
 	}
 }
