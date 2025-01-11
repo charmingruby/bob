@@ -16,8 +16,8 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "template options"
 
-			baseTemplateName := "Base"
-			postgresTemplateName := "Postgres"
+			baseTemplateName := "Base - Without resources implementations"
+			postgresTemplateName := "PostgreSQL - Contains PostgreSQL implementations"
 
 			var templateChoice string
 			prompt := &survey.Select{

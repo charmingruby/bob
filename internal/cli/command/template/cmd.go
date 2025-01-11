@@ -19,12 +19,11 @@ func Setup(fs filesystem.Manager) *cobra.Command {
 			section := "template options"
 
 			restOptionName := "REST API"
-			infraOptionsName := "Infra"
 
 			var templateChoice string
 			prompt := &survey.Select{
 				Message: input.ChooseSectionMessage(section),
-				Options: []string{restOptionName, infraOptionsName},
+				Options: []string{restOptionName},
 			}
 			survey.AskOne(prompt, &templateChoice)
 

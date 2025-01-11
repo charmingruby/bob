@@ -17,9 +17,9 @@ func Setup(fs filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "component type"
 
-			coreOptionName := "Core"
-			contextOptionsName := "Context"
-			resourceOptionsName := "Resource"
+			coreOptionName := "Core - Essential domain components of the application"
+			contextOptionsName := "Context - Context-specific components"
+			resourceOptionsName := "Resource - Resource management components"
 
 			var templateChoice string
 			prompt := &survey.Select{

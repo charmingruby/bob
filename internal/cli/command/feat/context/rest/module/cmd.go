@@ -17,8 +17,8 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 			section := "structure"
 
 			baseModuleName := "New base module"
-			customDBModuleName := "New module with custom DB"
-			postgresDBModuleName := "New module with Postgres DB"
+			customDBModuleName := "New module with Custom DB"
+			postgresDBModuleName := "New module with PostgreSQL DB"
 
 			var templateChoice string
 			prompt := &survey.Select{

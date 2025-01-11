@@ -5,6 +5,7 @@ import (
 	"github.com/charmingruby/bob/internal/cli/command/feat/core/bundle"
 	"github.com/charmingruby/bob/internal/cli/command/feat/core/unit"
 	"github.com/charmingruby/bob/internal/cli/input"
+	"github.com/charmingruby/bob/internal/shared/definition/component"
 	"github.com/charmingruby/bob/internal/shared/filesystem"
 	"github.com/spf13/cobra"
 )
@@ -18,20 +19,17 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "component size"
 
-			unitName := "Unit components"
-			bundleName := "Bundle components"
-
 			var templateChoice string
 			prompt := &survey.Select{
 				Message: input.ChooseSectionMessage(section),
-				Options: []string{unitName, bundleName},
+				Options: []string{component.UNIT_SIZE, component.BUNDLE_SIZE},
 			}
 			survey.AskOne(prompt, &templateChoice)
 
 			switch templateChoice {
-			case unitName:
+			case component.UNIT_SIZE:
 				unit.SetupCmd(fs).Execute()
-			case bundleName:
+			case component.BUNDLE_SIZE:
 				bundle.SetupCmd(fs).Execute()
 			}
 		},

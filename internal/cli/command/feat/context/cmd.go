@@ -18,14 +18,15 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "context"
 
-			restOptionName := "REST API"
-			gRPCOptionName := "gRPC API"
+			restOptionName := "REST"
+			gRPCOptionName := "gRPC"
 
 			var templateChoice string
 			prompt := &survey.Select{
 				Message: input.ChooseSectionMessage(section),
 				Options: []string{restOptionName, gRPCOptionName},
 			}
+
 			survey.AskOne(prompt, &templateChoice)
 
 			switch templateChoice {
