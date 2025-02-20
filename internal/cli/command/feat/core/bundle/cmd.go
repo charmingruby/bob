@@ -16,7 +16,7 @@ func SetupCmd(fs filesystem.Manager) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			section := "structure"
 
-			coreName := "Model"
+			coreName := "Core"
 			serviceName := "Service with entrypoint"
 
 			var templateChoice string
